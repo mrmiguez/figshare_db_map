@@ -24,6 +24,9 @@ if __name__ == '__main__':
     if args.run:
         for f in glob.iglob(os.path.join(args.records, '*.xml')):
             for rec in assets.parse_mods_stream(f):
-                print(rec)
+                assets.write_db_record(db_conn, rec)
+                if args.verbose:
+                    print(rec)
+
 
 

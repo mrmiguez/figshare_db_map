@@ -13,7 +13,7 @@ def connect_db(DB_PATH):
     if not(db_exists):
         logging.info(f'Initializing database... {DB_PATH}')
         cursor.executescript("""
-            CREATE TABLE IF NOT EXISTS author (
+            CREATE TABLE IF NOT EXISTS authors (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 firstname TEXT NOT NULL,
                 surname TEXT NOT NULL,
@@ -21,8 +21,8 @@ def connect_db(DB_PATH):
                 orcid TEXT
             );
         
-            CREATE TABLE IF NOT EXISTS object (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+            CREATE TABLE IF NOT EXISTS objects (
+                iid TEXT PRIMARY KEY,
                 title TEXT NOT NULL,
                 item_type TEXT NOT NULL,
                 keywords TEXT,
@@ -30,7 +30,7 @@ def connect_db(DB_PATH):
                 license TEXT
             );
         
-            CREATE TABLE IF NOT EXISTS object_author (
+            CREATE TABLE IF NOT EXISTS object_authors (
                 object_id INTEGER NOT NULL,
                 author_id INTEGER NOT NULL,
                 PRIMARY KEY (object_id, author_id),
@@ -39,16 +39,17 @@ def connect_db(DB_PATH):
             );
         """)
 
-    return cursor
+    return conn
 
 
-def get_db_status(cursor):
+def get_db_status(db_conn):
     """
     Return a dict mapping table_name -> row_count
     for all non-internal SQLite tables.
     """
 
     # Get all user-defined tables (skip sqlite_* internals)
+    cursor = db_conn.cursor()
     cursor.execute("""
                 SELECT name
                 FROM sqlite_master
@@ -66,4 +67,8 @@ def get_db_status(cursor):
 
     return status
 
-        
+def write_db_record(db_conn, record):
+    """"""
+    cursor = db_conn.cursor()
+    cursor.execute('INSERT INTO objects VALUES (?, ?, ?, ?, ?, ?)', (record['iid'], 'foo', 'bar', 'baz', 'boo', 'bork'))
+    db_conn.commit()

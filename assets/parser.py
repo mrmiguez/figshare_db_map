@@ -31,6 +31,9 @@ def parse_mods_stream(path):
             if id_elem.text
         ]
 
+        # Extract IID
+        record['iid'] = elem.find('mods:identifier[@type="IID"]', NS).text
+
         # Extract resource type
         type_elem = elem.find('mods:typeOfResource', NS)
         if type_elem is not None:

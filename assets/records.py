@@ -1,3 +1,5 @@
+import re
+
 class Record(object):
 
     def __init__(self):
@@ -39,8 +41,37 @@ class Record(object):
     # def __repr__(self):
     #     pass
 
+    def _clean_text(self, text):
+        mark_up_re = re.compile('<.*?>')
+        new_line_re = re.compile('\n')
+        date_time_code_re = re.compile('T\\d{2}:\\d{2}:\\d{2}Z')
+
+        # remove extraneous leading and trailing characters
+        clean_text = text.strip(':').strip(' ')
+
+        # remove markup
+        clean_text = re.sub(mark_up_re, '', clean_text)
+
+        # remove newlines
+        clean_text = re.sub(new_line_re, ' ', clean_text)
+
+        # remove timecode data trailing a date
+        clean_text = re.sub(date_time_code_re, '', clean_text)
+        return clean_text
+
 class ObjectRecord(Record):
 
-    def __init__(self, **kwargs):
+    def __init__(self, record):
         Record.__init__(self)
+        self.record = record
+
+    @property
+    def iid(self):
+        return self.record.iid
+
+class AuthorRecord(Record):
+
+    def __init__(self, record):
+        Record.__init__(self)
+        self.record = record
 
