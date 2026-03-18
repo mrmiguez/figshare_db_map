@@ -12,7 +12,7 @@ def argument_parser():
     args.add_argument('-b', '--burndown', action='store_true', help='burndown database')
     run_args_group = args.add_argument_group('Run data mapping')
     run_args_group.add_argument('-r', '--run', action='store_true')
-    run_args_group.add_argument('records', help='path to XML records', default=PATH)
+    run_args_group.add_argument('record_directory', help='path to XML records')
 
     # hack to show help when no arguments supplied
     if len(sys.argv) == 1:

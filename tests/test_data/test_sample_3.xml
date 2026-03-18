@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods:mods xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:flvc="info:flvc/manifest/v1" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dcterms="http://purl.org/dc/terms/" xsi:schemaLocation="http://www.loc.gov/standards/mods/v3/mods-3-4.xsd" version="3.4">
+  <titleInfo lang="eng">
+    <title>TE_C15.111 - Marble Inscription</title>
+  </titleInfo>
+  <name type="personal" authority="local">
+    <namePart type="given">Matthew E.</namePart>
+    <namePart type="family">Hunter</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">creator</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cre</roleTerm>
+    </role>
+  </name>
+  <originInfo>
+    <dateIssued encoding="w3cdtf" keyDate="yes">2023-06-19</dateIssued>
+    <dateCreated>2015-06-23</dateCreated>
+  </originInfo>
+  <abstract>Marble inscription, inscribed both sides</abstract>
+  <note displayLabel="Keywords">Roman archaeology, Cosa excavations</note>
+  <note displayLabel="Stratigraphic Unit">SU: TE 19007</note>
+  <abstract>Excavated 2015-06-23</abstract>
+  <abstract>Scanned 2023-06-19 with Artec Space Spider and Artec Studio 14 Professional </abstract>
+  <accessCondition type="use and reproduction" xlink:href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY 4.0)</accessCondition>
+  <note displayLabel="Method of Creation">3d_scanned</note>
+  <note displayLabel="3D Model Base Unit">mm</note>
+  <extent>Dimension: 7.5cm (L), 5.8cm (W), 1.5cm (Th). Weight = 75g</extent>
+  <note displayLabel="Animated">No</note>
+  <note displayLabel="Rigged Geometries">No</note>
+  <typeOfResource>three dimensional object</typeOfResource>
+  <genre authority="rdacontent">three-dimensional form</genre>
+  <genre authority="coar" authorityURI="http://purl.org/coar/resource_type" valueURI="http://purl.org/coar/resource_type/c_1843">other</genre>
+  <language>
+    <languageTerm type="text">Latin</languageTerm>
+    <languageTerm type="code" authority="iso639-2b">lat</languageTerm>
+  </language>
+  <physicalDescription>
+    <form authority="rdamedia" type="RDA media terms">computer</form>
+    <form authority="rdacarrier" type="RDA carrier terms">online resource</form>
+    <extent>1 online resource</extent>
+    <digitalOrigin>born digital</digitalOrigin>
+    <internetMediaType>text/plain</internetMediaType>
+  </physicalDescription>
+  <recordInfo>
+    <recordCreationDate encoding="w3cdtf">2024-03-14</recordCreationDate>
+    <descriptionStandard>rda</descriptionStandard>
+  </recordInfo>
+  <identifier type="IID">FSU_COSA_TE_CO_15-111</identifier>
+  <mods:location displayLabel="purl">
+    <mods:url>https://purl.lib.fsu.edu/diginole/FSU_COSA_TE_CO_15-111</mods:url>
+  </mods:location>
+</mods:mods>

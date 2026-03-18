@@ -2,16 +2,22 @@ import os
 import logging
 import sqlite3
 
+DB_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'db.sqlite3')
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
+
 def connect_db(DB_PATH):
-    '''init sqlite3 database and return cursor'''
+    """init sqlite3 database and return connection"""
     db_exists = os.path.exists(DB_PATH)
+    logger.info(f'DB path... {DB_PATH}')
 
     # Connect creates the database if it doesn't exist
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     if not(db_exists):
-        logging.info(f'Initializing database... {DB_PATH}')
+        logger.info(f'Initializing database... {DB_PATH}')
         cursor.executescript("""
             CREATE TABLE IF NOT EXISTS authors (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:flvc="info:flvc/manifest/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+  <titleInfo>
+    <title>History of the male varsity track and field program at Florida State University from 1948-1974</title>
+  </titleInfo>
+  <name type="personal">
+    <namePart>Long, Curtiss M.</namePart>
+    <namePart type="date">1943-</namePart>
+    <role>
+      <roleTerm authority="marcrelator" type="text">creator</roleTerm>
+    </role>
+  <affiliation>Theses and Dissertations</affiliation></name>
+  <typeOfResource>text</typeOfResource>
+  <originInfo>
+    <place>
+      <placeTerm type="text">Tallahassee, Fla.</placeTerm>
+    </place>
+    <dateIssued encoding="w3cdtf">1976</dateIssued>
+  </originInfo>
+  <location displayLabel="purl">
+    <physicalLocation>Special Collections, Florida State University Libraries, Tallahassee, Florida.</physicalLocation>
+    <url>http://purl.flvc.org/fcla/dl/FS00000102.jpg</url>
+  </location>
+  <relatedItem type="series">
+    <titleInfo>
+      <title>Florida heritage collection</title>
+    </titleInfo>
+  </relatedItem>
+  <identifier type="IID">FS00000102_00001</identifier>
+  <identifier type="digitool">2819835</identifier>
+  <recordInfo>
+    <recordIdentifier source="ufdc">FS00000102_00001</recordIdentifier>
+    <recordOrigin>Converted from MARCXML to MODS v3.4 using MARC21slim2MODS3-4_FLVC.xsl (LOC rev 1.86 / 20130610) (FLVC v7)</recordOrigin>
+  </recordInfo>
+  <identifier type="fedora">fsu:107473</identifier>
+  <extension>
+    <flvc:flvc>
+      <flvc:owningInstitution>FSU</flvc:owningInstitution>
+      <flvc:submittingInstitution>FSU</flvc:submittingInstitution>
+      <flvc:objectHistory source="digitool">admin_unit="FCL01", ingest_id="ing8137", creator="null:staff", creation_date="2010-12-08 17:47:04", modified_by="null:staff", modification_date="2010-12-08 18:44:15"</flvc:objectHistory>
+    </flvc:flvc>
+  </extension>
+  <language>
+    <languageTerm authority="iso639-2b" type="text">English</languageTerm>
+    <languageTerm authority="iso639-2b" type="code">eng</languageTerm>
+  </language>
+  <physicalDescription>
+    <extent>viii, 568 leaves ; 29 cm.</extent>
+    <form authority="gmd">electronic resource</form>
+  </physicalDescription>
+  <subject authority="NAF">
+    <topic>Florida State University -- Track and Field Program</topic>
+  </subject>
+  <subject authority="NAF">
+    <topic>Track and field</topic>
+    <geographic>Florida</geographic>
+  </subject>
+  <accessCondition type="useAndReproduction">Use of this item is provided for non-commercial, personal, educational, and research use only. For information about the copyright and reproduction rights for this item, please contact Special Collections, Florida State University Libraries, Tallahassee, Florida.</accessCondition>
+</mods>

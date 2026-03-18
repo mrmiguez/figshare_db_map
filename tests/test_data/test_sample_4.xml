@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods:mods xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:flvc="info:flvc/manifest/v1" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dcterms="http://purl.org/dc/terms/" xsi:schemaLocation="http://www.loc.gov/standards/mods/v3/mods-3-4.xsd" version="3.4">
+  <titleInfo lang="eng">
+    <title>Aqueous Myth</title>
+  </titleInfo>
+  <name type="personal" authority="local">
+    <namePart type="given">Glenn</namePart>
+    <namePart type="family">Tim</namePart>
+    <affiliation>Florida State University</affiliation>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Rob</namePart>
+    <namePart type="family">Eisenberg</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Composer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cmp</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Mark</namePart>
+    <namePart type="family">Wingate</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Composer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cmp</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Michael</namePart>
+    <namePart type="family">Strickland</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Composer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cmp</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Recording Engineer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">rce</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Jeffrey</namePart>
+    <namePart type="family">Rolf</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Recording Engineer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">rce</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Composer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cmp</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Sarah</namePart>
+    <namePart type="family">Aspirino</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Whitney</namePart>
+    <namePart type="family">Earnhardt</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Mayela G.</namePart>
+    <namePart type="family">Matthews</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">C.J.</namePart>
+    <namePart type="family">Perry</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Nicole</namePart>
+    <namePart type="family">Romano</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Caroline</namePart>
+    <namePart type="family">Smith</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Amanda</namePart>
+    <namePart type="family">Treiber</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Shelby</namePart>
+    <namePart type="family">Walker</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Amanda</namePart>
+    <namePart type="family">Gates</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Justin</namePart>
+    <namePart type="family">Kahan</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Lauren</namePart>
+    <namePart type="family">Birnbaum</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Brittany</namePart>
+    <namePart type="family">Brindel</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Kristin</namePart>
+    <namePart type="family">Campbell</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Renee</namePart>
+    <namePart type="family">Frangione</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Kelly</namePart>
+    <namePart type="family">Hauck</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Meghan</namePart>
+    <namePart type="family">Keeran</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Jessica</namePart>
+    <namePart type="family">Pitzer</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Doug</namePart>
+    <namePart type="family">Gillespie</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Merrick</namePart>
+    <namePart type="family">Hinterscher</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Mandy</namePart>
+    <namePart type="family">Jessen</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Brittany</namePart>
+    <namePart type="family">Sellers</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Holly</namePart>
+    <namePart type="family">Matyas</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Singer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">sng</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Curtis</namePart>
+    <namePart type="family">Schroeger</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Heather</namePart>
+    <namePart type="family">Seagraves</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Sarah</namePart>
+    <namePart type="family">Stockman</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Tamara</namePart>
+    <namePart type="family">Williams</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Laura</namePart>
+    <namePart type="family">Howard</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Terence</namePart>
+    <namePart type="family">Duncan</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">pmf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Katie</namePart>
+    <namePart type="family">Weir</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">pmf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Courtney</namePart>
+    <namePart type="family">Whittemore</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">pmf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Meeks</namePart>
+    <namePart type="family">Lindsay</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Giacomo</namePart>
+    <namePart type="family">Battarino</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Composer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">cmp</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Instrumentalist</roleTerm>
+      <roleTerm authority="marcrelator" type="code">itr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Rebecca</namePart>
+    <namePart type="family">Bliss</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Jason</namePart>
+    <namePart type="family">Giles</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Sarah</namePart>
+    <namePart type="family">Jacobs</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Performer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">prf</roleTerm>
+    </role>
+    <role>
+      <roleTerm authority="rda" type="text">Choreographer</roleTerm>
+      <roleTerm authority="marcrelator" type="code">chr</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Murray</namePart>
+    <namePart type="family">Louis</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">Consultant</roleTerm>
+      <roleTerm authority="marcrelator" type="code">csl</roleTerm>
+    </role>
+  </name>
+  <originInfo>
+    <dateIssued encoding="w3cdtf" keyDate="yes">2005</dateIssued>
+  </originInfo>
+  <abstract>Aqueous Myth: Tales of a Water Planet is foremost an interdisciplinary, collaborative process that culminates in an original, evening-length production of dance and technology, a synthesis of media and motion that explores human experience in relation to water. Unified by a liquid theme, consecutive vignettes explore contrasting approaches to expression through the moving body partnered by illusionary projection designs in an ever-changing, mediated atmosphere of reflective surfaces. A seamless blending of production elements results in an intrinsic work of total theater that undeniably acknowledges the mentorship of Alwin Nikolais. As an innate element of the production, digital video is used as both choreographic tool and illumination of landscape and architecture, yet attention to the use of technology is minimized and emphasis is given to the fusion of elements united to create an integrated whole.</abstract>
+  <identifier type="IID">FSU_libsubv1_AqueousMyth</identifier>
+  <extension>
+    <flvc:flvc>
+      <flvc:owningInstitution>FSU</flvc:owningInstitution>
+      <flvc:submittingInstitution>FSU</flvc:submittingInstitution>
+    </flvc:flvc>
+  </extension>
+  <typeOfResource>moving image</typeOfResource>
+  <genre authority="rdacontent">two-dimensional moving image</genre>
+  <genre authority="coar" authorityURI="http://purl.org/coar/resource_type" valueURI="http://purl.org/coar/resource_type/">video</genre>
+  <language>
+    <languageTerm type="text">English</languageTerm>
+    <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+  </language>
+  <physicalDescription>
+    <form authority="rdamedia" type="RDA media terms">computer</form>
+    <form authority="rdacarrier" type="RDA carrier terms">online resource</form>
+    <extent>1 online resource</extent>
+    <digitalOrigin>born digital</digitalOrigin>
+    <internetMediaType>video/mov</internetMediaType>
+  </physicalDescription>
+  <recordInfo>
+    <descriptionStandard>rda</descriptionStandard>
+  </recordInfo>
+  <location displayLabel="purl">
+    <url>http://purl.flvc.org/fsu/fd/FSU_libsubv1_AqueousMyth</url>
+  </location>
+</mods:mods>

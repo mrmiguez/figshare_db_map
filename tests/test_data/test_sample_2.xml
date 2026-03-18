@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:flvc="info:flvc/manifest/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+  <titleInfo>
+    <nonSort>A </nonSort>
+    <title>COMPETENCY-BASED TEACHER EDUCATION APPROACH TO ENABLING PRE-SERVICE ELEMENTARY TEACHERS TO GAIN COMPETENCY IN ELICITING DESCRIPTIVE RESPONSE FROM FIRST GRADE CHILDREN ABOUT THEIR DRAWINGS OF THE HUMAN FIGURE: AN EXPERIMENTAL STUDY</title>
+  </titleInfo>
+  <name type="personal" usage="primary">
+    <namePart>YRABEDRA, RONALD FRANK.</namePart>
+  <affiliation>Theses and Dissertations</affiliation></name>
+  <name type="corporate">
+    <namePart>The Florida State University</namePart>
+  </name>
+  <typeOfResource>text</typeOfResource>
+  <originInfo>
+    <dateIssued encoding="marc">1974</dateIssued>
+    <dateIssued encoding="marc">1974</dateIssued>
+    <issuance>monographic</issuance>
+  </originInfo>
+  <physicalDescription>
+    <extent>154 p.</extent>
+  </physicalDescription>
+  <accessCondition type="restrictionOnAccess">On campus use only.</accessCondition>
+  <note>Source: Dissertation Abstracts International, Volume: 35-12, Section: A, page: 7542.</note>
+  <note type="thesis">Thesis (Ph.D.)--The Florida State University, 1974.</note>
+  <subject>
+    <topic>Education, General</topic>
+  </subject>
+  <location displayLabel="purl">
+    <url>
+http://purl.flvc.org/fsu/lib/digcoll/etd/2987870</url>
+  </location>
+  <relatedItem type="host">
+    <titleInfo>
+      <title>Dissertation Abstracts International</title>
+    </titleInfo>
+    <part>
+      <text>35-12A.</text>
+    </part>
+  </relatedItem>
+  <identifier type="UnM">AAI7512680</identifier>
+  <identifier type="digitool">
+2987870</identifier>
+  <recordInfo>
+    <recordContentSource authority="marcorg">UnM</recordContentSource>
+    <recordCreationDate encoding="marc">041210</recordCreationDate>
+    <recordChangeDate encoding="iso8601">20110301160053.0</recordChangeDate>
+    <recordIdentifier>003090326</recordIdentifier>
+    <recordOrigin>Converted from MARCXML to MODS v3.4 using MARC21slim2MODS3-4_FLVC.xsl (LOC rev 1.86 / 20130610) (FLVC v7)</recordOrigin>
+  </recordInfo>
+  <identifier type="IID">FSDT2987870</identifier>
+  <identifier type="fedora">fsu:72377</identifier>
+  <extension>
+    <flvc:flvc>
+      <flvc:owningInstitution>FSU</flvc:owningInstitution>
+      <flvc:submittingInstitution>FSU</flvc:submittingInstitution>
+      <flvc:objectHistory source="digitool">admin_unit="FSU01", ingest_id="ing9012", creator="creator:CAPLAN", creation_date="2011-03-14 16:45:16", modified_by="creator:CAPLAN", modification_date="2011-03-14 16:45:16"</flvc:objectHistory>
+    </flvc:flvc>
+  </extension>
+</mods>

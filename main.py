@@ -7,26 +7,40 @@ import argparse
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(PATH, 'figshare_record_tables.sqlite3')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('figshare_db_map')
 logging.basicConfig(level=logging.INFO)
 
 if __name__ == '__main__':
     db_conn = assets.connect_db(DB_PATH)
     args = assets.argument_parser().parse_args()
-    print(args)  #test
+    logger.debug(f'Args... {args}')
 
     if args.status:
         print(assets.get_db_status(db_conn))
 
     if args.burndown:
+        if args.verbose:
+            print(f'Removing database... {DB_PATH}')
+        logger.info(f'Removing database... {DB_PATH}')
         os.remove(DB_PATH)
 
+
+
     if args.run:
-        for f in glob.iglob(os.path.join(args.records, '*.xml')):
-            for rec in assets.parse_mods_stream(f):
-                assets.write_db_record(db_conn, rec)
+        for f in glob.iglob(os.path.join(args.record_directory, '*.xml')):
+            logger.info(f'Reading... {os.path.join(args.record_directory, f)}')
+            for parsed_record in assets.parse_mods_stream(f):
                 if args.verbose:
-                    print(rec)
+                    print(f'Parsed... {parsed_record["iid"]}')
+
+                # object_record = assets.ObjectRecord(parsed_record)
+                # assets.write_db_record(db_conn, object_record)
+
+                logger.info(f'Writing record to DB... {parsed_record["iid"]}')
+                logger.debug(f'Writing record to DB... {parsed_record}')
+                assets.write_db_record(db_conn, parsed_record)
 
 
 
+
+    db_conn.close()
