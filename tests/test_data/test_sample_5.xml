@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:flvc="info:flvc/manifest/v1" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+  <identifier type="IID">igc_commoncoreofdata_1986-1987</identifier>
+  <titleInfo>
+    <title>Public School Status and Enrollment: CCD Data 1986-1987</title>
+  </titleInfo>
+  <name type="corporate" authority="local">
+    <namePart>Institute for Governance and Civics</namePart>
+    <nameIdentifier type="orcid">0009-0008-0603-6393</nameIdentifier>
+    <role>
+      <roleTerm type="text" authority="marcrelator" authorityURI="http://id.loc.gov/vocabulary/relators">creator</roleTerm>
+      <roleTerm type="code" authority="marcrelator" authorityURI="http://id.loc.gov/vocabulary/relators">cre</roleTerm>
+    </role>
+  </name>
+  <originInfo>
+    <dateIssued encoding="w3cdtf" keyDate="yes">1987</dateIssued>
+  </originInfo>
+  <language>
+    <languageTerm type="text" authority="iso639-2b">English</languageTerm>
+    <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+  </language>
+  <physicalDescription>
+    <form authority="rdamedia" type="RDA media terms">computer</form>
+    <form authority="rdacarrier" type="RDA carrier terms">online resource</form>
+    <extent>1 online resource</extent>
+    <digitalOrigin>born digital</digitalOrigin>
+    <internetMediaType>text/csv</internetMediaType>
+  </physicalDescription>
+  <abstract displayLabel="Summary">Public School Status and Enrollment: CCD Data 1987</abstract>
+  <note>Data may not be used to attempt to identify any individual. Please cite Institute for Governance and Civics in all data set uses.</note>
+  <note displayLabel="Keywords">public schools, enrollment, status, ccd, stata</note>
+  <recordInfo>
+    <recordCreationDate>2025-11-17</recordCreationDate>
+  </recordInfo>
+  <location displayLabel="purl">
+    <url>https://purl.lib.fsu.edu/diginole/igc_commoncoreofdata_1986-1987</url>
+  </location>
+</mods>

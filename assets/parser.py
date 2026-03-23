@@ -1,6 +1,8 @@
 import logging
 import lxml.etree as ET
 
+from assets.records import ObjectRecord, AuthorRecord
+
 # register namespaces
 NS = {"mods": "http://www.loc.gov/mods/v3",}
 logger = logging.getLogger(__name__)
@@ -11,36 +13,9 @@ def parse_mods_stream(path):
 
     context = ET.iterparse(path, events=('end',), tag='{http://www.loc.gov/mods/v3}mods')
     for event, elem in context:
-        record = {}
 
-        # Title
-        title_elem = elem.find('mods:titleInfo/mods:title', NS)
-        if title_elem is not None:
-            record['title'] = title_elem.text
-
-        # Names
-        record['names'] = [
-            name_elem.text
-            for name_elem in elem.findall('mods:name/mods:namePart', NS)
-            if name_elem.text
-        ]
-
-        # Identifiers
-        record['identifiers'] = [
-            (id_elem.get('type'), id_elem.text)
-            for id_elem in elem.findall('mods:identifier', NS)
-            if id_elem.text
-        ]
-
-        # IID
-        record['iid'] = elem.find('mods:identifier[@type="IID"]', NS).text
-        logger.info(f'Parsing... {record["iid"]}')
-
-        # Resource type
-        type_elem = elem.find('mods:typeOfResource', NS)
-        if type_elem is not None:
-            record['resource_type'] = type_elem.text
-
+        record = ObjectRecord(elem)
+        print(record.names)
         yield record
 
         # Free memory

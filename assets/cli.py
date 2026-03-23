@@ -4,8 +4,9 @@ import argparse
 
 PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 def argument_parser():
-    '''Top level argument parser'''
+    """Top level argument parser"""
     args = argparse.ArgumentParser(description='Figshare data-mapping DB utility')
     args.add_argument('-s', '--status', help='get DB status', action='store_true')
     args.add_argument('-v', '--verbose', action='store_true')
