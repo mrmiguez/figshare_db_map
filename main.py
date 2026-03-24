@@ -1,10 +1,8 @@
 import os
 import sys
 import glob
-import pymods
 import assets
 import logging
-import argparse
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(PATH, 'figshare_record_tables.sqlite3')
@@ -17,17 +15,6 @@ if __name__ == '__main__':
     # Parse args
     args = assets.argument_parser().parse_args()
     logger.debug(f'Args... {args}')
-
-    # CLI status
-    if args.status:
-        print(assets.get_db_status(db_conn))
-
-    # CLI burndown
-    if args.burndown:
-        if args.verbose:
-            print(f'Removing database... {DB_PATH}')
-        logger.info(f'Removing database... {DB_PATH}')
-        os.remove(DB_PATH)
 
     # CLI run
     if args.run:
@@ -43,6 +30,18 @@ if __name__ == '__main__':
                 logger.info(f'Writing record to DB... {parsed_record.iid}')
                 logger.debug(f'Writing record to DB... {parsed_record}')
                 assets.write_db_record(db_conn, parsed_record)
+
+    # CLI status
+    if args.status:
+        print(assets.get_db_status(db_conn))
+
+    # CLI burndown
+    if args.burndown:
+        if args.verbose:
+            print(f'Removing database... {DB_PATH}')
+        logger.info(f'Removing database... {DB_PATH}')
+        os.remove(DB_PATH)
+
 
     # Close DB connection
     db_conn.close()

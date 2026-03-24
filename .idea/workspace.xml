@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="Updating progress">
-      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="Add LICENSE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +78,7 @@
       <recent name="$PROJECT_DIR$/tests/test_data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main --help">
+  <component name="RunManager" selected="Python.main --burndown">
     <configuration name="main --burndown" type="PythonConfigurationType" factoryName="Python">
       <module name="figshare_db_map" />
       <option name="ENV_FILES" value="" />
@@ -264,7 +265,7 @@
       <workItem from="1773924654020" duration="19022000" />
       <workItem from="1774011758013" duration="4539000" />
       <workItem from="1774268460431" duration="11104000" />
-      <workItem from="1774354947103" duration="1888000" />
+      <workItem from="1774354947103" duration="4338000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -306,7 +307,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774301959203</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add readme.md">
+      <option name="closed" value="true" />
+      <created>1774380485614</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774380485614</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add LICENSE">
+      <option name="closed" value="true" />
+      <created>1774380596513</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774380596513</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,14 +335,16 @@
     <MESSAGE value="Writing MODS data to DB" />
     <MESSAGE value="Cleaning logging msgs" />
     <MESSAGE value="Updating progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating progress" />
+    <MESSAGE value="Add readme.md" />
+    <MESSAGE value="Add LICENSE" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add LICENSE" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run.coverage" NAME="main --run Coverage Results" MODIFIED="1774299244046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___help.coverage" NAME="main --help Coverage Results" MODIFIED="1774380240885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$FileDir$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___status.coverage" NAME="main --status Coverage Results" MODIFIED="1773861985330" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1774299239014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main dev-data Coverage Results" MODIFIED="1774299229100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1774382335282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main dev-data Coverage Results" MODIFIED="1774381751884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main.coverage" NAME="main --run Coverage Results" MODIFIED="1773776670977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1774295089432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
