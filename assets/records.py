@@ -60,7 +60,7 @@ class ObjectRecord(Record):
     ###########################################################################
     # Figshare Metadata Schema Overview:                                      #
     # https://info.figshare.com/user-guide/figshare-metadata-schema-overview/ #
-    #   - IID being used as object table DB key                               #
+    #   - pid` being used as object table DB key                               #
     ###########################################################################
 
     # IID

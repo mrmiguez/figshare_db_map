@@ -3,6 +3,7 @@ import sys
 import glob
 import assets
 import logging
+from pathlib import Path
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(PATH, 'figshare_record_tables.sqlite3')
@@ -18,18 +19,16 @@ if __name__ == '__main__':
 
     # CLI run
     if args.run:
-        for f in glob.iglob(os.path.join(args.record_directory, '*.xml')):
-            logger.info(f'Reading... {os.path.join(args.record_directory, f)}')
+        for f in Path(args.record_directory).rglob('*MODS.xml'):
+            logger.info(f'Reading... {f}')
+            pid = f.stem.replace('fsu_', 'fsu:').replace('FSU_', 'fsu:').removesuffix('_MODS')
             for parsed_record in assets.parse_mods_stream(f):
                 if args.verbose:
-                    print(f'Parsed... {parsed_record.iid}')
+                    print(f'Parsed... {pid}')
 
-                # object_record = assets.ObjectRecord(parsed_record)
-                # assets.write_db_record(db_conn, object_record)
-
-                logger.info(f'Writing record to DB... {parsed_record.iid}')
-                logger.debug(f'Writing record to DB... {parsed_record}')
-                assets.write_db_record(db_conn, parsed_record)
+                logger.info(f'Writing record to DB... {pid}')
+                # logger.debug(f'Writing record to DB... {parsed_record}')
+                assets.write_db_record(db_conn, pid, parsed_record)
 
     # CLI status
     if args.status:

@@ -30,7 +30,7 @@ def connect_db(DB_PATH):
 
                              CREATE TABLE IF NOT EXISTS objects
                              (
-                                 iid TEXT PRIMARY KEY,
+                                 pid TEXT PRIMARY KEY,
                                  title TEXT NOT NULL,
                                  item_type TEXT NOT NULL,
                                  keywords TEXT,
@@ -80,15 +80,24 @@ def get_db_status(db_conn):
     return status
 
 
-def write_db_record(db_conn, record):
-    """"""
+def write_db_record(db_conn, pid, record):
+    """
+    Write record to database
+    :param db_conn:
+    :param pid:
+    :param record:
+    :return:
+    """
     cursor = db_conn.cursor()
-    cursor.execute('INSERT INTO objects VALUES (?, ?, ?, ?, ?, ?)',
-                   (record.iid, # iid
-                    'bar', # test
-                    #record.titles, # title
-                    'spam', # item_type
-                    'eggs', # keywords
-                    'boo', # description
-                    'bork')) # license
+    try:
+        cursor.execute('INSERT INTO objects VALUES (?, ?, ?, ?, ?, ?)',
+                       (pid, # pid
+                        record.titles[0], # title
+                        'spam', # item_type
+                        'eggs', # keywords
+                        'description', # description
+                        # record.abstract.text, # description
+                        'bork')) # license
+    except sqlite3.IntegrityError:
+        logger.error(f'Duplicate identifier... {pid}')
     db_conn.commit()

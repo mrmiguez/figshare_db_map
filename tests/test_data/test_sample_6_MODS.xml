@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods:mods xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:flvc="info:flvc/manifest/v1" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dcterms="http://purl.org/dc/terms/" xsi:schemaLocation="http://www.loc.gov/standards/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd" version="3.4">
+  <titleInfo lang="eng">
+    <title>Personality and Frailty</title>
+    <subTitle>Evidence From Four Samples.</subTitle>
+  </titleInfo>
+  <name type="personal" authority="local">
+    <namePart type="given">Yannick</namePart>
+    <namePart type="family">Stephan</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">author</roleTerm>
+      <roleTerm authority="marcrelator" type="code">aut</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Angelina R</namePart>
+    <namePart type="family">Sutin</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">author</roleTerm>
+      <roleTerm authority="marcrelator" type="code">aut</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Brice</namePart>
+    <namePart type="family">Canada</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">author</roleTerm>
+      <roleTerm authority="marcrelator" type="code">aut</roleTerm>
+    </role>
+  </name>
+  <name type="personal" authority="local">
+    <namePart type="given">Antonio</namePart>
+    <namePart type="family">Terracciano</namePart>
+    <role>
+      <roleTerm authority="rda" type="text">author</roleTerm>
+      <roleTerm authority="marcrelator" type="code">aut</roleTerm>
+    </role>
+  </name>
+  <originInfo>
+    <dateIssued encoding="w3cdtf" keyDate="yes">2017-02-01</dateIssued>
+  </originInfo>
+  <abstract>Frailty is a prevalent geriatric syndrome. Little is known about the psychological factors associated with this syndrome. Based on four large samples of older adults aged from 65 to 104 years old, the present study examined whether personality traits are related to frailty. High neuroticism, low conscientiousness, low extraversion, low openness and low agreeableness were related to higher frailty across samples. Longitudinal analysis conducted in one sample revealed that high neuroticism was associated with worsening frailty over an 8-year period. Higher frailty at baseline and over time was related to maladaptive personality changes. This study extends existing knowledge on the link between personality and health in older adults, by identifying the personality traits associated with frailty, a complex geriatric syndrome. </abstract>
+  <identifier type="IID">FSU_pmch_28649150</identifier>
+  <identifier type="DOI">10.1016/j.jrp.2016.12.006</identifier>
+  <identifier type="PMCID">PMC5482292</identifier>
+  <identifier type="RID">28649150</identifier>
+  <identifier type="EID">28649150</identifier>
+  <relatedItem type="host">
+    <titleInfo>
+      <title>Journal of research in personality</title>
+    </titleInfo>
+    <identifier type="issn">0092-6566</identifier>
+    <part>
+      <detail type="volume">
+        <number>66</number>
+        <caption>vol.</caption>
+      </detail>
+      <extent unit="page">
+        <start>46</start>
+        <end>53</end>
+      </extent>
+    </part>
+  </relatedItem>
+  <note displayLabel="Keywords">Frailty, Aging, Personality</note>
+  <note displayLabel="Grant Number">R01 AG041868, U01 AG009740, U01 AG032947, P01 AG021079, R01 AG033285, R03 AG051960, R01 AG009775</note>
+  <note displayLabel="Publication Note">This NIH-funded author manuscript originally appeared in PubMed Central at https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5482292.</note>
+  <extension>
+    <flvc:flvc>
+      <flvc:owningInstitution>FSU</flvc:owningInstitution>
+      <flvc:submittingInstitution>FSU</flvc:submittingInstitution>
+    </flvc:flvc>
+  </extension>
+  <typeOfResource>text</typeOfResource>
+  <genre authority="coar" authorityURI="http://purl.org/coar/resource_type" valueURI="http://purl.org/coar/resource_type/c_6501">journal article</genre>
+  <genre authority="rdacontent">text</genre>
+  <language>
+    <languageTerm type="text">English</languageTerm>
+    <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+  </language>
+  <physicalDescription>
+    <form authority="rdamedia" type="RDA media terms">computer</form>
+    <form authority="rdacarrier" type="RDA carrier terms">online resource</form>
+    <extent>1 online resource</extent>
+    <digitalOrigin>born digital</digitalOrigin>
+    <internetMediaType>application/pdf</internetMediaType>
+  </physicalDescription>
+  <recordInfo>
+    <recordCreationDate encoding="w3cdtf">2018-12-12</recordCreationDate>
+    <descriptionStandard>rda</descriptionStandard>
+  </recordInfo>
+  <location displayLabel="purl">
+    <url>http://purl.flvc.org/fsu/fd/FSU_pmch_28649150</url>
+  </location>
+</mods:mods>

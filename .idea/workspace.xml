@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="Add LICENSE">
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="Switch to pymods parser">
+      <change afterPath="$PROJECT_DIR$/tests/test_data/test_sample_6_MODS.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/records.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/records.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_data/test_sample_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/test_sample_1_MODS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_data/test_sample_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/test_sample_2_MODS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_data/test_sample_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/test_sample_3_MODS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_data/test_sample_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/test_sample_4_MODS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_data/test_sample_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/test_sample_5_MODS.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,9 +54,12 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.main --burndown.executor": "Run",
     "Python.main --help.executor": "Run",
+    "Python.main --run full.executor": "Run",
+    "Python.main --run sample.executor": "Run",
     "Python.main --run.executor": "Run",
     "Python.main --status.executor": "Run",
     "Python.main dev-data.executor": "Run",
+    "Python.main test-data.executor": "Run",
     "Python.main.executor": "Run",
     "Python.scratch.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -58,7 +69,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mmiguez/bin/figshare_db_map/tests/test_data",
+    "last_opened_file_path": "/home/mmiguez/bin/figshare_db_map/main.py",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
@@ -129,7 +140,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main --run" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="main --run full" type="PythonConfigurationType" factoryName="Python">
+      <module name="figshare_db_map" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.10 (figshare_db_map)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="-v --run $USER_HOME$/Downloads/root/fsu_research_repository" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main --run sample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="figshare_db_map" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,7 +214,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main dev-data" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="main test-data" type="PythonConfigurationType" factoryName="Python">
       <module name="figshare_db_map" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -229,16 +265,17 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main --status" />
-      <item itemvalue="Python.main --help" />
-      <item itemvalue="Python.main dev-data" />
       <item itemvalue="Python.main --burndown" />
+      <item itemvalue="Python.main --help" />
+      <item itemvalue="Python.main --status" />
+      <item itemvalue="Python.main test-data" />
       <item itemvalue="Python.scratch" />
-      <item itemvalue="Python.main --run" />
+      <item itemvalue="Python.main --run full" />
+      <item itemvalue="Python.main --run sample" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main --run" />
+        <item itemvalue="Python.main --run sample" />
       </list>
     </recent_temporary>
   </component>
@@ -265,7 +302,17 @@
       <workItem from="1773924654020" duration="19022000" />
       <workItem from="1774011758013" duration="4539000" />
       <workItem from="1774268460431" duration="11104000" />
-      <workItem from="1774354947103" duration="4338000" />
+      <workItem from="1774354947103" duration="4440000" />
+      <workItem from="1774441425984" duration="4687000" />
+      <workItem from="1774527618412" duration="10057000" />
+      <workItem from="1774872606311" duration="1801000" />
+      <workItem from="1774890257750" duration="1543000" />
+      <workItem from="1775740427618" duration="40000" />
+      <workItem from="1778591161823" duration="1207000" />
+      <workItem from="1778595874765" duration="2971000" />
+      <workItem from="1779809610404" duration="5116000" />
+      <workItem from="1780315758513" duration="778000" />
+      <workItem from="1780317458507" duration="14015000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -323,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774380596513</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Switch to pymods parser">
+      <option name="closed" value="true" />
+      <created>1774391840669</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774391840669</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -337,15 +392,18 @@
     <MESSAGE value="Updating progress" />
     <MESSAGE value="Add readme.md" />
     <MESSAGE value="Add LICENSE" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add LICENSE" />
+    <MESSAGE value="Switch to pymods parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="Switch to pymods parser" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run.coverage" NAME="main --run Coverage Results" MODIFIED="1774299244046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___help.coverage" NAME="main --help Coverage Results" MODIFIED="1774380240885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$FileDir$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___status.coverage" NAME="main --status Coverage Results" MODIFIED="1773861985330" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1774382335282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main dev-data Coverage Results" MODIFIED="1774381751884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___status.coverage" NAME="main --status Coverage Results" MODIFIED="1780338367599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1780338039691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_sample.coverage" NAME="main --run sample Coverage Results" MODIFIED="1780348259308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1780348264353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1780332531083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main.coverage" NAME="main --run Coverage Results" MODIFIED="1773776670977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1774295089432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1780332428991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
