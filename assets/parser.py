@@ -1,7 +1,7 @@
 import logging
 import pymods
 
-from assets.records import ObjectRecord, AuthorRecord
+#from assets.records import ObjectRecord, AuthorRecord
 
 # register namespaces
 NS = {"mods": "http://www.loc.gov/mods/v3",}

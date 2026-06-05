@@ -25,7 +25,8 @@ def connect_db(DB_PATH):
                                  firstname TEXT NOT NULL,
                                  surname TEXT NOT NULL,
                                  email TEXT,
-                                 orcid TEXT
+                                 orcid TEXT,
+                                 identity TEXT UNIQUE
                              );
 
                              CREATE TABLE IF NOT EXISTS objects
@@ -37,18 +38,16 @@ def connect_db(DB_PATH):
                                  description TEXT,
                                  license TEXT
                              );
+                     
+                            CREATE TABLE IF NOT EXISTS object_authors
+                            (
+                                object_id TEXT NOT NULL,
+                                author_id INTEGER NOT NULL,
+                                PRIMARY KEY (object_id, author_id),
+                                FOREIGN KEY (object_id) REFERENCES objects(pid) ON DELETE CASCADE,
+                                FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
+                            );
 
-                             CREATE TABLE IF NOT EXISTS object_authors
-                             (
-                                 object_id INTEGER NOT NULL,
-                                 author_id INTEGER NOT NULL,
-                                 PRIMARY KEY
-                                     ( object_id, author_id ),
-                                 FOREIGN KEY
-                                     ( object_id ) REFERENCES object ( id ) ON DELETE CASCADE,
-                                 FOREIGN KEY
-                                     ( author_id ) REFERENCES author ( id ) ON DELETE CASCADE
-                             );
                              """)
 
     return conn
@@ -97,7 +96,52 @@ def write_db_record(db_conn, pid, record):
                         'eggs', # keywords
                         'description', # description
                         # record.abstract.text, # description
-                        'bork')) # license
+                        'bork',)) # license
     except sqlite3.IntegrityError:
         logger.error(f'Duplicate identifier... {pid}')
     db_conn.commit()
+
+
+
+def write_author_record(db_conn, author):
+    cursor = db_conn.cursor()
+
+    identity = author["identity"]
+
+    # Try insert
+    cursor.execute(
+        """
+        INSERT OR IGNORE INTO authors
+        (firstname, surname, email, orcid, identity)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (
+            author["firstname"],
+            author["surname"],
+            author["email"],
+            author["orcid"],
+            identity
+        )
+    )
+
+    # Always fetch ID
+    cursor.execute(
+        "SELECT id FROM authors WHERE identity = ?",
+        (identity,)
+    )
+    return cursor.fetchone()[0]
+
+
+
+def link_author_to_object(db_conn, pid, author_id):
+    cursor = db_conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO object_authors (object_id, author_id)
+        VALUES (?, ?)
+        """,
+        (pid, author_id)
+    )
+
+
