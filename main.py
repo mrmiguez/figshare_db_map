@@ -1,6 +1,5 @@
 import os
 import sys
-import glob
 import assets
 import logging
 from pathlib import Path
@@ -35,7 +34,7 @@ if __name__ == '__main__':
                 for name in parsed_record.names:
 
                     if name.role.code not in ('cre', 'aut'):
-                        logger.warning(f"Skipping non-author role... {name.text}")
+                        logger.info(f"Skipping non-author role... {name.text}")
                         continue
 
                     author = assets.AuthorRecord(name)
@@ -52,7 +51,6 @@ if __name__ == '__main__':
                     link_author_to_object(db_conn, pid, author_id)
 
                 logger.info(f'Writing record to DB... {pid}')
-                #print("...write to DB...") # test
                 assets.write_db_record(db_conn, pid, parsed_record)
 
     # CLI status

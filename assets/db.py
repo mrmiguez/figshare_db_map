@@ -30,14 +30,34 @@ def connect_db(DB_PATH):
                              );
 
                              CREATE TABLE IF NOT EXISTS objects
+
                              (
-                                 pid TEXT PRIMARY KEY,
+                                 pid TEXT PRIMARY KEY,                            
                                  title TEXT NOT NULL,
-                                 item_type TEXT NOT NULL,
-                                 keywords TEXT,
-                                 description TEXT,
-                                 license TEXT
+                                 category TEXT NOT NULL,
+                                 item_type TEXT NOT NULL,                            
+                                 keywords TEXT,                          
+                                 description TEXT,                                 
+                                 publication_date TEXT, 
+                                 license TEXT,
+                                 embargo_date TEXT,
+                                 embargo_type TEXT,
+                                 embargo_reason TEXT,
+                                 identifier TEXT,  -- doi or handle
+                                 language TEXT,
+                                 publisher TEXT,
+                                 journal TEXT,
+                                 volume TEXT,
+                                 issue TEXT,
+                                 physical_location TEXT,
+                                 purl TEXT,
+                                 notes TEXT,
+                                 other_identifiers TEXT,
+                                 contributors TEXT,
+                                 subjects TEXT
+
                              );
+
                      
                             CREATE TABLE IF NOT EXISTS object_authors
                             (
@@ -79,28 +99,69 @@ def get_db_status(db_conn):
     return status
 
 
-def write_db_record(db_conn, pid, record):
-    """
-    Write record to database
-    :param db_conn:
-    :param pid:
-    :param record:
-    :return:
-    """
-    cursor = db_conn.cursor()
-    try:
-        cursor.execute('INSERT INTO objects VALUES (?, ?, ?, ?, ?, ?)',
-                       (pid, # pid
-                        record.titles[0], # title
-                        'spam', # item_type
-                        'eggs', # keywords
-                        'description', # description
-                        # record.abstract.text, # description
-                        'bork',)) # license
-    except sqlite3.IntegrityError:
-        logger.error(f'Duplicate identifier... {pid}')
-    db_conn.commit()
 
+def write_db_record(db_conn, pid, record):
+
+    from assets.records import ObjectRecord
+
+    obj = ObjectRecord(pid, record)
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(
+            '''
+            INSERT INTO objects (
+                pid,
+                title,
+                item_type,
+                keywords,
+                description,
+                license,
+                publication_date,
+                language,
+                publisher,
+                journal,
+                volume,
+                issue,
+                physical_location,
+                purl,
+                notes,
+                subjects,
+                other_identifiers,
+                contributors
+            )
+            VALUES (
+                ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?
+            )
+            ''',
+            (
+                pid,
+                obj.title or "[no title]",
+                obj.item_type,
+                obj.keywords,
+                obj.description,
+                obj.license,
+                obj.publication_date,
+                obj.language,
+                obj.publisher,
+                obj.journal_title,
+                obj.volume,
+                obj.issue,
+                obj.physical_location,
+                obj.purl,
+                obj.notes,
+                obj.subjects,
+                obj.other_identifiers,
+                obj.contributors,
+            )
+        )
+
+    except sqlite3.IntegrityError:
+        logger.error(f"Duplicate identifier: {pid}")
+
+    db_conn.commit()
 
 
 def write_author_record(db_conn, author):
@@ -138,7 +199,7 @@ def link_author_to_object(db_conn, pid, author_id):
 
     cursor.execute(
         """
-        INSERT INTO object_authors (object_id, author_id)
+        INSERT OR IGNORE INTO object_authors (object_id, author_id)
         VALUES (?, ?)
         """,
         (pid, author_id)

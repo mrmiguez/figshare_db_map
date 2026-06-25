@@ -1,7 +1,6 @@
 import logging
 import pymods
 
-#from assets.records import ObjectRecord, AuthorRecord
 
 # register namespaces
 NS = {"mods": "http://www.loc.gov/mods/v3",}
@@ -13,4 +12,3 @@ def parse_mods_stream(path):
     for record in records:
 
         yield record
-
