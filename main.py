@@ -11,6 +11,15 @@ DB_PATH = os.path.join(PATH, 'figshare_record_tables.sqlite3')
 logger = logging.getLogger('figshare_db_map')
 logging.basicConfig(level=logging.INFO)
 
+# TSV logging
+from assets.tsv_logger import TSVHandler
+
+tsv_handler = TSVHandler("figshare_db_map.tsv")
+tsv_handler.setLevel(logging.DEBUG)
+
+logging.getLogger().addHandler(tsv_handler)
+
+
 if __name__ == '__main__':
     # Connect DB
     db_conn = assets.connect_db(DB_PATH)
@@ -48,10 +57,17 @@ if __name__ == '__main__':
                     }
 
                     author_id = write_author_record(db_conn, author_data)
-                    link_author_to_object(db_conn, pid, author_id)
+                    if author_id:
+                        link_author_to_object(db_conn, pid, author_id)
 
-                logger.info(f'Writing record to DB... {pid}')
-                assets.write_db_record(db_conn, pid, parsed_record)
+                logger.info("Writing record",
+                    extra={
+                        "pid": pid,
+                        "collection": str(f.parent)
+                    }
+                )
+
+                assets.write_db_record(db_conn, pid, parsed_record, f.parent)
 
     # CLI status
     if args.status:

@@ -22,8 +22,8 @@ def connect_db(DB_PATH):
                              CREATE TABLE IF NOT EXISTS authors
                              (
                                  id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 firstname TEXT NOT NULL,
-                                 surname TEXT NOT NULL,
+                                 firstname TEXT,
+                                 surname TEXT,
                                  email TEXT,
                                  orcid TEXT,
                                  identity TEXT UNIQUE
@@ -34,7 +34,7 @@ def connect_db(DB_PATH):
                              (
                                  pid TEXT PRIMARY KEY,                            
                                  title TEXT NOT NULL,
-                                 category TEXT NOT NULL,
+                                 category TEXT,
                                  item_type TEXT NOT NULL,                            
                                  keywords TEXT,                          
                                  description TEXT,                                 
@@ -54,7 +54,8 @@ def connect_db(DB_PATH):
                                  notes TEXT,
                                  other_identifiers TEXT,
                                  contributors TEXT,
-                                 subjects TEXT
+                                 subjects TEXT,
+                                 source_collection TEXT
 
                              );
 
@@ -100,11 +101,11 @@ def get_db_status(db_conn):
 
 
 
-def write_db_record(db_conn, pid, record):
+def write_db_record(db_conn, pid, record, coll_path):
 
     from assets.records import ObjectRecord
 
-    obj = ObjectRecord(pid, record)
+    obj = ObjectRecord(pid, record, coll_path)
     cursor = db_conn.cursor()
 
     try:
@@ -128,12 +129,14 @@ def write_db_record(db_conn, pid, record):
                 notes,
                 subjects,
                 other_identifiers,
-                contributors
+                contributors,
+                source_collection
             )
             VALUES (
                 ?, ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?, ?,
-                ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?,
+                ?
             )
             ''',
             (
@@ -155,11 +158,12 @@ def write_db_record(db_conn, pid, record):
                 obj.subjects,
                 obj.other_identifiers,
                 obj.contributors,
+                str(obj.collection_path)
             )
         )
 
-    except sqlite3.IntegrityError:
-        logger.error(f"Duplicate identifier: {pid}")
+    except Exception as e:
+        logger.exception(f"Failed to insert... {pid}: {e}")
 
     db_conn.commit()
 
@@ -190,8 +194,16 @@ def write_author_record(db_conn, author):
         "SELECT id FROM authors WHERE identity = ?",
         (identity,)
     )
-    return cursor.fetchone()[0]
 
+    row = cursor.fetchone()
+
+    if row is None:
+        logger.error(
+            f"Failed to insert author: {author}"
+        )
+        return None
+
+    return row[0]
 
 
 def link_author_to_object(db_conn, pid, author_id):

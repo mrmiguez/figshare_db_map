@@ -3,7 +3,7 @@ import logging
 import unicodedata
 
 from lxml.etree import ElementBase
-from .data_maps import STRIP_VALUES, LICENSE_MAP, TYPE_MAP
+from .data_maps import *
 
 mods = 'http://www.loc.gov/mods/v3'
 NS = {"mods": "http://www.loc.gov/mods/v3",}
@@ -38,9 +38,10 @@ class Record(ElementBase):
 
 class ObjectRecord:
 
-    def __init__(self, pid, record):
+    def __init__(self, pid, record, collection_path=None):
         self.record = record
         self.pid = pid
+        self.collection_path = collection_path
 
     # ------------------
     # Helper methods
@@ -141,12 +142,26 @@ class ObjectRecord:
     # Metadata properties
     # -----------------------
 
+    # ---- category Figshare Field of Research (FoR)
+    @property
+    def category(self):
+
+        if not self.collection_path:
+            return None
+
+        for collection, categories in CATEGORY_MAP.items():
+
+            if collection in self.collection_path.lower():
+                return "|".join(categories)
+
+        return None
+
     # ---- contributors
     @property
     def contributors(self):
         values = []
 
-        for name in getattr(self.record, "name", []):
+        for name in getattr(self.record, "names", []):
 
             role = getattr(name, "role", None)
 

@@ -107,3 +107,20 @@ TYPE_MAP = {
 
     "three-dimensional form": "Physical object",
 }
+
+# Figshare Field of Research (FoR) category map
+CATEGORY_MAP = {
+    "fsu_department_of_anthropology": [
+        "4301",  # Archaeology
+        "4401",  # Anthropology
+    ],
+
+    "fsu_anthropology_faculty_scholarship": [
+        "4401",  # Anthropology
+    ],
+
+    "fsu_doctor_of_nurse_anesthesia_practice": [
+        "4205",  # Nursing
+        "3202",  # Clinical sciences
+    ],
+}
