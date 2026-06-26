@@ -111,7 +111,7 @@ def write_db_record(db_conn, pid, record, coll_path):
     try:
         cursor.execute(
             '''
-            INSERT INTO objects (
+            INSERT OR IGNORE INTO objects (
                 pid,
                 title,
                 item_type,
