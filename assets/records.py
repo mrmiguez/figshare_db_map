@@ -219,6 +219,8 @@ class ObjectRecord:
     @property
     def item_type(self):
 
+        candidates = set()
+
         for genre in getattr(self.record, "genre", []):
 
             key = self._normalize_genre(genre.text)
@@ -226,29 +228,41 @@ class ObjectRecord:
             if not key:
                 continue
 
+            # direct mapping
             if key in TYPE_MAP:
-                return TYPE_MAP[key]
+                candidates.add(TYPE_MAP[key])
+                continue
+
+            # fallback pattern matching
 
             if "thesis" in key or "dissertation" in key:
-                return "Thesis"
+                candidates.add("Thesis")
 
-            if "report" in key:
-                return "Report"
+            elif "report" in key:
+                candidates.add("Report")
 
-            if "dataset" in key:
-                return "Dataset"
+            elif "dataset" in key:
+                candidates.add("Dataset")
 
-            if "poster" in key:
-                return "Poster"
+            elif "poster" in key:
+                candidates.add("Poster")
 
-            if "conference" in key:
-                return "Conference contribution"
+            elif "conference" in key:
+                candidates.add("Conference contribution")
 
-            if any(x in key for x in ("video", "sound", "audio", "film")):
-                return "Media"
+            elif any(x in key for x in ("video", "sound", "audio", "film")):
+                candidates.add("Media")
 
-            if any(x in key for x in ("map", "model", "design")):
-                return "Model"
+            elif any(x in key for x in ("map", "model", "design")):
+                candidates.add("Model")
+
+        # choose highest-priority match
+
+        if candidates:
+            return max(
+                candidates,
+                key=lambda x: TYPE_PRIORITY.get(x, 0)
+            )
 
         logger.debug(
             "Unmapped genres: %s",

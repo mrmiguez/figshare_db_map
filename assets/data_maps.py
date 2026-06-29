@@ -108,6 +108,19 @@ TYPE_MAP = {
     "three-dimensional form": "Physical object",
 }
 
+TYPE_PRIORITY = {
+    "Thesis": 100,
+    "Dataset": 90,
+    "Standard": 80,
+    "Report": 70,
+    "Physical object": 60,
+    "Model": 50,
+    "Figure": 40,
+    "Media": 30,
+    "Educational resource": 20,
+    "Journal contribution": 10,
+}
+
 # Figshare Field of Research (FoR) category map
 CATEGORY_MAP = {
     "fsu_department_of_anthropology": [
