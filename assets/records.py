@@ -144,17 +144,35 @@ class ObjectRecord:
 
     # ---- category Figshare Field of Research (FoR)
     @property
-    def category(self):
+    @property
+    def categories(self):
 
-        if not self.collection_path:
-            return None
+        categories = set()
 
-        for collection, categories in CATEGORY_MAP.items():
+        path = str(self.collection_path).lower()
 
-            if collection in self.collection_path.lower():
-                return "|".join(categories)
+        # collection-driven assignment
+        for key, vals in CATEGORY_MAP.items():
 
-        return None
+            if key in path:
+                categories.update(vals)
+
+        # subject enrichment
+        subjects = (self.subjects or "").lower()
+
+        if "archaeology" in subjects:
+            categories.add("Archaeology")
+
+        if "psychology" in subjects:
+            categories.add("Psychology")
+
+        if "physics" in subjects:
+            categories.add("Physics")
+
+        if "machine learning" in subjects:
+            categories.add("Artificial Intelligence")
+
+        return "|".join(sorted(categories)) if categories else None
 
     # ---- contributors
     @property
@@ -488,7 +506,7 @@ class ObjectRecord:
     def subjects(self):
         values = []
 
-        for subject in getattr(self.record, "subject", []):
+        for subject in getattr(self.record, "subjects", []):
 
             if subject.text:
                 values.append(subject.text)

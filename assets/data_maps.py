@@ -123,17 +123,315 @@ TYPE_PRIORITY = {
 
 # Figshare Field of Research (FoR) category map
 CATEGORY_MAP = {
+    "fsu_etds": ["Multidisciplinary"],
+    "fsu_retroetds": ["Multidisciplinary"],
+
+    "fsu_honors_theses": ["Multidisciplinary"],
+
     "fsu_department_of_anthropology": [
-        "4301",  # Archaeology
-        "4401",  # Anthropology
+        "Archaeology",
+        "Anthropology",
     ],
 
-    "fsu_anthropology_faculty_scholarship": [
-        "4401",  # Anthropology
+    "fsu_department_of_classics": [
+        "Classical Studies",
     ],
 
-    "fsu_doctor_of_nurse_anesthesia_practice": [
-        "4205",  # Nursing
-        "3202",  # Clinical sciences
+    "fsu_department_of_physics": [
+        "Physics",
     ],
+
+    "fsu_department_of_psychology": [
+        "Psychology",
+    ],
+
+    "fsu_department_of_statistics": [
+        "Statistics",
+    ],
+
+    "fsu_school_of_information": [
+        "Information and Computing Sciences",
+    ],
+}
+
+COLLECTION_FOR_MAP = {
+
+    # ------------------------------------------------------------------
+    # ETDs
+    # ------------------------------------------------------------------
+
+    "fsu_etds": {
+        "Multidisciplinary"
+    },
+
+    "fsu_retroetds": {
+        "Multidisciplinary"
+    },
+
+    "fsu_honors_theses": {
+        "Multidisciplinary"
+    },
+
+    "fsu_dnp_project_graduates": {
+        "Nursing"
+    },
+
+    "fsu_doctor_of_nurse_anesthesia_practice": {
+        "Nursing"
+    },
+
+    # ------------------------------------------------------------------
+    # Anthropology / Archaeology
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_anthropology": {
+        "Anthropology",
+        "Archaeology"
+    },
+
+    "fsu_castrocollectionanthro": {
+        "Anthropology",
+        "Archaeology"
+    },
+
+    "fsu_castrophotographs": {
+        "Archaeology"
+    },
+
+    "fsu_castroposthole": {
+        "Archaeology"
+    },
+
+    "fsu_castrocontrolledsurfaceforms": {
+        "Archaeology"
+    },
+
+    "fsu_castroartifactanalysiscoll": {
+        "Archaeology"
+    },
+
+    "fsu_castrobeadanalysisforms": {
+        "Archaeology"
+    },
+
+    "fsu_castrofieldnotes": {
+        "Archaeology"
+    },
+
+    "fsu_castromaps": {
+        "Archaeology"
+    },
+
+    # ------------------------------------------------------------------
+    # Classics / Cetamura
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_classics": {
+        "Classical Studies"
+    },
+
+    "fsu_cetamura": {
+        "Classical Studies",
+        "Archaeology"
+    },
+
+    "fsu_cetamuraphotos": {
+        "Archaeology"
+    },
+
+    "fsu_cetamuraExcavations_trenchPhotos": {
+        "Archaeology"
+    },
+
+    "fsu_cetamuraExcavations_maps": {
+        "Archaeology"
+    },
+
+    # ------------------------------------------------------------------
+    # Physical Sciences
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_physics": {
+        "Physics"
+    },
+
+    "fsu_department_of_earth_ocean_and_atmospheric_science": {
+        "Atmospheric Sciences",
+        "Oceanography"
+    },
+
+    "fsu_florida_climate_institute": {
+        "Climate Change Science"
+    },
+
+    "fsu_center_for_ocean_atmospheric_prediction_studies": {
+        "Oceanography",
+        "Atmospheric Sciences"
+    },
+
+    "fsu_National_High_Magnetic_Field_Laboratory": {
+        "Physics"
+    },
+
+    # ------------------------------------------------------------------
+    # Chemistry / Biology
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_chemistry_and_biochemistry": {
+        "Chemistry"
+    },
+
+    "fsu_department_of_biological_science": {
+        "Biological Sciences"
+    },
+
+    "fsu_department_of_biomedical_sciences": {
+        "Biomedical Sciences"
+    },
+
+    "fsu_institute_of_molecular_biophysics": {
+        "Molecular Biophysics"
+    },
+
+    # ------------------------------------------------------------------
+    # Mathematics / Statistics / Computing
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_mathematics": {
+        "Mathematics"
+    },
+
+    "fsu_department_of_statistics": {
+        "Statistics"
+    },
+
+    "fsu_department_of_computer_science": {
+        "Computer Science"
+    },
+
+    "fsu_department_of_scientific_computing": {
+        "Scientific Computing"
+    },
+
+    "fsu_school_of_information": {
+        "Information Systems"
+    },
+
+    # ------------------------------------------------------------------
+    # Social Sciences
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_psychology": {
+        "Psychology"
+    },
+
+    "fsu_department_of_geography": {
+        "Geography"
+    },
+
+    "fsu_department_of_sociology": {
+        "Sociology"
+    },
+
+    "fsu_department_of_political_science": {
+        "Political Science"
+    },
+
+    "fsu_askew_school_of_public_administration_and_policy": {
+        "Public Policy"
+    },
+
+    "fsu_department_of_urban_and_regional_planning": {
+        "Urban and Regional Planning"
+    },
+
+    "fsu_college_of_criminology_and_criminal_justice": {
+        "Criminology"
+    },
+
+    # ------------------------------------------------------------------
+    # Humanities
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_english": {
+        "Literary Studies"
+    },
+
+    "fsu_department_of_history": {
+        "History"
+    },
+
+    "fsu_department_of_philosophy": {
+        "Philosophy"
+    },
+
+    "fsu_department_of_modern_languages_and_linguistics": {
+        "Languages and Linguistics"
+    },
+
+    # ------------------------------------------------------------------
+    # Medicine / Health
+    # ------------------------------------------------------------------
+
+    "fsu_college_of_medicine": {
+        "Medical Sciences"
+    },
+
+    "fsu_department_of_clinical_sciences": {
+        "Clinical Sciences"
+    },
+
+    "fsu_department_of_family_medicine_and_rural_health": {
+        "Clinical Sciences"
+    },
+
+    "fsu_department_of_geriatrics": {
+        "Geriatrics"
+    },
+
+    "fsu_department_of_behavioral_sciences_and_social_medicine": {
+        "Behavioural Health"
+    },
+
+    # ------------------------------------------------------------------
+    # Engineering
+    # ------------------------------------------------------------------
+
+    "fsu_department_of_chemical_and_biomedical_engineering": {
+        "Chemical Engineering"
+    },
+
+    "fsu_department_of_civil_and_environmental_engineering": {
+        "Civil Engineering"
+    },
+
+    "fsu_department_of_electrical_and_computer_engineering": {
+        "Electrical Engineering"
+    },
+
+    "fsu_department_of_mechanical_engineering": {
+        "Mechanical Engineering"
+    },
+
+    "fsu_industrial_and_manufacturing_engineering": {
+        "Industrial Engineering"
+    },
+
+    "fsu_center_for_advanced_power_systems": {
+        "Electrical Engineering"
+    },
+
+    # ------------------------------------------------------------------
+    # Other
+    # ------------------------------------------------------------------
+
+    "fsu_florida_state_university_patents": {
+        "Technology",
+        "Engineering"
+    },
+
+    "fsu_university_libraries": {
+        "Library and Information Studies"
+    },
+
 }
