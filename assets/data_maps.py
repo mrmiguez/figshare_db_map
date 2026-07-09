@@ -112,12 +112,16 @@ TYPE_PRIORITY = {
     "Thesis": 100,
     "Dataset": 90,
     "Standard": 80,
-    "Report": 70,
-    "Physical object": 60,
-    "Model": 50,
-    "Figure": 40,
+    "Conference contribution": 70,
+    "Chapter": 65,
+    "Book": 60,
+    "Report": 55,
+    "Poster": 50,
+    "Physical object": 45,
+    "Model": 40,
+    "Figure": 35,
     "Media": 30,
-    "Educational resource": 20,
+    "Educational resource": 25,
     "Journal contribution": 10,
 }
 
@@ -434,4 +438,396 @@ COLLECTION_FOR_MAP = {
         "Library and Information Studies"
     },
 
+}
+
+SUBJECT_FOR_MAP = {
+
+    # Anthropology / Archaeology
+    "anthropology": {
+        "Anthropology",
+    },
+
+    "archaeology": {
+        "Archaeology",
+    },
+
+    # Psychology
+    "psychology": {
+        "Psychology",
+    },
+
+    "clinical psychology": {
+        "Psychology",
+    },
+
+    "developmental psychology": {
+        "Psychology",
+    },
+
+    "cognitive psychology": {
+        "Psychology",
+    },
+
+    "counseling psychology": {
+        "Psychology",
+    },
+
+    # Physical sciences
+    "physics": {
+        "Physics",
+    },
+
+    "meteorology": {
+        "Atmospheric Sciences",
+    },
+
+    "oceanography": {
+        "Oceanography",
+    },
+
+    "atmospheric sciences": {
+        "Atmospheric Sciences",
+    },
+
+    # Computing
+    "computer science": {
+        "Computer Science",
+    },
+
+    "information science": {
+        "Information Systems",
+    },
+
+    "library science": {
+        "Library and Information Studies",
+    },
+
+    # Mathematics / Statistics
+    "statistics": {
+        "Statistics",
+    },
+
+    "mathematics": {
+        "Mathematics",
+    },
+
+    # Engineering
+    "electrical engineering": {
+        "Electrical Engineering",
+    },
+
+    "computer engineering": {
+        "Electrical Engineering",
+    },
+
+    "mechanical engineering": {
+        "Mechanical Engineering",
+    },
+
+    "civil engineering": {
+        "Civil Engineering",
+    },
+
+    "chemical engineering": {
+        "Chemical Engineering",
+    },
+
+    "environmental engineering": {
+        "Civil Engineering",
+    },
+
+    "aerospace engineering": {
+        "Mechanical Engineering",
+    },
+
+    "industrial engineering": {
+        "Industrial Engineering",
+    },
+
+    # Chemistry
+    "chemistry": {
+        "Chemistry",
+    },
+
+    "organic chemistry": {
+        "Chemistry",
+    },
+
+    "materials science": {
+        "Chemistry",
+    },
+
+    # Biology / Medicine
+    "biology": {
+        "Biological Sciences",
+    },
+
+    "life sciences": {
+        "Biological Sciences",
+    },
+
+    "biochemistry": {
+        "Biomedical Sciences",
+    },
+
+    "biophysics": {
+        "Molecular Biophysics",
+    },
+
+    "molecular biology": {
+        "Biomedical Sciences",
+    },
+
+    "medical sciences": {
+        "Medical Sciences",
+    },
+
+    "nutrition": {
+        "Medical Sciences",
+    },
+
+    "dietetics": {
+        "Medical Sciences",
+    },
+
+    "exercise": {
+        "Medical Sciences",
+    },
+
+    # Education
+    "education": {
+        "Education",
+    },
+
+    "educational psychology": {
+        "Education", "Psychology"
+    },
+
+    "educational leadership": {
+        "Education",
+    },
+
+    "educational technology": {
+        "Education",
+    },
+
+    "teachers--training of": {
+        "Education",
+    },
+
+    "school management and organization": {
+        "Education",
+    },
+
+    # Social sciences
+    "sociology": {
+        "Sociology",
+    },
+
+    "public administration": {
+        "Public Policy",
+    },
+
+    "public policy": {
+        "Public Policy",
+    },
+
+    "international relations": {
+        "Political Science",
+    },
+
+    "city planning": {
+        "Urban and Regional Planning",
+    },
+
+    "social service": {
+        "Social Work",
+    },
+
+    # Humanities
+    "history": {
+        "History",
+    },
+
+    "religion": {
+        "Religious Studies",
+    },
+
+    "literature": {
+        "Literary Studies",
+    },
+
+    "english literature": {
+        "Literary Studies",
+    },
+
+    "african literature": {
+        "Literary Studies",
+    },
+
+    "english language": {
+        "Languages and Linguistics",
+    },
+
+    "languages, modern": {
+        "Languages and Linguistics",
+    },
+
+    # Arts
+    "music": {
+        "Music",
+    },
+
+    "music therapy": {
+        "Music",
+    },
+
+    "performing arts": {
+        "Performing Arts",
+    },
+
+    "dance": {
+        "Performing Arts",
+    },
+
+    "creative writing": {
+        "Creative Writing",
+    },
+
+    "theater": {
+        "Performing Arts",
+    },
+
+    # Sport
+    "sports sciences": {
+        "Sport and Exercise Sciences",
+    },
+
+    # General engineering
+    "engineering": {
+        "Engineering",
+    },
+
+    # Business
+    "economics": {
+        "Economics",
+    },
+
+    "accounting": {
+        "Accounting",
+    },
+
+    "marketing": {
+        "Marketing",
+    },
+
+    "business": {
+        "Business",
+    },
+
+    # Geography / Earth
+    "geography": {
+        "Geography",
+    },
+
+    "geology": {
+        "Geology",
+    },
+
+    "earth sciences": {
+        "Geology",
+    },
+
+    # Communications
+    "communication": {
+        "Communication and Media Studies",
+    },
+
+    "communicative disorders": {
+        "Communication Disorders",
+    },
+
+    "speech therapy": {
+        "Communication Disorders",
+    },
+
+    # Health
+    "nursing": {
+        "Nursing",
+    },
+
+    "food": {
+        "Nutrition",
+    },
+}
+
+SUBJECT_NORMALIZATION = {
+
+    # Education
+    "education, higher": "education",
+    "education, administration": "education",
+    "education, educational psychology": "education",
+    "education, adult and continuing": "education",
+    "education, guidance and counseling": "education",
+    "education, physical": "education",
+    "education, curriculum and instruction": "education",
+    "education, teacher training": "education",
+    "education, tests and measurements": "education",
+    "education, reading": "education",
+    "education, community college": "education",
+    "education, social sciences": "education",
+    "education, mathematics": "education",
+    "education, technology": "education",
+
+    # Psychology
+    "psychology, clinical": "psychology",
+    "psychology, experimental": "psychology",
+    "psychology, general": "psychology",
+    "psychology, social": "psychology",
+    "psychology, psychobiology": "psychology",
+
+    # Chemistry
+    "chemistry, organic": "chemistry",
+    "chemistry, biochemistry": "chemistry",
+    "chemistry, physical": "chemistry",
+    "chemistry, inorganic": "chemistry",
+    "chemistry, analytical": "chemistry",
+
+    # Physics
+    "physics, nuclear": "physics",
+    "physics, atmospheric science": "physics",
+    "physics, condensed matter": "physics",
+    "physics, elementary particles and high energy": "physics",
+
+    # Literature
+    "literature, modern": "literary studies",
+    "literature, general": "literary studies",
+    "literature, american": "literary studies",
+    "literature, english": "literary studies",
+    "literature, romance": "literary studies",
+
+    # Sociology
+    "sociology, general": "sociology",
+    "sociology, individual and family studies": "sociology",
+    "sociology, criminology and penology": "criminology",
+    "sociology, demography": "sociology",
+
+    # Political science
+    "political science, general": "political science",
+    "political science, public administration": "public policy",
+    "political science, international law and relations": "political science",
+
+    # Business
+    "business administration, general": "business",
+    "business administration, accounting": "accounting",
+    "business administration, management": "business",
+    "business administration, marketing": "marketing",
+
+    # Biology
+    "biology, general": "biology",
+    "biology, zoology": "biology",
+    "biology, animal physiology": "biology",
+    "biology, genetics": "biology",
+    "biology, ecology": "biology",
+    "biology, oceanography": "marine biology",
 }

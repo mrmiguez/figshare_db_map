@@ -138,41 +138,75 @@ class ObjectRecord:
 
         return val
 
+    # ------------------------------------------------------------------
+    # Category helpers
+    # ------------------------------------------------------------------
+
+    def _get_collection_categories(self):
+        categories = set()
+
+        if not self.collection_path:
+            return categories
+
+        path = str(self.collection_path).lower()
+
+        for collection, values in COLLECTION_FOR_MAP.items():
+
+            if collection.lower() in path:
+                categories.update(values)
+
+        return categories
+
+    def _get_subject_categories(self):
+
+        categories = set()
+
+        if not self.subjects:
+            return categories
+
+        subject_terms = [
+            s.strip().lower()
+            for s in self.subjects.split("|")
+        ]
+
+        for subject in subject_terms:
+
+            subject = SUBJECT_NORMALIZATION.get(
+                subject,
+                subject
+            )
+
+            if subject in SUBJECT_FOR_MAP:
+                categories.update(
+                    SUBJECT_FOR_MAP[subject]
+                )
+
+        return categories
+
     # -----------------------
     # Metadata properties
     # -----------------------
 
     # ---- category Figshare Field of Research (FoR)
-    @property
+
     @property
     def categories(self):
 
         categories = set()
 
-        path = str(self.collection_path).lower()
+        categories.update(
+            self._get_collection_categories()
+        )
 
-        # collection-driven assignment
-        for key, vals in CATEGORY_MAP.items():
+        categories.update(
+            self._get_subject_categories()
+        )
 
-            if key in path:
-                categories.update(vals)
-
-        # subject enrichment
-        subjects = (self.subjects or "").lower()
-
-        if "archaeology" in subjects:
-            categories.add("Archaeology")
-
-        if "psychology" in subjects:
-            categories.add("Psychology")
-
-        if "physics" in subjects:
-            categories.add("Physics")
-
-        if "machine learning" in subjects:
-            categories.add("Artificial Intelligence")
-
-        return "|".join(sorted(categories)) if categories else None
+        return (
+            "|".join(sorted(categories))
+            if categories
+            else None
+        )
 
     # ---- contributors
     @property

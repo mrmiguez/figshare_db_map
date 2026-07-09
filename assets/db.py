@@ -114,6 +114,7 @@ def write_db_record(db_conn, pid, record, coll_path):
             INSERT OR IGNORE INTO objects (
                 pid,
                 title,
+                category,
                 item_type,
                 keywords,
                 description,
@@ -136,12 +137,13 @@ def write_db_record(db_conn, pid, record, coll_path):
                 ?, ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?, ?,
-                ?
+                ?, ?
             )
             ''',
             (
                 pid,
                 obj.title or "[no title]",
+                obj.categories,
                 obj.item_type,
                 obj.keywords,
                 obj.description,
