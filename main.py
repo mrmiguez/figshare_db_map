@@ -19,7 +19,6 @@ tsv_handler.setLevel(logging.DEBUG)
 
 logging.getLogger().addHandler(tsv_handler)
 
-
 if __name__ == '__main__':
     # Connect DB
     db_conn = assets.connect_db(DB_PATH)
@@ -29,6 +28,11 @@ if __name__ == '__main__':
 
     # CLI run
     if args.run:
+
+        # DB commit batching
+        db_conn.execute("BEGIN")
+        BATCH_SIZE = 1000
+        count = 0
 
         # iterate over files in dir structure
         for f in Path(args.record_directory).rglob('*MODS.xml'):
@@ -61,13 +65,21 @@ if __name__ == '__main__':
                         link_author_to_object(db_conn, pid, author_id)
 
                 logger.info("Writing record",
-                    extra={
-                        "pid": pid,
-                        "collection": str(f.parent)
-                    }
-                )
+                            extra={
+                                "pid": pid,
+                                "collection": str(f.parent)
+                            }
+                            )
 
                 assets.write_db_record(db_conn, pid, parsed_record, f.parent)
+
+                # batching DB commits
+                count += 1
+
+                if count % BATCH_SIZE == 0:
+                    db_conn.commit()
+                    db_conn.execute("BEGIN")
+                    logger.info(f"{count:,} records committed")
 
     # CLI status
     if args.status:
@@ -79,7 +91,6 @@ if __name__ == '__main__':
             print(f'Removing database... {DB_PATH}')
         logger.info(f'Removing database... {DB_PATH}')
         os.remove(DB_PATH)
-
 
     # Close DB connection
     db_conn.close()

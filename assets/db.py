@@ -21,53 +21,53 @@ def connect_db(DB_PATH):
         cursor.executescript("""
                              CREATE TABLE IF NOT EXISTS authors
                              (
-                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                 id        INTEGER PRIMARY KEY AUTOINCREMENT,
                                  firstname TEXT,
-                                 surname TEXT,
-                                 email TEXT,
-                                 orcid TEXT,
-                                 identity TEXT UNIQUE
+                                 surname   TEXT,
+                                 email     TEXT,
+                                 orcid     TEXT,
+                                 identity  TEXT UNIQUE
                              );
 
                              CREATE TABLE IF NOT EXISTS objects
 
                              (
-                                 pid TEXT PRIMARY KEY,                            
-                                 title TEXT NOT NULL,
-                                 category TEXT,
-                                 item_type TEXT NOT NULL,                            
-                                 keywords TEXT,                          
-                                 description TEXT,                                 
-                                 publication_date TEXT, 
-                                 license TEXT,
-                                 embargo_date TEXT,
-                                 embargo_type TEXT,
-                                 embargo_reason TEXT,
-                                 identifier TEXT,  -- doi or handle
-                                 language TEXT,
-                                 publisher TEXT,
-                                 journal TEXT,
-                                 volume TEXT,
-                                 issue TEXT,
+                                 pid               TEXT PRIMARY KEY,
+                                 title             TEXT NOT NULL,
+                                 category          TEXT,
+                                 item_type         TEXT NOT NULL,
+                                 keywords          TEXT,
+                                 description       TEXT,
+                                 publication_date  TEXT,
+                                 license           TEXT,
+                                 embargo_date      TEXT,
+                                 embargo_type      TEXT,
+                                 embargo_reason    TEXT,
+                                 identifier        TEXT, -- doi or handle
+                                 language          TEXT,
+                                 publisher         TEXT,
+                                 journal           TEXT,
+                                 volume            TEXT,
+                                 issue             TEXT,
                                  physical_location TEXT,
-                                 purl TEXT,
-                                 notes TEXT,
+                                 purl              TEXT,
+                                 notes             TEXT,
                                  other_identifiers TEXT,
-                                 contributors TEXT,
-                                 subjects TEXT,
+                                 contributors      TEXT,
+                                 subjects          TEXT,
                                  source_collection TEXT
 
                              );
 
-                     
-                            CREATE TABLE IF NOT EXISTS object_authors
-                            (
-                                object_id TEXT NOT NULL,
-                                author_id INTEGER NOT NULL,
-                                PRIMARY KEY (object_id, author_id),
-                                FOREIGN KEY (object_id) REFERENCES objects(pid) ON DELETE CASCADE,
-                                FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
-                            );
+
+                             CREATE TABLE IF NOT EXISTS object_authors
+                             (
+                                 object_id TEXT    NOT NULL,
+                                 author_id INTEGER NOT NULL,
+                                 PRIMARY KEY (object_id, author_id),
+                                 FOREIGN KEY (object_id) REFERENCES objects (pid) ON DELETE CASCADE,
+                                 FOREIGN KEY (author_id) REFERENCES authors (id) ON DELETE CASCADE
+                             );
 
                              """)
 
@@ -100,9 +100,7 @@ def get_db_status(db_conn):
     return status
 
 
-
 def write_db_record(db_conn, pid, record, coll_path):
-
     from assets.records import ObjectRecord
 
     obj = ObjectRecord(pid, record, coll_path)
@@ -111,34 +109,30 @@ def write_db_record(db_conn, pid, record, coll_path):
     try:
         cursor.execute(
             '''
-            INSERT OR IGNORE INTO objects (
-                pid,
-                title,
-                category,
-                item_type,
-                keywords,
-                description,
-                license,
-                publication_date,
-                language,
-                publisher,
-                journal,
-                volume,
-                issue,
-                physical_location,
-                purl,
-                notes,
-                subjects,
-                other_identifiers,
-                contributors,
-                source_collection
-            )
-            VALUES (
-                ?, ?, ?, ?, ?, ?,
-                ?, ?, ?, ?, ?, ?,
-                ?, ?, ?, ?, ?, ?,
-                ?, ?
-            )
+            INSERT OR IGNORE INTO objects (pid,
+                                           title,
+                                           category,
+                                           item_type,
+                                           keywords,
+                                           description,
+                                           license,
+                                           publication_date,
+                                           language,
+                                           publisher,
+                                           journal,
+                                           volume,
+                                           issue,
+                                           physical_location,
+                                           purl,
+                                           notes,
+                                           subjects,
+                                           other_identifiers,
+                                           contributors,
+                                           source_collection)
+            VALUES (?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?,
+                    ?, ?)
             ''',
             (
                 pid,
@@ -179,7 +173,7 @@ def write_author_record(db_conn, author):
     cursor.execute(
         """
         INSERT OR IGNORE INTO authors
-        (firstname, surname, email, orcid, identity)
+            (firstname, surname, email, orcid, identity)
         VALUES (?, ?, ?, ?, ?)
         """,
         (
@@ -218,5 +212,3 @@ def link_author_to_object(db_conn, pid, author_id):
         """,
         (pid, author_id)
     )
-
-

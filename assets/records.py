@@ -6,7 +6,7 @@ from lxml.etree import ElementBase
 from .data_maps import *
 
 mods = 'http://www.loc.gov/mods/v3'
-NS = {"mods": "http://www.loc.gov/mods/v3",}
+NS = {"mods": "http://www.loc.gov/mods/v3", }
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -95,8 +95,8 @@ class ObjectRecord:
         if "non-commercial use" in text and "freely accessible" not in text:
             return "http://rightsstatements.org/vocab/NoC-NC/1.0/"
 
-        #logger.info(f'Assigning default statement... {self.pid}')
-        #return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
+        # logger.info(f'Assigning default statement... {self.pid}')
+        # return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
         return None
 
     def _normalize_genre(self, text):
@@ -280,17 +280,21 @@ class ObjectRecord:
             if not key:
                 continue
 
+            if key in IGNORED_GENRES:
+                continue
+
+            # strongest signal
+            if "thesis" in key or "dissertation" in key:
+                candidates.add("Thesis")
+                continue
+
             # direct mapping
             if key in TYPE_MAP:
                 candidates.add(TYPE_MAP[key])
                 continue
 
-            # fallback pattern matching
-
-            if "thesis" in key or "dissertation" in key:
-                candidates.add("Thesis")
-
-            elif "report" in key:
+            # heuristic mappings
+            if "report" in key:
                 candidates.add("Report")
 
             elif "dataset" in key:
@@ -302,23 +306,54 @@ class ObjectRecord:
             elif "conference" in key:
                 candidates.add("Conference contribution")
 
-            elif any(x in key for x in ("video", "sound", "audio", "film")):
+            elif any(
+                    x in key
+                    for x in (
+                            "video",
+                            "sound",
+                            "audio",
+                            "film"
+                    )
+            ):
                 candidates.add("Media")
 
-            elif any(x in key for x in ("map", "model", "design")):
+            elif any(
+                    x in key
+                    for x in (
+                            "map",
+                            "model",
+                            "design"
+                    )
+            ):
                 candidates.add("Model")
 
-        # choose highest-priority match
-
+        # choose the highest-priority mapped type
         if candidates:
             return max(
                 candidates,
-                key=lambda x: TYPE_PRIORITY.get(x, 0)
+                key=lambda x:
+                TYPE_PRIORITY.get(x, 0)
             )
+
+        path = str(self.collection_path).lower()
+
+        if any(
+                x in path
+                for x in (
+                        "fsu_etds",
+                        "fsu_retroetds",
+                        "fsu_honors_theses",
+                )
+        ):
+            return "Thesis"
 
         logger.debug(
             "Unmapped genres: %s",
-            [g.text for g in getattr(self.record, "genre", []) if g.text]
+            [
+                g.text
+                for g in getattr(self.record, "genre", [])
+                if g.text
+            ]
         )
 
         return "Journal contribution"
@@ -378,7 +413,7 @@ class ObjectRecord:
 
         if not ac_list:
             logger.info(f"No rights found on record... {self.pid}")
-            return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
+            return 'http://rightsstatements.org/vocab/CNE/1.0/'  # default rights URI
 
         for r in ac_list:
             raw_values = []
@@ -419,7 +454,7 @@ class ObjectRecord:
                 logger.info(f"Unmatched license value: {raw[:120]}")
 
         logger.info(f'Assigning default statement... {self.pid}')
-        #return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
+        # return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
         return None
 
     # ---- notes
@@ -502,8 +537,6 @@ class ObjectRecord:
             return normalize(oi.date_created[0].text)
 
         return None
-
-
 
     # ---- publisher
     @property

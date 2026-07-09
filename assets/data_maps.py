@@ -125,6 +125,11 @@ TYPE_PRIORITY = {
     "Journal contribution": 10,
 }
 
+IGNORED_GENRES = {
+    "text",
+    "unspecified",
+}
+
 # Figshare Field of Research (FoR) category map
 CATEGORY_MAP = {
     "fsu_etds": ["Multidisciplinary"],
