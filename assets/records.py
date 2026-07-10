@@ -11,6 +11,10 @@ NS = {"mods": "http://www.loc.gov/mods/v3", }
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
+ORCID_RE = re.compile(
+    r"^(\d{4}-\d{4}-\d{4}-[\dX]{4})$",
+    re.IGNORECASE
+)
 
 class Record(ElementBase):
 
@@ -541,7 +545,7 @@ class ObjectRecord:
 
         vals = []
 
-        for ident in getattr(self.record, "identifier", []):
+        for ident in getattr(self.record, "identifiers", []):
 
             if ident.type and ident.type.lower() == "iid":
                 continue
@@ -621,16 +625,13 @@ class ObjectRecord:
     # ---- purl
     @property
     def purl(self):
-        urls = []
+        purls = []
 
-        for loc in getattr(self.record, "location", []):
+        for purl in getattr(self.record, "purl", []):
+            if purl:
+                purls.append(purl)
 
-            url = getattr(loc, "url", None)
-
-            if url:
-                urls.append(url)
-
-        return self._join_pipe(urls)
+        return self._join_pipe(purls)
 
     # ---- subjects
     @property
@@ -760,30 +761,67 @@ class AuthorRecord:
 
     @property
     def orcid(self):
-        node = self._xpath_first("mods:nameIdentifier[@type='orcid']")
 
-        # Case 1: text node
-        if node is not None:
-            if node.text:
-                val = self._clean_text(node.text)
-                return self._normalize_orcid(val)
+        node = self._xpath_first(
+            "mods:nameIdentifier[@type='orcid']"
+        )
 
-            # Case 2: valueURI
-            uri = node.get("valueURI")
-            if uri:
-                return self._normalize_orcid(uri)
+        if node is None:
+            return None
+
+        # text node takes precedence
+
+        if node.text:
+            return self._normalize_orcid(
+                self._clean_text(node.text)
+            )
+
+        # fallback to valueURI
+
+        uri = node.get("valueURI")
+
+        if uri:
+            return self._normalize_orcid(uri)
 
         return None
 
     def _normalize_orcid(self, value):
+
         if not value:
             return None
 
         value = value.strip()
 
-        # strip URI prefix if present
-        value = value.replace("https://orcid.org/", "")
-        value = value.replace("http://orcid.org/", "")
+        # remove common prefixes
+
+        value = re.sub(
+            r"^ORCID:\s*",
+            "",
+            value,
+            flags=re.IGNORECASE
+        )
+
+        value = value.replace(
+            "https://orcid.org/",
+            ""
+        )
+
+        value = value.replace(
+            "http://orcid.org/",
+            ""
+        )
+
+        value = value.strip()
+
+        # validate format
+
+        if not ORCID_RE.match(value):
+            logger.debug(
+                "Rejected invalid ORCID: %s",
+                value
+            )
+
+            return None
 
         return value
 

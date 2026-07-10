@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import assets
 import logging
 from pathlib import Path
@@ -33,6 +34,7 @@ if __name__ == '__main__':
         db_conn.execute("BEGIN")
         BATCH_SIZE = 1000
         count = 0
+        start = time.perf_counter()
 
         # iterate over files in dir structure
         for f in Path(args.record_directory).rglob('*MODS.xml'):
@@ -77,9 +79,11 @@ if __name__ == '__main__':
                 count += 1
 
                 if count % BATCH_SIZE == 0:
+                    elapsed = time.perf_counter() - start
                     db_conn.commit()
                     db_conn.execute("BEGIN")
-                    logger.info(f"{count:,} records committed")
+                    logger.info("Processed %s records in %.1f sec (%.1f rec/sec)",
+                                f"{count:,}", elapsed, count / elapsed)
 
     # CLI status
     if args.status:
