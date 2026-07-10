@@ -30,7 +30,6 @@ def connect_db(DB_PATH):
                              );
 
                              CREATE TABLE IF NOT EXISTS objects
-
                              (
                                  pid               TEXT PRIMARY KEY,
                                  title             TEXT NOT NULL,

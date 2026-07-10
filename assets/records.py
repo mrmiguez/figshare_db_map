@@ -114,6 +114,48 @@ class ObjectRecord:
 
         return text
 
+    def _normalize_identifier(self, ident_type, value):
+
+        if not value:
+            return None
+
+        value = self._clean_text(value)
+
+        ident_type = (
+            ident_type.lower().strip()
+            if ident_type
+            else None
+        )
+
+        # DOI cleanup
+        if ident_type == "doi":
+            value = re.sub(
+                r"^https?://(dx\.)?doi\.org/",
+                "",
+                value,
+                flags=re.I
+            )
+
+            return f"doi:{value}"
+
+        # Handle cleanup
+
+        if ident_type in ("hdl", "handle"):
+            value = re.sub(
+                r"^https?://hdl\.handle\.net/",
+                "",
+                value,
+                flags=re.I
+            )
+
+            return f"handle:{value}"
+
+        return (
+            f"{ident_type}:{value}"
+            if ident_type
+            else value
+        )
+
     def _normalize_label(self, label):
         label = self._clean_text(label)
 
@@ -409,13 +451,17 @@ class ObjectRecord:
     # ---- license (accessCondition)
     @property
     def license(self):
-        ac_list = getattr(self.record, "rights", [])
 
-        if not ac_list:
-            logger.info(f"No rights found on record... {self.pid}")
-            return 'http://rightsstatements.org/vocab/CNE/1.0/'  # default rights URI
+        rights = getattr(self.record, "rights", [])
 
-        for r in ac_list:
+        if not rights:
+            logger.info(
+                f"No rights found on record... {self.pid}"
+            )
+            return 'http://rightsstatements.org/vocab/CNE/1.0/'
+
+        for r in rights:
+
             raw_values = []
 
             if r.uri:
@@ -425,36 +471,53 @@ class ObjectRecord:
                 raw_values.append(r.text)
 
             for raw in raw_values:
+
+                if not raw:
+                    continue
+
+                raw = raw.strip()
+
+                # -----------------------------------
+                # Direct URI normalization
+                # -----------------------------------
+
+                if raw.startswith("http"):
+                    normalized = LICENSE_MAP.get(
+                        raw,
+                        raw
+                    )
+
+                    return normalized
+
+                # -----------------------------------
+                # Text normalization
+                # -----------------------------------
+
                 cleaned = self._normalize_license(raw)
+
                 if not cleaned:
                     continue
 
-                # ---- direct URI pass-through
-                if raw.startswith("http"):
-                    return raw.strip()
-
-                # ---- normalized URI (in case clean_text changed it)
-                if cleaned.startswith("http://rightsstatements.org/"):
-                    return cleaned
-
-                # ---- CC URLs
-                if "creativecommons.org" in cleaned:
-                    return cleaned
-
-                # ---- direct lookup
+                # direct map lookup
                 if cleaned in LICENSE_MAP:
                     return LICENSE_MAP[cleaned]
 
-                # ---- fallback pattern matching (use RAW, not cleaned)
-                fallback = self._license_fallback(raw.lower())
+                # fallback pattern matching
+                fallback = self._license_fallback(
+                    raw.lower()
+                )
+
                 if fallback:
                     return fallback
 
-                # ---- debug unmatched cases
-                logger.info(f"Unmatched license value: {raw[:120]}")
+                logger.info(
+                    f"Unmatched license value: {raw[:120]}"
+                )
 
-        logger.info(f'Assigning default statement... {self.pid}')
-        # return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
+        logger.info(
+            f"Assigning default statement... {self.pid}"
+        )
+
         return None
 
     # ---- notes
@@ -475,6 +538,7 @@ class ObjectRecord:
     # ---- other identifiers (doi &/or handle)
     @property
     def other_identifiers(self):
+
         vals = []
 
         for ident in getattr(self.record, "identifier", []):
@@ -482,13 +546,13 @@ class ObjectRecord:
             if ident.type and ident.type.lower() == "iid":
                 continue
 
-            value = self._clean_text(ident.text)
+            normalized = self._normalize_identifier(
+                ident.type,
+                ident.text
+            )
 
-            if value:
-                vals.append(
-                    f"{ident.type}:{value}"
-                    if ident.type else value
-                )
+            if normalized:
+                vals.append(normalized)
 
         return self._join_pipe(vals)
 

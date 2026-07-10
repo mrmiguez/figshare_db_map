@@ -836,3 +836,28 @@ SUBJECT_NORMALIZATION = {
     "biology, ecology": "biology",
     "biology, oceanography": "marine biology",
 }
+
+LICENSE_MAP = {
+
+    # CC BY
+    "http://creativecommons.org/licenses/by/4.0/":
+        "https://creativecommons.org/licenses/by/4.0/",
+
+    # CC BY-NC
+    "http://creativecommons.org/licenses/by-nc/4.0/":
+        "https://creativecommons.org/licenses/by-nc/4.0/",
+
+    # CC BY-NC-ND
+    "http://creativecommons.org/licenses/by-nc-nd/4.0/":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    "https://creativecommons.org/licenses/by-nc-nd/4.0":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    "https://creativecommons.org/licenses/by-nc-nd//4.0/":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    # CC0
+    "https://creativecommons.org/public-domain/cc0/":
+        "https://creativecommons.org/publicdomain/zero/1.0/",
+}

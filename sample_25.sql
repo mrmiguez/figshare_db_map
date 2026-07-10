@@ -21,4 +21,4 @@ LEFT JOIN authors a
     ON oa.author_id = a.id
 GROUP BY o.pid
 ORDER BY RANDOM()
-LIMIT 50;
+LIMIT 25;
