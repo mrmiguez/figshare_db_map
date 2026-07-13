@@ -16,6 +16,22 @@ ORCID_RE = re.compile(
     re.IGNORECASE
 )
 
+def _fix_mojibake(value):
+    if not value:
+        return value
+
+    if not any(
+            marker in value
+            for marker in MOJIBAKE_MARKERS
+    ):
+        return value
+
+    try:
+        return value.encode("latin1").decode("utf-8")
+    except Exception:
+        return value
+
+
 class Record(ElementBase):
 
     def __init__(self):
@@ -59,6 +75,7 @@ class ObjectRecord:
         text = re.sub(r'&lt;.*?&gt;', '', text)
         text = text.replace('\n', ' ')
         text = re.sub(r'T\d{2}:\d{2}:\d{2}Z', '', text)
+        text = _fix_mojibake(text)
 
         return text.strip()
 
@@ -693,6 +710,10 @@ class AuthorRecord:
 
         # remove ISO datetime fragments
         text = re.sub(r'T\d{2}:\d{2}:\d{2}Z', '', text)
+        text = _fix_mojibake(text)
+        text = text.replace("\xa0", " ")
+        for bad, good in CP1252_FIXES.items():
+            text = text.replace(bad, good)
 
         return text.strip()
 

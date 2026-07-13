@@ -861,3 +861,22 @@ LICENSE_MAP = {
     "https://creativecommons.org/public-domain/cc0/":
         "https://creativecommons.org/publicdomain/zero/1.0/",
 }
+
+MOJIBAKE_MARKERS = (
+    "Ã",
+    "Â",
+    "â€",
+    "â€™",
+    "â€œ",
+    "â€",
+)
+
+CP1252_FIXES = {
+    "â€™": "’",
+    "â€˜": "‘",
+    "â€œ": '"',
+    "â€\x9d": '"',
+    "â€“": "–",
+    "â€”": "—",
+    "â€": "‑",   # often an en-dash/hyphen corruption
+}
