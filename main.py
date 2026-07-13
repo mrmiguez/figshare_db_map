@@ -15,7 +15,8 @@ logging.basicConfig(level=logging.INFO)
 # TSV logging
 from assets.tsv_logger import TSVHandler
 
-tsv_handler = TSVHandler("figshare_db_map.tsv")
+TSV_LOG_PATH = os.path.join(PATH, "figshare_db_log.tsv")
+tsv_handler = TSVHandler(TSV_LOG_PATH)
 tsv_handler.setLevel(logging.DEBUG)
 
 logging.getLogger().addHandler(tsv_handler)
@@ -91,10 +92,20 @@ if __name__ == '__main__':
 
     # CLI burndown
     if args.burndown:
-        if args.verbose:
-            print(f'Removing database... {DB_PATH}')
-        logger.info(f'Removing database... {DB_PATH}')
-        os.remove(DB_PATH)
+
+        for fpath in (
+                DB_PATH,
+                TSV_LOG_PATH,
+        ):
+
+            try:
+                os.remove(fpath)
+                logger.info(f"Removed... {fpath}")
+
+            except FileNotFoundError:
+                logger.info(
+                    f"Already absent... {fpath}"
+                )
 
     # Close DB connection
     db_conn.close()
