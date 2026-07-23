@@ -4,9 +4,7 @@
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/data_maps.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/data_maps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/records.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/records.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -342,7 +340,7 @@
       <workItem from="1783607971455" duration="19202000" />
       <workItem from="1783947110240" duration="12409000" />
       <workItem from="1784039897287" duration="5420000" />
-      <workItem from="1784742346035" duration="15504000" />
+      <workItem from="1784742346035" duration="16771000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -528,7 +526,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784036196071</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Enriched FOR category mapping">
+      <option name="closed" value="true" />
+      <created>1784831527676</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1784831527676</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,7 +576,8 @@
     <MESSAGE value="Massaging encoding errors" />
     <MESSAGE value="update_db_embargoes.py" />
     <MESSAGE value="Second pass embargo enrichment complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Second pass embargo enrichment complete" />
+    <MESSAGE value="Enriched FOR category mapping" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enriched FOR category mapping" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
@@ -578,9 +585,9 @@
     <SUITE FILE_PATH="coverage/figshare_db_map$main_test_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1782399792842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run.coverage" NAME="main --run Coverage Results" MODIFIED="1774299244046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___help.coverage" NAME="main --help Coverage Results" MODIFIED="1774380240885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$FileDir$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1784828674994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1784832170845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run_sample.coverage" NAME="main --run sample Coverage Results" MODIFIED="1782399809363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1784828672678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1784832127465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1780676275106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main.coverage" NAME="main --run Coverage Results" MODIFIED="1773776670977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$update_db_embargoes.coverage" NAME="update_db_embargoes Coverage Results" MODIFIED="1784039751793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

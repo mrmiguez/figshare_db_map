@@ -266,11 +266,7 @@ class ObjectRecord:
             self._get_subject_categories()
         )
 
-        return (
-            "|".join(sorted(categories))
-            if categories
-            else None
-        )
+        return "|".join(str(c) for c in sorted(categories))
 
     # ---- contributors
     @property

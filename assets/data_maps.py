@@ -169,945 +169,161 @@ IGNORED_GENRES = {
     "unspecified",
 }
 
-# Figshare Field of Research (FoR) category map
-CATEGORY_MAP = {
-    "fsu_etds": ["Multidisciplinary"],
-    "fsu_retroetds": ["Multidisciplinary"],
-
-    "fsu_honors_theses": ["Multidisciplinary"],
-
-    "fsu_department_of_anthropology": [
-        "Archaeology",
-        "Anthropology",
-    ],
-
-    "fsu_department_of_classics": [
-        "Classical Studies",
-    ],
-
-    "fsu_department_of_physics": [
-        "Physics",
-    ],
-
-    "fsu_department_of_psychology": [
-        "Psychology",
-    ],
-
-    "fsu_department_of_statistics": [
-        "Statistics",
-    ],
-
-    "fsu_school_of_information": [
-        "Information and Computing Sciences",
-    ],
-}
+# ----------------------------------------------------------------------
+# COLLECTION -> FoR codes
+# ----------------------------------------------------------------------
 
 COLLECTION_FOR_MAP = {
 
-    # ------------------------------------------------------------------
     # ETDs
-    # ------------------------------------------------------------------
+    "fsu_etds": {3903},
+    "fsu_retroetds": {3903},
+    "fsu_honors_theses": {3903},
 
-    "fsu_etds": {
-        "Multidisciplinary"
-    },
-
-    "fsu_retroetds": {
-        "Multidisciplinary"
-    },
-
-    "fsu_honors_theses": {
-        "Multidisciplinary"
-    },
-
-    "fsu_dnp_project_graduates": {
-        "Nursing"
-    },
-
-    "fsu_doctor_of_nurse_anesthesia_practice": {
-        "Nursing"
-    },
-
-    # ------------------------------------------------------------------
     # Anthropology / Archaeology
-    # ------------------------------------------------------------------
+    "fsu_department_of_anthropology": {4301, 4401},
+    "fsu_castrocollectionanthro": {4301, 4401},
+    "fsu_castrophotographs": {4301},
+    "fsu_castroposthole": {4301},
+    "fsu_castrocontrolledsurfaceforms": {4301},
+    "fsu_castroartifactanalysiscoll": {4301},
+    "fsu_castrobeadanalysisforms": {4301},
+    "fsu_castrofieldnotes": {4301},
+    "fsu_castromaps": {4301},
 
-    "fsu_department_of_anthropology": {
-        "Anthropology",
-        "Archaeology"
-    },
+    # Classics
+    "fsu_department_of_classics": {4303},
+    "fsu_cetamura": {4301, 4303},
 
-    "fsu_castrocollectionanthro": {
-        "Anthropology",
-        "Archaeology"
-    },
+    # Physical sciences
+    "fsu_department_of_physics": {5105},
+    "fsu_department_of_earth_ocean_and_atmospheric_science": {3701, 3708},
+    "fsu_florida_climate_institute": {3702},
+    "fsu_center_for_ocean_atmospheric_prediction_studies": {3701, 3708},
+    "fsu_National_High_Magnetic_Field_Laboratory": {5105},
 
-    "fsu_castrophotographs": {
-        "Archaeology"
-    },
+    # Biology / Biomedical
+    "fsu_department_of_biological_science": {3103},
+    "fsu_department_of_biomedical_sciences": {3101},
+    "fsu_institute_of_molecular_biophysics": {3101},
 
-    "fsu_castroposthole": {
-        "Archaeology"
-    },
+    # Computing
+    "fsu_department_of_computer_science": {4601},
+    "fsu_department_of_scientific_computing": {4601},
+    "fsu_school_of_information": {4609, 4610},
 
-    "fsu_castrocontrolledsurfaceforms": {
-        "Archaeology"
-    },
+    # Social sciences
+    "fsu_department_of_psychology": {5203},
+    "fsu_department_of_geography": {4406},
+    "fsu_department_of_sociology": {4410},
+    "fsu_department_of_political_science": {4408},
+    "fsu_askew_school_of_public_administration_and_policy": {4407},
+    "fsu_department_of_urban_and_regional_planning": {3304},
+    "fsu_college_of_criminology_and_criminal_justice": {4402},
+    "fsu_college_of_social_work": {4409},
 
-    "fsu_castroartifactanalysiscoll": {
-        "Archaeology"
-    },
-
-    "fsu_castrobeadanalysisforms": {
-        "Archaeology"
-    },
-
-    "fsu_castrofieldnotes": {
-        "Archaeology"
-    },
-
-    "fsu_castromaps": {
-        "Archaeology"
-    },
-
-    # ------------------------------------------------------------------
-    # Classics / Cetamura
-    # ------------------------------------------------------------------
-
-    "fsu_department_of_classics": {
-        "Classical Studies"
-    },
-
-    "fsu_cetamura": {
-        "Classical Studies",
-        "Archaeology"
-    },
-
-    "fsu_cetamuraphotos": {
-        "Archaeology"
-    },
-
-    "fsu_cetamuraExcavations_trenchPhotos": {
-        "Archaeology"
-    },
-
-    "fsu_cetamuraExcavations_maps": {
-        "Archaeology"
-    },
-
-    # ------------------------------------------------------------------
-    # Physical Sciences
-    # ------------------------------------------------------------------
-
-    "fsu_department_of_physics": {
-        "Physics"
-    },
-
-    "fsu_department_of_earth_ocean_and_atmospheric_science": {
-        "Atmospheric Sciences",
-        "Oceanography"
-    },
-
-    "fsu_florida_climate_institute": {
-        "Climate Change Science"
-    },
-
-    "fsu_center_for_ocean_atmospheric_prediction_studies": {
-        "Oceanography",
-        "Atmospheric Sciences"
-    },
-
-    "fsu_National_High_Magnetic_Field_Laboratory": {
-        "Physics"
-    },
-
-    # ------------------------------------------------------------------
-    # Chemistry / Biology
-    # ------------------------------------------------------------------
-
-    "fsu_department_of_chemistry_and_biochemistry": {
-        "Chemistry"
-    },
-
-    "fsu_department_of_biological_science": {
-        "Biological Sciences"
-    },
-
-    "fsu_department_of_biomedical_sciences": {
-        "Biomedical Sciences"
-    },
-
-    "fsu_institute_of_molecular_biophysics": {
-        "Molecular Biophysics"
-    },
-
-    # ------------------------------------------------------------------
-    # Mathematics / Statistics / Computing
-    # ------------------------------------------------------------------
-
-    "fsu_department_of_mathematics": {
-        "Mathematics"
-    },
-
-    "fsu_department_of_statistics": {
-        "Statistics"
-    },
-
-    "fsu_department_of_computer_science": {
-        "Computer Science"
-    },
-
-    "fsu_department_of_scientific_computing": {
-        "Scientific Computing"
-    },
-
-    "fsu_school_of_information": {
-        "Information Systems"
-    },
-
-    # ------------------------------------------------------------------
-    # Social Sciences
-    # ------------------------------------------------------------------
-
-    "fsu_department_of_psychology": {
-        "Psychology"
-    },
-
-    "fsu_department_of_geography": {
-        "Geography"
-    },
-
-    "fsu_department_of_sociology": {
-        "Sociology"
-    },
-
-    "fsu_department_of_political_science": {
-        "Political Science"
-    },
-
-    "fsu_askew_school_of_public_administration_and_policy": {
-        "Public Policy"
-    },
-
-    "fsu_department_of_urban_and_regional_planning": {
-        "Urban and Regional Planning"
-    },
-
-    "fsu_college_of_criminology_and_criminal_justice": {
-        "Criminology"
-    },
-
-    "fsu_college_of_social_work": {
-        "Social Work"
-    },
-
-    "fsu_department_of_educational_psychology_and_learning_systems": {
-        "Education"
-    },
-
-    "fsu_florida_learning_disability_research_center": {
-        "Psychology"
-    },
-
-    "fsu_school_of_teacher_education": {
-        "Education"
-    },
-
-    # ------------------------------------------------------------------
     # Humanities
-    # ------------------------------------------------------------------
+    "fsu_department_of_history": {4303},
+    "fsu_department_of_philosophy": {5003},
+    "fsu_department_of_english": {4705},
+    "fsu_department_of_modern_languages_and_linguistics": {4704},
 
-    "fsu_department_of_english": {
-        "Literary Studies"
-    },
+    # Education
+    "fsu_school_of_teacher_education": {3903},
+    "fsu_department_of_educational_psychology_and_learning_systems": {3904},
+    "fsu_learning_systems_institute": {3904},
+    "fsu_florida_center_for_reading_research": {3901},
 
-    "fsu_department_of_history": {
-        "History"
-    },
+    # Health
+    "fsu_college_of_medicine": {3202},
+    "fsu_department_of_clinical_sciences": {3202},
+    "fsu_department_of_family_medicine_and_rural_health": {3202},
+    "fsu_department_of_geriatrics": {3202},
+    "fsu_department_of_behavioral_sciences_and_social_medicine": {5203},
+    "fsu_college_of_nursing": {4205},
+    "fsu_school_of_communication_science_and_disorders": {4201},
 
-    "fsu_department_of_philosophy": {
-        "Philosophy"
-    },
-
-    "fsu_department_of_modern_languages_and_linguistics": {
-        "Languages and Linguistics"
-    },
-
-    # ------------------------------------------------------------------
-    # Medicine / Health
-    # ------------------------------------------------------------------
-
-    "fsu_college_of_medicine": {
-        "Medical Sciences"
-    },
-
-    "fsu_department_of_clinical_sciences": {
-        "Clinical Sciences"
-    },
-
-    "fsu_department_of_family_medicine_and_rural_health": {
-        "Clinical Sciences"
-    },
-
-    "fsu_department_of_geriatrics": {
-        "Geriatrics"
-    },
-
-    "fsu_department_of_behavioral_sciences_and_social_medicine": {
-        "Behavioural Health"
-    },
-
-    # ------------------------------------------------------------------
     # Engineering
-    # ------------------------------------------------------------------
+    "fsu_department_of_chemical_and_biomedical_engineering": {4004},
+    "fsu_department_of_civil_and_environmental_engineering": {4005},
+    "fsu_department_of_electrical_and_computer_engineering": {4008},
+    "fsu_department_of_mechanical_engineering": {4017},
+    "fsu_industrial_and_manufacturing_engineering": {4014},
+    "fsu_center_for_advanced_power_systems": {4008},
 
-    "fsu_department_of_chemical_and_biomedical_engineering": {
-        "Chemical Engineering"
-    },
+    # Libraries / repositories
+    "fsu_university_libraries": {4610},
 
-    "fsu_department_of_civil_and_environmental_engineering": {
-        "Civil Engineering"
-    },
+    # Business
+    "fsu_department_of_management": {3507},
+    "fsu_department_of_marketing": {3506},
 
-    "fsu_department_of_electrical_and_computer_engineering": {
-        "Electrical Engineering"
-    },
-
-    "fsu_department_of_mechanical_engineering": {
-        "Mechanical Engineering"
-    },
-
-    "fsu_industrial_and_manufacturing_engineering": {
-        "Industrial Engineering"
-    },
-
-    "fsu_center_for_advanced_power_systems": {
-        "Electrical Engineering"
-    },
-
-    # ------------------------------------------------------------------
-    # Other
-    # ------------------------------------------------------------------
-
-    "fsu_florida_state_university_patents": {
-        "Technology",
-        "Engineering"
-    },
-
-    "fsu_university_libraries": {
-        "Library and Information Studies"
-    },
-
-    "fsu_huadeepcconsortium": {
-        "Engineering"
-    },
-
-    "fsu_undergraduate_research_symposium": {
-        "Multidisciplinary"
-    },
-
-    "fsu_nutrition_integrative_physiology": {
-        "Nutrition",
-        "Medical Sciences"
-    },
-
-    "fsu_center_for_tech_in_counseling_and_career_development": {
-        "Psychology",
-        "Education"
-    },
-
-    "fsu_department_of_educational_leadership_and_policy_studies": {
-        "Education",
-        "Public Policy"
-    },
-
-    "fsu_college_of_nursing": {
-        "Nursing"
-    },
-
-    "fsu_school_of_communication_science_and_disorders": {
-        "Communication Disorders"
-    },
-
-    "fsu_human_development_and_family_science": {
-        "Social Work",
-        "Psychology"
-    },
-
-    "fsu_learning_systems_institute": {
-        "Education"
-    },
-
-    "fsu_department_of_sport_management": {
-        "Sport and Exercise Sciences"
-    },
-
-    "fsu_florida_center_for_reading_research": {
-        "Education"
-    },
-
-    "fsu_department_of_management": {
-        "Business"
-    },
-
-    "fsu_department_of_marketing": {
-        "Marketing"
-    },
-
-    "fsu_fsu_coastal_and_marine_laboratory": {
-        "Biological Sciences",
-        "Marine Sciences"
-    },
-
-    "fsu_program_in_neuroscience": {
-        "Biomedical Sciences",
-        "Psychology"
-    },
+    # Misc
+    "fsu_nutrition_integrative_physiology": {3210},
+    "fsu_program_in_neuroscience": {3209, 5203},
+    "fsu_department_of_sport_management": {4207},
+    "fsu_undergraduate_research_symposium": {3903},
 }
 
 SUBJECT_FOR_MAP = {
-
-    # Anthropology / Archaeology
-    "anthropology": {
-        "Anthropology",
-    },
-
-    "archaeology": {
-        "Archaeology",
-    },
-
-    # Psychology
-    "psychology": {
-        "Psychology",
-    },
-
-    "clinical psychology": {
-        "Psychology",
-    },
-
-    "developmental psychology": {
-        "Psychology",
-    },
-
-    "cognitive psychology": {
-        "Psychology",
-    },
-
-    "counseling psychology": {
-        "Psychology",
-    },
-
-    # Physical sciences
-    "physics": {
-        "Physics",
-    },
-
-    "meteorology": {
-        "Atmospheric Sciences",
-    },
-
-    "oceanography": {
-        "Oceanography",
-    },
-
-    "atmospheric sciences": {
-        "Atmospheric Sciences",
-    },
-
-    # Computing
-    "computer science": {
-        "Computer Science",
-    },
-
-    "information science": {
-        "Information Systems",
-    },
-
-    "library science": {
-        "Library and Information Studies",
-    },
-
-    # Mathematics / Statistics
-    "statistics": {
-        "Statistics",
-    },
-
-    "mathematics": {
-        "Mathematics",
-    },
-
-    # Engineering
-    "electrical engineering": {
-        "Electrical Engineering",
-    },
-
-    "computer engineering": {
-        "Electrical Engineering",
-    },
-
-    "mechanical engineering": {
-        "Mechanical Engineering",
-    },
-
-    "civil engineering": {
-        "Civil Engineering",
-    },
-
-    "chemical engineering": {
-        "Chemical Engineering",
-    },
-
-    "environmental engineering": {
-        "Civil Engineering",
-    },
-
-    "aerospace engineering": {
-        "Mechanical Engineering",
-    },
-
-    "industrial engineering": {
-        "Industrial Engineering",
-    },
-
-    # Chemistry
-    "chemistry": {
-        "Chemistry",
-    },
-
-    "organic chemistry": {
-        "Chemistry",
-    },
-
-    "materials science": {
-        "Chemistry",
-    },
-
-    # Biology / Medicine
-    "biology": {
-        "Biological Sciences",
-    },
-
-    "life sciences": {
-        "Biological Sciences",
-    },
-
-    "biochemistry": {
-        "Biomedical Sciences",
-    },
-
-    "biophysics": {
-        "Molecular Biophysics",
-    },
-
-    "molecular biology": {
-        "Biomedical Sciences",
-    },
-
-    "medical sciences": {
-        "Medical Sciences",
-    },
-
-    "nutrition": {
-        "Medical Sciences",
-    },
-
-    "dietetics": {
-        "Medical Sciences",
-    },
-
-    "exercise": {
-        "Medical Sciences",
-    },
-
-    # Education
-    "education": {
-        "Education",
-    },
-
-    "educational psychology": {
-        "Education", "Psychology"
-    },
-
-    "educational leadership": {
-        "Education",
-    },
-
-    "educational technology": {
-        "Education",
-    },
-
-    "teachers--training of": {
-        "Education",
-    },
-
-    "school management and organization": {
-        "Education",
-    },
-
-    "teacher education": {
-        "Education",
-    },
-
-    "curriculum and instruction": {
-        "Education",
-    },
-
-    "language and literature": {
-        "Education",
-        "Languages and Linguistics",
-    },
-
-    "higher education": {
-        "Education",
-    },
-
-    "reading": {
-        "Education",
-    },
-
-    "educational assessment": {
-        "Education",
-    },
-
-    "educational measurement": {
-        "Education",
-    },
-
-    "counselor education": {
-        "Education",
-    },
-
-    "rehabilitation counseling": {
-        "Psychology",
-        "Social Work",
-    },
-
-    "educational evaluation": {
-        "Education",
-    },
-
-    "education--research": {
-        "Education",
-    },
-
-    "instructional systems": {
-        "Education",
-    },
-
-    # Social sciences
-    "sociology": {
-        "Sociology",
-    },
-
-    "public administration": {
-        "Public Policy",
-    },
-
-    "public policy": {
-        "Public Policy",
-    },
-
-    "international relations": {
-        "Political Science",
-    },
-
-    "city planning": {
-        "Urban and Regional Planning",
-    },
-
-    "social service": {
-        "Social Work",
-    },
-
-    "social work": {
-        "Social Work",
-    },
-
-    "child welfare": {
-        "Social Work",
-    },
-
-    "human services": {
-        "Social Work",
-    },
-
-    "family studies": {
-        "Social Work",
-    },
-
-    "family science": {
-        "Social Work",
-    },
-
-    "foster care": {
-        "Social Work",
-    },
-
-    "substance abuse": {
-        "Social Work",
-    },
-
-    "mental illness": {
-        "Psychology",
-    },
-
-    # Humanities
-    "history": {
-        "History",
-    },
-
-    "religion": {
-        "Religious Studies",
-    },
-
-    "literature": {
-        "Literary Studies",
-    },
-
-    "english literature": {
-        "Literary Studies",
-    },
-
-    "african literature": {
-        "Literary Studies",
-    },
-
-    "english language": {
-        "Languages and Linguistics",
-    },
-
-    "languages, modern": {
-        "Languages and Linguistics",
-    },
-
-    # Arts
-    "music": {
-        "Music",
-    },
-
-    "music therapy": {
-        "Music",
-    },
-
-    "performing arts": {
-        "Performing Arts",
-    },
-
-    "dance": {
-        "Performing Arts",
-    },
-
-    "creative writing": {
-        "Creative Writing",
-    },
-
-    "theater": {
-        "Performing Arts",
-    },
-
-    # Sport
-    "sports sciences": {
-        "Sport and Exercise Sciences",
-    },
-
-    # General engineering
-    "engineering": {
-        "Engineering",
-    },
-
-    # Business
-    "economics": {
-        "Economics",
-    },
-
-    "accounting": {
-        "Accounting",
-    },
-
-    "marketing": {
-        "Marketing",
-    },
-
-    "business": {
-        "Business",
-    },
-
-    "management": {
-        "Business",
-    },
-
-    "finance": {
-        "Economics",
-    },
-
-    "entrepreneurship": {
-        "Business",
-    },
-
-    "risk management": {
-        "Business",
-    },
-
-    "insurance": {
-        "Business",
-    },
-
-    "real estate": {
-        "Business",
-    },
-
-    "business analytics": {
-        "Information Systems",
-    },
-
-    # Geography / Earth
-    "geography": {
-        "Geography",
-    },
-
-    "geology": {
-        "Geology",
-    },
-
-    "earth sciences": {
-        "Geology",
-    },
-
-    # Communications
-    "communication": {
-        "Communication and Media Studies",
-    },
-
-    "communicative disorders": {
-        "Communication Disorders",
-    },
-
-    "speech therapy": {
-        "Communication Disorders",
-    },
-
-    # Health
-    "nursing": {
-        "Nursing",
-    },
-
-    "food": {
-        "Nutrition",
-    },
-
-    "public health": {
-        "Medical Sciences",
-    },
-
-    "pain management": {
-        "Medical Sciences",
-    },
-
-    "epidemiology": {
-        "Medical Sciences",
-    },
-
-    "clinical research": {
-        "Medical Sciences",
-    },
-
-    "health sciences": {
-        "Medical Sciences",
-    },
-
-    "exercise science": {
-        "Sport and Exercise Sciences",
-    },
-
-    # Communication
-    "speech-language pathology": {
-        "Communication Disorders",
-    },
-
-    "communication sciences and disorders": {
-        "Communication Disorders",
-    },
-
-    "audiology": {
-        "Communication Disorders",
-    },
-
-    # Arts
-    "art": {
-        "Visual Arts",
-    },
-
-    "art education": {
-        "Visual Arts",
-        "Education",
-    },
-
-    "art therapy": {
-        "Visual Arts",
-        "Psychology",
-    },
-
-    "arts administration": {
-        "Visual Arts",
-    },
-
-    "music education": {
-        "Music",
-        "Education",
-    },
-
-    # Environmental science
-    "marine biology": {
-        "Biological Sciences",
-    },
-
-    "coastal studies": {
-        "Environmental Sciences",
-    },
-
-    "climate": {
-        "Atmospheric Sciences",
-    },
-
-    "geoscience": {
-        "Geology",
-    },
-
-    # Philosophy
-    "philosophy": {
-        "Philosophy",
-    },
-
-    "political ethics": {
-        "Philosophy",
-    },
-
-    "ethics": {
-        "Philosophy",
-    },
-
-    # Political science
-    "political science": {
-        "Political Science",
-    },
-
-    # Music education
-    "pedagogy (music)": {
-        "Music",
-        "Education",
-    },
-
-    # GIS
-    "geographic information systems": {
-        "Geography",
-        "Information Systems",
-    },
-
-    "geomatics": {
-        "Geography",
-    },
-
-
+    "anthropology": {4401},
+    "archaeology": {4301},
+    "history": {4303},
+
+    "psychology": {5203},
+    "clinical psychology": {5203},
+    "counseling psychology": {5203},
+
+    "sociology": {4410},
+    "social work": {4409},
+    "political science": {4408},
+    "public policy": {4407},
+
+    "education": {3903},
+    "higher education": {3903},
+    "curriculum and instruction": {3901},
+
+    "computer science": {4601},
+    "information science": {4609},
+    "library science": {4610},
+
+    "statistics": {4905},
+    "mathematics": {4901},
+
+    "physics": {5105},
+    "atmospheric sciences": {3701},
+    "oceanography": {3708},
+    "climate": {3702},
+
+    "biology": {3103},
+    "biochemistry": {3101},
+    "molecular biology": {3101},
+
+    "nursing": {4205},
+    "public health": {4206},
+    "speech-language pathology": {4201},
+    "audiology": {4201},
+    "communication sciences and disorders": {4201},
+
+    "communication": {4701},
+    "literature": {4705},
+    "philosophy": {5003},
+    "religion": {5004},
+
+    "music": {3603},
+    "performing arts": {3604},
+    "creative writing": {3602},
+    "art": {3606},
+
+    "marketing": {3506},
+    "accounting": {3501},
+    "business": {3507},
+    "management": {3507},
+    "economics": {3801},
+
+    "geography": {4406},
+    "geology": {3705},
+    "urban planning": {3304},
 }
 
 SUBJECT_NORMALIZATION = {
