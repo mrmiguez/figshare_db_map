@@ -434,11 +434,13 @@ class ObjectRecord:
 
         return None
 
-    # ---- keywords (note@displayLabel="keywords")
+    # ---- keywords (keywords note + subjects)
     @property
     def keywords(self):
-        kws = []
 
+        terms = []
+
+        # Existing keywords
         for note in getattr(self.record, "note", []):
 
             if self._normalize_label(note.displayLabel) != "keywords":
@@ -447,13 +449,35 @@ class ObjectRecord:
             if not note.text:
                 continue
 
-            kws.extend(
+            terms.extend(
                 kw.strip()
                 for kw in note.text.split(",")
                 if kw.strip()
             )
 
-        return self._join_pipe(kws)
+        # Add subject terms
+        for subject in self.subjects.split("|") if self.subjects else []:
+
+            subject = subject.strip()
+
+            if subject:
+                terms.append(subject)
+
+        # Case-insensitive deduplication preserving first occurrence
+        seen = set()
+        deduped = []
+
+        for term in terms:
+
+            key = term.casefold()
+
+            if key in seen:
+                continue
+
+            seen.add(key)
+            deduped.append(term)
+
+        return self._join_pipe(sorted(deduped, key=str.casefold))
 
     # ---- language
     @property
