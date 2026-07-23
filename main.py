@@ -37,6 +37,10 @@ if __name__ == '__main__':
         count = 0
         start = time.perf_counter()
 
+        # gathering author stats for log
+        fallback_primary_count = 0
+        fallback_personal_count = 0
+
         # iterate over files in dir structure
         for f in Path(args.record_directory).rglob('*MODS.xml'):
             logger.info(f'Reading... {f}')
@@ -47,12 +51,46 @@ if __name__ == '__main__':
                 if args.verbose:
                     print(f'Parsed... {pid}')
 
+                author_names = []
+
+                # Pass 1 - explicit creators/authors by role terms/codes
                 for name in parsed_record.names:
-
-                    if name.role.code not in ('cre', 'aut'):
-                        logger.info(f"Skipping non-author role... {name.text}")
+                    role = getattr(name, "role", None)
+                    if not role:
                         continue
+                    role_code = (getattr(role, "code", None) or "").lower()
+                    if role_code in ("aut", "cre"):
+                        author_names.append(name)
 
+                # Pass 2 - 1st personal name w/ @usage="primary"
+                if not author_names:
+                    primary_names = [
+                        n
+                        for n in parsed_record.names
+                        if getattr(n, "type", None) == "personal"
+                        and n.elem.get("usage") == "primary"
+                    ]
+
+                    if primary_names:
+                        author_names.append(primary_names[0])
+                        fallback_primary_count += 1
+                        logger.debug(f"{pid}... Using primary personal name as author: {primary_names[0].text}")
+
+                # Pass 3 - First personal name as author
+                if not author_names:
+                    personal_names = [
+                        n
+                        for n in parsed_record.names
+                        if getattr(n, "type", None) == "personal"
+                    ]
+
+                    if personal_names:
+                        author_names.append(personal_names[0])
+                        fallback_personal_count += 1
+                        logger.debug(f"{pid}... Using first personal name as author: {personal_names[0].text}")
+
+
+                for name in author_names:
                     author = assets.AuthorRecord(name)
 
                     author_data = {
@@ -72,7 +110,7 @@ if __name__ == '__main__':
                                 "pid": pid,
                                 "collection": str(f.parent)
                             }
-                            )
+                )
 
                 assets.write_db_record(db_conn, pid, parsed_record, f.parent)
 
@@ -85,6 +123,15 @@ if __name__ == '__main__':
                     db_conn.execute("BEGIN")
                     logger.info("Processed %s records in %.1f sec (%.1f rec/sec)",
                                 f"{count:,}", elapsed, count / elapsed)
+        logger.info(
+            f"Primary-name fallback authors: "
+            f"{fallback_primary_count:,}"
+        )
+
+        logger.info(
+            f"First-personal fallback authors: "
+            f"{fallback_personal_count:,}"
+        )
 
     # CLI status
     if args.status:

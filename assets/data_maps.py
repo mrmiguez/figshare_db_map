@@ -8,14 +8,53 @@ STRIP_VALUES = {
 }
 
 # normalized direct mappings (lowercased + cleaned)
-LICENSE_MAP = {
-    "creative commons attribution (cc by 4.0)": "CC-BY",
-    "creative commons attribution-noncommercial (cc by-nc 4.0)": "CC BY-NC",
-    "creative commons attribution-noncommercial-noderivatives (cc by-nc-nd 4.0)": "CC BY-NC-ND",
-    "creative commons attribution-sharealike (cc by-sa 4.0)": "CC BY-SA",
-    "creative commons attribution-nonderivatives (cc by-nd 4.0)": "CC BY-ND",
-    "creative commons public domain dedication (cc0)": "CC-0",
-    "creative commons attribution-public domain (cc0 1.0)": "CC-0",
+LICENSE_TEXT_MAP = {
+
+    "creative commons attribution (cc by 4.0)":
+        "https://creativecommons.org/licenses/by/4.0/",
+
+    "creative commons attribution-sharealike (cc by-sa 4.0)":
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+
+    "creative commons attribution-nonderivatives (cc by-nd 4.0)":
+        "https://creativecommons.org/licenses/by-nd/4.0/",
+
+    "creative commons attribution-noncommercial (cc by-nc 4.0)":
+        "https://creativecommons.org/licenses/by-nc/4.0/",
+
+    "creative commons attribution-noncommercial-noderivatives (cc by-nc-nd 4.0)":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    "creative commons public domain dedication (cc0)":
+        "https://creativecommons.org/publicdomain/zero/1.0/",
+
+    "creative commons attribution-public domain (cc0 1.0)":
+        "https://creativecommons.org/publicdomain/zero/1.0/",
+}
+
+LICENSE_URL_MAP = {
+
+    # CC BY
+    "http://creativecommons.org/licenses/by/4.0/":
+        "https://creativecommons.org/licenses/by/4.0/",
+
+    # CC BY-NC
+    "http://creativecommons.org/licenses/by-nc/4.0/":
+        "https://creativecommons.org/licenses/by-nc/4.0/",
+
+    # CC BY-NC-ND
+    "http://creativecommons.org/licenses/by-nc-nd/4.0/":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    "https://creativecommons.org/licenses/by-nc-nd/4.0":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    "https://creativecommons.org/licenses/by-nc-nd//4.0/":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
+    # CC0
+    "https://creativecommons.org/public-domain/cc0/":
+        "https://creativecommons.org/publicdomain/zero/1.0/",
 }
 
 # MODS genre element text to Figshare Item type
@@ -358,6 +397,22 @@ COLLECTION_FOR_MAP = {
         "Criminology"
     },
 
+    "fsu_college_of_social_work": {
+        "Social Work"
+    },
+
+    "fsu_department_of_educational_psychology_and_learning_systems": {
+        "Education"
+    },
+
+    "fsu_florida_learning_disability_research_center": {
+        "Psychology"
+    },
+
+    "fsu_school_of_teacher_education": {
+        "Education"
+    },
+
     # ------------------------------------------------------------------
     # Humanities
     # ------------------------------------------------------------------
@@ -443,6 +498,71 @@ COLLECTION_FOR_MAP = {
         "Library and Information Studies"
     },
 
+    "fsu_huadeepcconsortium": {
+        "Engineering"
+    },
+
+    "fsu_undergraduate_research_symposium": {
+        "Multidisciplinary"
+    },
+
+    "fsu_nutrition_integrative_physiology": {
+        "Nutrition",
+        "Medical Sciences"
+    },
+
+    "fsu_center_for_tech_in_counseling_and_career_development": {
+        "Psychology",
+        "Education"
+    },
+
+    "fsu_department_of_educational_leadership_and_policy_studies": {
+        "Education",
+        "Public Policy"
+    },
+
+    "fsu_college_of_nursing": {
+        "Nursing"
+    },
+
+    "fsu_school_of_communication_science_and_disorders": {
+        "Communication Disorders"
+    },
+
+    "fsu_human_development_and_family_science": {
+        "Social Work",
+        "Psychology"
+    },
+
+    "fsu_learning_systems_institute": {
+        "Education"
+    },
+
+    "fsu_department_of_sport_management": {
+        "Sport and Exercise Sciences"
+    },
+
+    "fsu_florida_center_for_reading_research": {
+        "Education"
+    },
+
+    "fsu_department_of_management": {
+        "Business"
+    },
+
+    "fsu_department_of_marketing": {
+        "Marketing"
+    },
+
+    "fsu_fsu_coastal_and_marine_laboratory": {
+        "Biological Sciences",
+        "Marine Sciences"
+    },
+
+    "fsu_program_in_neuroscience": {
+        "Biomedical Sciences",
+        "Psychology"
+    },
 }
 
 SUBJECT_FOR_MAP = {
@@ -624,6 +744,56 @@ SUBJECT_FOR_MAP = {
         "Education",
     },
 
+    "teacher education": {
+        "Education",
+    },
+
+    "curriculum and instruction": {
+        "Education",
+    },
+
+    "language and literature": {
+        "Education",
+        "Languages and Linguistics",
+    },
+
+    "higher education": {
+        "Education",
+    },
+
+    "reading": {
+        "Education",
+    },
+
+    "educational assessment": {
+        "Education",
+    },
+
+    "educational measurement": {
+        "Education",
+    },
+
+    "counselor education": {
+        "Education",
+    },
+
+    "rehabilitation counseling": {
+        "Psychology",
+        "Social Work",
+    },
+
+    "educational evaluation": {
+        "Education",
+    },
+
+    "education--research": {
+        "Education",
+    },
+
+    "instructional systems": {
+        "Education",
+    },
+
     # Social sciences
     "sociology": {
         "Sociology",
@@ -647,6 +817,38 @@ SUBJECT_FOR_MAP = {
 
     "social service": {
         "Social Work",
+    },
+
+    "social work": {
+        "Social Work",
+    },
+
+    "child welfare": {
+        "Social Work",
+    },
+
+    "human services": {
+        "Social Work",
+    },
+
+    "family studies": {
+        "Social Work",
+    },
+
+    "family science": {
+        "Social Work",
+    },
+
+    "foster care": {
+        "Social Work",
+    },
+
+    "substance abuse": {
+        "Social Work",
+    },
+
+    "mental illness": {
+        "Psychology",
     },
 
     # Humanities
@@ -730,6 +932,34 @@ SUBJECT_FOR_MAP = {
         "Business",
     },
 
+    "management": {
+        "Business",
+    },
+
+    "finance": {
+        "Economics",
+    },
+
+    "entrepreneurship": {
+        "Business",
+    },
+
+    "risk management": {
+        "Business",
+    },
+
+    "insurance": {
+        "Business",
+    },
+
+    "real estate": {
+        "Business",
+    },
+
+    "business analytics": {
+        "Information Systems",
+    },
+
     # Geography / Earth
     "geography": {
         "Geography",
@@ -764,25 +994,141 @@ SUBJECT_FOR_MAP = {
     "food": {
         "Nutrition",
     },
+
+    "public health": {
+        "Medical Sciences",
+    },
+
+    "pain management": {
+        "Medical Sciences",
+    },
+
+    "epidemiology": {
+        "Medical Sciences",
+    },
+
+    "clinical research": {
+        "Medical Sciences",
+    },
+
+    "health sciences": {
+        "Medical Sciences",
+    },
+
+    "exercise science": {
+        "Sport and Exercise Sciences",
+    },
+
+    # Communication
+    "speech-language pathology": {
+        "Communication Disorders",
+    },
+
+    "communication sciences and disorders": {
+        "Communication Disorders",
+    },
+
+    "audiology": {
+        "Communication Disorders",
+    },
+
+    # Arts
+    "art": {
+        "Visual Arts",
+    },
+
+    "art education": {
+        "Visual Arts",
+        "Education",
+    },
+
+    "art therapy": {
+        "Visual Arts",
+        "Psychology",
+    },
+
+    "arts administration": {
+        "Visual Arts",
+    },
+
+    "music education": {
+        "Music",
+        "Education",
+    },
+
+    # Environmental science
+    "marine biology": {
+        "Biological Sciences",
+    },
+
+    "coastal studies": {
+        "Environmental Sciences",
+    },
+
+    "climate": {
+        "Atmospheric Sciences",
+    },
+
+    "geoscience": {
+        "Geology",
+    },
+
+    # Philosophy
+    "philosophy": {
+        "Philosophy",
+    },
+
+    "political ethics": {
+        "Philosophy",
+    },
+
+    "ethics": {
+        "Philosophy",
+    },
+
+    # Political science
+    "political science": {
+        "Political Science",
+    },
+
+    # Music education
+    "pedagogy (music)": {
+        "Music",
+        "Education",
+    },
+
+    # GIS
+    "geographic information systems": {
+        "Geography",
+        "Information Systems",
+    },
+
+    "geomatics": {
+        "Geography",
+    },
+
+
 }
 
 SUBJECT_NORMALIZATION = {
 
     # Education
-    "education, higher": "education",
-    "education, administration": "education",
-    "education, educational psychology": "education",
+    "education, higher": "higher education",
     "education, adult and continuing": "education",
-    "education, guidance and counseling": "education",
     "education, physical": "education",
-    "education, curriculum and instruction": "education",
     "education, teacher training": "education",
     "education, tests and measurements": "education",
-    "education, reading": "education",
+    "education, reading": "reading",
     "education, community college": "education",
     "education, social sciences": "education",
     "education, mathematics": "education",
     "education, technology": "education",
+    "education, curriculum and instruction": "curriculum and instruction",
+    "education, language and literature": "language and literature",
+    "education, teacher education": "teacher education",
+    "education, educational psychology": "educational psychology",
+    "education, guidance and counseling": "counseling psychology",
+    "education, administration": "educational leadership",
 
     # Psychology
     "psychology, clinical": "psychology",
@@ -825,8 +1171,11 @@ SUBJECT_NORMALIZATION = {
     # Business
     "business administration, general": "business",
     "business administration, accounting": "accounting",
-    "business administration, management": "business",
     "business administration, marketing": "marketing",
+    "business administration, management": "management",
+    "business administration, finance": "finance",
+    "business administration, entrepreneurship": "entrepreneurship",
+    "business administration, risk management": "risk management",
 
     # Biology
     "biology, general": "biology",
@@ -835,31 +1184,37 @@ SUBJECT_NORMALIZATION = {
     "biology, genetics": "biology",
     "biology, ecology": "biology",
     "biology, oceanography": "marine biology",
-}
 
-LICENSE_MAP = {
+    # Social work
+    "social work": "social work",
+    "social welfare": "social work",
+    "child welfare": "child welfare",
+    "human services": "human services",
 
-    # CC BY
-    "http://creativecommons.org/licenses/by/4.0/":
-        "https://creativecommons.org/licenses/by/4.0/",
+    # Communication
+    "communication sciences and disorders": "communication sciences and disorders",
+    "speech-language pathology": "speech-language pathology",
+    "audiology": "audiology",
 
-    # CC BY-NC
-    "http://creativecommons.org/licenses/by-nc/4.0/":
-        "https://creativecommons.org/licenses/by-nc/4.0/",
+    # Arts
+    "arts": "art",
+    "art education": "art education",
+    "art therapy": "art therapy",
+    "arts administration": "arts administration",
 
-    # CC BY-NC-ND
-    "http://creativecommons.org/licenses/by-nc-nd/4.0/":
-        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    # Marine biology
+    "marine biology": "marine biology",
+    "biology, marine": "marine biology",
 
-    "https://creativecommons.org/licenses/by-nc-nd/4.0":
-        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    # Religion
+    "religion--history": "religion",
 
-    "https://creativecommons.org/licenses/by-nc-nd//4.0/":
-        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
-
-    # CC0
-    "https://creativecommons.org/public-domain/cc0/":
-        "https://creativecommons.org/publicdomain/zero/1.0/",
+    # Other
+    "political ethics": "philosophy",
+    "education--research": "educational evaluation",
+    "instructional systems": "educational evaluation",
+    "geomatics": "geographic information systems",
+    "pedagogy (music)": "music education",
 }
 
 MOJIBAKE_MARKERS = (
@@ -880,3 +1235,12 @@ CP1252_FIXES = {
     "â€”": "—",
     "â€": "‑",   # often an en-dash/hyphen corruption
 }
+
+DATE_FORMATS = (
+"%Y-%m-%d",
+"%Y/%m/%d",
+"%m/%d/%Y",
+"%m/%d/%y",
+"%m-%d-%Y",
+"%m-%d-%y",
+)

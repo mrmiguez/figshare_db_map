@@ -14,6 +14,8 @@ def connect_db(DB_PATH):
 
     # Connect creates the database if it doesn't exist
     conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA journal_mode = OFF")
+    conn.execute("PRAGMA synchronous = OFF")
     cursor = conn.cursor()
 
     if not (db_exists):

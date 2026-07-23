@@ -2,6 +2,7 @@ import re
 import logging
 import unicodedata
 
+from datetime import datetime
 from lxml.etree import ElementBase
 from .data_maps import *
 
@@ -503,12 +504,10 @@ class ObjectRecord:
                 # -----------------------------------
 
                 if raw.startswith("http"):
-                    normalized = LICENSE_MAP.get(
+                    return LICENSE_URL_MAP.get(
                         raw,
                         raw
                     )
-
-                    return normalized
 
                 # -----------------------------------
                 # Text normalization
@@ -519,9 +518,12 @@ class ObjectRecord:
                 if not cleaned:
                     continue
 
-                # direct map lookup
-                if cleaned in LICENSE_MAP:
-                    return LICENSE_MAP[cleaned]
+                mapped = LICENSE_TEXT_MAP.get(
+                    cleaned
+                )
+
+                if mapped:
+                    return mapped
 
                 # fallback pattern matching
                 fallback = self._license_fallback(
@@ -594,34 +596,143 @@ class ObjectRecord:
     # ---- publication date
     @property
     def publication_date(self):
-        """Normalized to YYYY-MM-DD for Figshare compatibility"""
 
         def normalize(date_str):
+
             if not date_str:
                 return None
-            date_str = self._clean_text(date_str)
 
-            if len(date_str) == 4:
+            date_str = self._clean_text(date_str).strip()
+
+            # Drop ranges
+            if " - " in date_str:
+                date_str = date_str.split(" - ")[0]
+
+            # Null-equivalent values
+            if date_str.lower() in {
+                "n/a",
+                "not published",
+            }:
+                return None
+
+            # Remove circa / trailing punctuation
+            date_str = re.sub(r"^c\.\s*", "", date_str)
+            date_str = date_str.rstrip(".")
+
+            # YYYY Copyright...
+            # YYYY © ...
+            # YYYY, Person Name
+            match = re.match(r"^((?:19|20)\d{2})", date_str)
+
+            if (
+                    match
+                    and not re.match(
+                r"^\d{4}(-\d{2})?(-\d{2})?$",
+                date_str
+            )
+            ):
+                return f"{match.group(1)}-01-01"
+
+            # YYYY
+            if re.match(r"^\d{4}$", date_str):
                 return f"{date_str}-01-01"
-            if len(date_str) == 7:
+
+            # YYYY-MM
+            if re.match(r"^\d{4}-\d{2}$", date_str):
                 return f"{date_str}-01"
+
+            # Month YYYY
+            try:
+
+                dt = datetime.strptime(
+                    date_str,
+                    "%B %Y"
+                )
+
+                return dt.strftime(
+                    "%Y-%m-01"
+                )
+
+            except ValueError:
+                pass
+
+            # Flexible formats
+            for fmt in (
+                    "%Y-%m-%d",
+                    "%Y/%m/%d",
+                    "%m/%d/%Y",
+                    "%m/%d/%y",
+                    "%m-%d-%Y",
+                    "%m-%d-%y",
+            ):
+
+                try:
+
+                    dt = datetime.strptime(
+                        date_str,
+                        fmt
+                    )
+
+                    return dt.strftime(
+                        "%Y-%m-%d"
+                    )
+
+                except ValueError:
+                    continue
+
+            # YYYY-M-D
+            match = re.match(
+                r"^(\d{4})-(\d{1,2})-(\d{1,2})$",
+                date_str
+            )
+
+            if match:
+                year, month, day = match.groups()
+
+                return (
+                    f"{year}-"
+                    f"{int(month):02d}-"
+                    f"{int(day):02d}"
+                )
+
+            # YYYY/M/D
+            match = re.match(
+                r"^(\d{4})/(\d{1,2})/(\d{1,2})$",
+                date_str
+            )
+
+            if match:
+                year, month, day = match.groups()
+
+                return (
+                    f"{year}-"
+                    f"{int(month):02d}-"
+                    f"{int(day):02d}"
+                )
+
+            logger.warning(
+                "Unparsed publication date: %s",
+                date_str
+            )
+
             return date_str
 
-        oi = getattr(self.record, "origin_info", None)
-        if not oi:
+        dates = getattr(self.record, "dates", None)
+
+        if not dates:
             return None
 
-        for d in getattr(oi, "date_issued", []):
-            if d.elem.get("keyDate") == "yes":
+        for d in dates:
+
+            if d.type.endswith("dateIssued"):
                 return normalize(d.text)
 
-        if getattr(oi, "date_issued", []):
-            return normalize(oi.date_issued[0].text)
+        for d in dates:
 
-        if getattr(oi, "date_created", []):
-            return normalize(oi.date_created[0].text)
+            if d.type.endswith("dateCreated"):
+                return normalize(d.text)
 
-        return None
+        return normalize(dates[0].text)
 
     # ---- publisher
     @property
