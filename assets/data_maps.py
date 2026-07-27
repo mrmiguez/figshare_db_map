@@ -197,7 +197,7 @@ COLLECTION_FOR_MAP = {
 
     # Physical sciences
     "fsu_department_of_physics": {5105},
-    "fsu_department_of_earth_ocean_and_atmospheric_science": {3701, 3708},
+    "fsu_department_of_earth_ocean_and_atmospheric_science": {3701, 3708, 3705},
     "fsu_florida_climate_institute": {3702},
     "fsu_center_for_ocean_atmospheric_prediction_studies": {3701, 3708},
     "fsu_National_High_Magnetic_Field_Laboratory": {5105},
