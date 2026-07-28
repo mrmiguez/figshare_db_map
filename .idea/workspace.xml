@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/dump_db_tables.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flatten_asset_tree.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ftp_upload.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/updates/item_type_updates.csv" beforeDir="false" afterPath="$PROJECT_DIR$/updates/item_type_updates.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,52 +40,58 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.dump_db_tables.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --burndown.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --help.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --run full.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --run sample.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --run.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main --status.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main dev-data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main test-data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch_1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.update_db_embargoes.executor&quot;: &quot;Run&quot;,
-    &quot;Python.update_db_item_types.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/mmiguez/bin/figshare_migration_data&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.dump_db_tables.executor": "Run",
+    "Python.main --burndown.executor": "Run",
+    "Python.main --help.executor": "Run",
+    "Python.main --run full.executor": "Run",
+    "Python.main --run sample.executor": "Run",
+    "Python.main --run.executor": "Run",
+    "Python.main --status.executor": "Run",
+    "Python.main dev-data.executor": "Run",
+    "Python.main test-data.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.scratch.executor": "Run",
+    "Python.scratch_1.executor": "Run",
+    "Python.update_db_embargoes.executor": "Run",
+    "Python.update_db_item_types.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHELLCHECK.PATH": "/home/mmiguez/.local/share/JetBrains/PyCharm2025.3/Shell Script/shellcheck",
+    "Shell Script.run_migration.executor": "Run",
+    "ai.playground.ignore.import.keys.banner.in.settings": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/mmiguez/bin/figshare_db_map",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ],
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Python&quot;
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tests/test_data" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sql" />
+      <recent name="$PROJECT_DIR$/updates" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.dump_db_tables">
+  <component name="RunManager" selected="Shell Script.run_migration">
     <configuration name="dump_db_tables" type="PythonConfigurationType" factoryName="Python">
       <module name="figshare_db_map" />
       <option name="ENV_FILES" value="" />
@@ -105,7 +109,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dump_db_tables.py" />
-      <option name="PARAMETERS" value="figshare_record_tables.sqlite3" />
+      <option name="PARAMETERS" value="$PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -130,7 +134,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="-v --burndown $USER_HOME$/Downloads/figshare_samples" />
+      <option name="PARAMETERS" value="-v --burndown --db $PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 $USER_HOME$/Downloads/figshare_samples" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -180,7 +184,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="-v --run $USER_HOME$/Downloads/root/fsu_research_repository" />
+      <option name="PARAMETERS" value="-v --run --db $PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 $USER_HOME$/Downloads/root/fsu_research_repository" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -204,7 +208,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="-v --run $USER_HOME$/Downloads/figshare_samples" />
+      <option name="PARAMETERS" value="-v --run --db $PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 $USER_HOME$/Downloads/figshare_samples" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -229,7 +233,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="-v --status $USER_HOME$/Downloads/figshare_samples" />
+      <option name="PARAMETERS" value="-v --status --db $PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 $USER_HOME$/Downloads/figshare_samples" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -254,7 +258,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="-v --run tests/test_data/" />
+      <option name="PARAMETERS" value="-v --run --db $PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 tests/test_data/" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -304,7 +308,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/update_db_embargoes.py" />
-      <option name="PARAMETERS" value="$USER_HOME$/Downloads/root/fsu_research_repository" />
+      <option name="PARAMETERS" value="$PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 $USER_HOME$/Downloads/root/fsu_research_repository" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -329,7 +333,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/update_DB_by_CSV.py" />
-      <option name="PARAMETERS" value="figshare_record_tables.sqlite3 item_type_updates.csv" />
+      <option name="PARAMETERS" value="$PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3 item_type_updates.csv" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -337,17 +341,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="run_migration" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/run_migration.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs>
+        <env name="DB" value="$PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3" />
+        <env name="ROOT" value="$USER_HOME$/Downloads/root/fsu_research_repository" />
+      </envs>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.dump_db_tables" />
       <item itemvalue="Python.main --burndown" />
       <item itemvalue="Python.main --help" />
       <item itemvalue="Python.main --run full" />
-      <item itemvalue="Python.main --run sample" />
       <item itemvalue="Python.main --status" />
       <item itemvalue="Python.main test-data" />
       <item itemvalue="Python.scratch" />
       <item itemvalue="Python.update_db_embargoes" />
       <item itemvalue="Python.update_db_item_types" />
+      <item itemvalue="Python.main --run sample" />
+      <item itemvalue="Shell Script.run_migration" />
     </list>
     <recent_temporary>
       <list>
@@ -400,7 +423,7 @@
       <workItem from="1785159519995" duration="4615000" />
       <workItem from="1785173414459" duration="14000" />
       <workItem from="1785173808561" duration="10000" />
-      <workItem from="1785173903509" duration="811000" />
+      <workItem from="1785173903509" duration="9915000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -626,7 +649,31 @@
       <option name="project" value="LOCAL" />
       <updated>1785159676879</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="More utils">
+      <option name="closed" value="true" />
+      <created>1785180375512</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1785180375512</updated>
+    </task>
+    <task id="LOCAL-00030" summary="structuring for migration run">
+      <option name="closed" value="true" />
+      <created>1785260576956</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1785260576956</updated>
+    </task>
+    <task id="LOCAL-00031" summary="documenting">
+      <option name="closed" value="true" />
+      <created>1785260586727</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1785260586727</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,9 +692,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Cleaning logging msgs" />
-    <MESSAGE value="Updating progress" />
-    <MESSAGE value="Add readme.md" />
     <MESSAGE value="Add LICENSE" />
     <MESSAGE value="Switch to pymods parser" />
     <MESSAGE value="updating" />
@@ -670,22 +714,25 @@
     <MESSAGE value="Shuffle subject terms to keywords" />
     <MESSAGE value="small DB update util" />
     <MESSAGE value="Small edits" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small edits" />
+    <MESSAGE value="More utils" />
+    <MESSAGE value="structuring for migration run" />
+    <MESSAGE value="documenting" />
+    <option name="LAST_COMMIT_MESSAGE" value="documenting" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___status.coverage" NAME="main --status Coverage Results" MODIFIED="1782852466987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___status.coverage" NAME="main --status Coverage Results" MODIFIED="1785252263186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main_test_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1782399792842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$dump_db_tables.coverage" NAME="dump_db_tables Coverage Results" MODIFIED="1785171092013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run.coverage" NAME="main --run Coverage Results" MODIFIED="1774299244046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___help.coverage" NAME="main --help Coverage Results" MODIFIED="1774380240885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$FileDir$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1785159743076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1785252058460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run_sample.coverage" NAME="main --run sample Coverage Results" MODIFIED="1782399809363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1785159697264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1785257435751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1780676275106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main.coverage" NAME="main --run Coverage Results" MODIFIED="1773776670977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$update_db_embargoes.coverage" NAME="update_db_embargoes Coverage Results" MODIFIED="1785171048964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$update_db_item_types.coverage" NAME="update_db_item_types Coverage Results" MODIFIED="1785171067046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$update_db_embargoes.coverage" NAME="update_db_embargoes Coverage Results" MODIFIED="1785252222598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$update_db_item_types.coverage" NAME="update_db_item_types Coverage Results" MODIFIED="1785252232841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1784823075787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
