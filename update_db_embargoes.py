@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 
 PATH = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(PATH, "figshare_record_tables.sqlite3")
 
 FILE_EMBARGO_TYPES = {
     "PDF datastream",
@@ -127,9 +126,12 @@ def update_embargo(conn, pid, embargo_target, embargo_value):
     )
 
 
-def update_embargoes(record_directory):
-    conn = sqlite3.connect(DB_PATH)
+def update_embargoes(db_path, record_directory):
+
+    conn = sqlite3.connect(db_path)
+
     conn.execute("BEGIN")
+
     count = 0
 
     for embargo_file in embargo_files(record_directory):
@@ -178,12 +180,18 @@ def update_embargoes(record_directory):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
 
         print(
-            f"Usage: {sys.argv[0]} <repository_root>"
+            f"Usage: {sys.argv[0]} DATABASE REPOSITORY_ROOT"
         )
 
         sys.exit(1)
 
-    update_embargoes(sys.argv[1])
+    db_path = sys.argv[1]
+    repository_root = sys.argv[2]
+
+    update_embargoes(
+        db_path,
+        repository_root
+    )

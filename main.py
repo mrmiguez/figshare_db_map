@@ -8,24 +8,40 @@ from pathlib import Path
 from assets import write_author_record, link_author_to_object
 
 PATH = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(PATH, 'figshare_record_tables.sqlite3')
+
 logger = logging.getLogger('figshare_db_map')
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
-# TSV logging
-from assets.tsv_logger import TSVHandler
-
-TSV_LOG_PATH = os.path.join(PATH, "figshare_db_log.tsv")
-tsv_handler = TSVHandler(TSV_LOG_PATH)
-tsv_handler.setLevel(logging.DEBUG)
-
-logging.getLogger().addHandler(tsv_handler)
 
 if __name__ == '__main__':
-    # Connect DB
-    db_conn = assets.connect_db(DB_PATH)
+
     # Parse args
     args = assets.argument_parser().parse_args()
+
+    DB_PATH = os.path.abspath(args.db)
+
+    db_dir = os.path.dirname(DB_PATH)
+    db_stem = Path(DB_PATH).stem
+
+    # create parent directory if needed
+    os.makedirs(db_dir, exist_ok=True)
+
+    TSV_LOG_PATH = os.path.join(
+        db_dir,
+        f"{db_stem}.tsv"
+    )
+
+    # TSV logging
+    from assets.tsv_logger import TSVHandler
+
+    tsv_handler = TSVHandler(TSV_LOG_PATH)
+    tsv_handler.setLevel(logging.DEBUG)
+
+    logging.getLogger().addHandler(tsv_handler)
+
+    # Connect DB
+    db_conn = assets.connect_db(DB_PATH)
+
     logger.debug(f'Args... {args}')
 
     # CLI run
