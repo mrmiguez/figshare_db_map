@@ -7,11 +7,9 @@ SET keywords =
         THEN 'Cetamura del Chianti Site|Italy excavations|archaeological digs'
         ELSE keywords || '|Cetamura del Chianti Site|Italy excavations|archaeological digs'
     END
-WHERE source_collection IN (
-    'fsu_cetamura',
-    'fsu_cetamuraphotos',
-    'fsu_cetamuraExcavations_trenchPhotos',
-    'fsu_cetamuraExcavations_maps'
-);
+WHERE source_collection LIKE '%fsu_cetamura%'
+   OR source_collection LIKE '%fsu_cetamuraphotos%'
+   OR source_collection LIKE '%fsu_cetamuraExcavations_trenchPhotos%'
+   OR source_collection LIKE '%fsu_cetamuraExcavations_maps%';
 
 COMMIT;
