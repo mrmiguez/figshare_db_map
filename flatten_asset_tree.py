@@ -62,8 +62,11 @@ def main():
 
         pid = m.group(1)
 
+        extension = os.path.splitext(filename)[1]
+        destination_filename = f"{pid}{extension}"
+
         destination_key = (
-            f"{pid}/{filename}"
+            f"{pid}/{destination_filename}"
         )
 
         print(

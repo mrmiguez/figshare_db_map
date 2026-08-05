@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flatten_asset_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/flatten_asset_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -425,7 +421,7 @@
       <workItem from="1785173414459" duration="14000" />
       <workItem from="1785173808561" duration="10000" />
       <workItem from="1785173903509" duration="20957000" />
-      <workItem from="1785946246922" duration="769000" />
+      <workItem from="1785946246922" duration="1780000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -707,7 +703,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785416852736</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="rewriting flatten_asset_tree.py for native ec2/s3 env">
+      <option name="closed" value="true" />
+      <created>1785947163881</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1785947163881</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +730,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="record class fleshed out" />
     <MESSAGE value="TSV logging output" />
     <MESSAGE value="merging master into main" />
     <MESSAGE value="item_types tuned a bit with priority term matching" />
@@ -751,7 +754,8 @@
     <MESSAGE value="requirements.txt" />
     <MESSAGE value="SQL error" />
     <MESSAGE value="fleshed out ftp_upload.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="fleshed out ftp_upload.py" />
+    <MESSAGE value="rewriting flatten_asset_tree.py for native ec2/s3 env" />
+    <option name="LAST_COMMIT_MESSAGE" value="rewriting flatten_asset_tree.py for native ec2/s3 env" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
