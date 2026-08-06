@@ -3,6 +3,8 @@
 import os
 import re
 import argparse
+from pathlib import PurePosixPath
+
 import boto3
 
 SRCBUCK = os.environ["SRCBUCK"]
@@ -13,15 +15,22 @@ PID_RE = re.compile(
     re.IGNORECASE
 )
 
+PARENT_PID_RE = re.compile(
+    r"^fsu_\d+$",
+    re.IGNORECASE
+)
+
 
 def parse_args():
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="Reorganize Islandora assets in S3 for Figshare ingest."
+    )
 
     parser.add_argument(
         "--execute",
         action="store_true",
-        help="Actually perform copies"
+        help="Actually perform S3 copies"
     )
 
     parser.add_argument(
@@ -42,37 +51,71 @@ def main():
     src_bucket = s3.Bucket(SRCBUCK)
     tgt_bucket = s3.Bucket(TGTBUCK)
 
-    count = 0
-
     print(f"SOURCE: s3://{SRCBUCK}")
     print(f"TARGET: s3://{TGTBUCK}")
 
     if not args.execute:
         print("\n*** DRY RUN ***\n")
 
+    count = 0
+
     for obj in src_bucket.objects.all():
 
         key = obj.key
+
         filename = os.path.basename(key)
+
+        #
+        # Only process PDF and OBJ assets
+        #
 
         m = PID_RE.search(filename)
 
         if not m:
             continue
 
-        pid = m.group(1)
+        child_pid = m.group(1)
+
+        #
+        # Use parent PID directory if this is a page child
+        #
+        # Example:
+        #
+        # .../fsu_107473/fsu_107474_OBJ.tiff
+        #
+        # becomes:
+        #
+        # fsu_107473/fsu_107474.tiff
+        #
+        # Otherwise:
+        #
+        # fsu_1064943_PDF.pdf
+        #
+        # becomes:
+        #
+        # fsu_1064943/fsu_1064943.pdf
+        #
+
+        parent_name = PurePosixPath(key).parent.name
+
+        if PARENT_PID_RE.fullmatch(parent_name):
+            destination_dir = parent_name
+        else:
+            destination_dir = child_pid
 
         extension = os.path.splitext(filename)[1]
-        destination_filename = f"{pid}{extension}"
+
+        destination_filename = (
+            f"{child_pid}{extension}"
+        )
 
         destination_key = (
-            f"{pid}/{destination_filename}"
+            f"{destination_dir}/{destination_filename}"
         )
 
         print(
-            f"s3://{SRCBUCK}/{key}"
-            f"\n    -> "
-            f"s3://{TGTBUCK}/{destination_key}\n"
+            f"s3://{SRCBUCK}/{key}\n"
+            f"    -> s3://{TGTBUCK}/{destination_key}\n"
         )
 
         if args.execute:
@@ -80,7 +123,7 @@ def main():
             tgt_bucket.copy(
                 {
                     "Bucket": SRCBUCK,
-                    "Key": key
+                    "Key": key,
                 },
                 destination_key
             )
