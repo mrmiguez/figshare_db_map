@@ -2,76 +2,59 @@
 
 set -euo pipefail
 
-: "${FIGSHARE_FTP_HOST:?}"
-: "${FIGSHARE_FTP_USER:?}"
-: "${FIGSHARE_FTP_PASS:?}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+FILES_DIR="${FILES_DIR:-/data/files}"
+FILES_ZIP="${FILES_ZIP:-$SCRIPT_DIR/files.zip}"
+FILES_SHA="${FILES_SHA:-$SCRIPT_DIR/files.zip.sha256}"
+
+: "${SRCBUCK:?}"
 
 echo
 echo "=========================================================="
-echo "FIGSHARE FTP TRANSFER"
+echo "FIGSHARE ASSET PACKAGING"
 echo "=========================================================="
-echo "Host : $FIGSHARE_FTP_HOST"
+echo "Repository : $SCRIPT_DIR"
+echo "Source     : $SRCBUCK"
+echo "Files Dir  : $FILES_DIR"
+echo "Output ZIP : $FILES_ZIP"
 echo "=========================================================="
 echo
 
-echo "[1/2] Uploading metadata package..."
+echo "[1/4] Preparing local asset directory..."
 
-lftp \
-  -u "$FIGSHARE_FTP_USER","$FIGSHARE_FTP_PASS" \
-  "$FIGSHARE_FTP_HOST" \
-  -e "
-    set cmd:trace yes;
-    set ftp:ssl-force true;
-    set ftp:ssl-protect-data true;
-    set net:max-retries 100;
-    set net:timeout 30;
-    set xfer:clobber on;
-
-    debug 3;
-
-    pwd;
-    cls -l;
-
-    cd data/metadata;
-
-    pwd;
-
-    put -c metadata.zip;
-    put -c metadata.zip.sha256;
-
-    bye
-  " | tee metadata_upload.log
+rm -rf "$FILES_DIR"
+mkdir -p "$FILES_DIR"
 
 echo
-echo "[2/2] Uploading asset package..."
+echo "[2/4] Building flattened asset tree..."
 
-lftp \
-  -u "$FIGSHARE_FTP_USER","$FIGSHARE_FTP_PASS" \
-  "$FIGSHARE_FTP_HOST" \
-  -e "
-    set cmd:trace yes;
-    set ftp:ssl-force true;
-    set ftp:ssl-protect-data true;
-    set net:max-retries 100;
-    set net:timeout 30;
-    set xfer:clobber on;
+python3 "$SCRIPT_DIR/flatten_asset_tree.py" \
+    --execute \
+    --local-root "$FILES_DIR"
 
-    debug 3;
+echo
+echo "[3/4] Creating files.zip..."
 
-    pwd;
-    cls -l;
+(
+    cd "$(dirname "$FILES_DIR")"
 
-    cd data/files;
+    zip -rq \
+        "$FILES_ZIP" \
+        "$(basename "$FILES_DIR")"
+)
 
-    pwd;
+echo
+echo "[4/4] Generating checksum..."
 
-    put -c files.zip;
-    put -c files.zip.sha256;
-
-    bye
-  " | tee files_upload.log
+sha256sum "$FILES_ZIP" \
+    > "$FILES_SHA"
 
 echo
 echo "=========================================================="
-echo "TRANSFER COMPLETE"
+echo "ASSET PACKAGING COMPLETE"
 echo "=========================================================="
+
+ls -lh \
+    "$FILES_ZIP" \
+    "$FILES_SHA"

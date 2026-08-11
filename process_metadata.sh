@@ -81,4 +81,149 @@ if [[ "$S3_MODE" != "true" ]]; then
 
 else
 
-    echo "Skipping"
+    echo "Skipping embargo update in S3 mode"
+
+fi
+
+#
+# Repeatable SQL fixes
+#
+
+echo
+echo "[3/8] Applying SQL corrections..."
+
+if [[ -d "$SCRIPT_DIR/sql" ]]; then
+
+    for SQL in "$SCRIPT_DIR"/sql/*.sql
+    do
+
+        [[ -e "$SQL" ]] || continue
+
+        echo "    Applying: $(basename "$SQL")"
+
+        sqlite3 "$DB" < "$SQL"
+
+    done
+
+fi
+
+#
+# CSV-driven corrections
+#
+
+echo
+echo "[4/8] Applying override spreadsheets..."
+
+if [[ -d "$UPDATES_DIR" ]]; then
+
+    for CSV in "$UPDATES_DIR"/*.csv
+    do
+
+        [[ -e "$CSV" ]] || continue
+
+        echo "    Applying: $(basename "$CSV")"
+
+        python3 "$SCRIPT_DIR/update_DB_by_CSV.py" \
+            "$DB" \
+            "$CSV"
+
+    done
+
+fi
+
+#
+# Keyword cleanup
+#
+
+echo
+echo "[5/8] Deduplicating keywords..."
+
+python3 "$SCRIPT_DIR/dedupe_keywords.py" "$DB"
+
+#
+# Export tables
+#
+
+echo
+echo "[6/8] Exporting database tables..."
+
+python3 "$SCRIPT_DIR/dump_db_tables.py" "$DB"
+
+#
+# Build metadata package
+#
+
+echo
+echo "[7/8] Creating metadata.zip..."
+
+PACKAGE_DIR="$SCRIPT_DIR/metadata_package"
+
+rm -rf "$PACKAGE_DIR"
+mkdir -p "$PACKAGE_DIR"
+
+#
+# Include database
+#
+
+cp "$DB" "$PACKAGE_DIR/"
+
+#
+# Include exported CSVs
+#
+
+find "$SCRIPT_DIR" \
+    -maxdepth 1 \
+    -type f \
+    -name "*.csv" \
+    -exec cp {} "$PACKAGE_DIR/" \;
+
+#
+# Include TSV logs
+#
+
+find "$SCRIPT_DIR" \
+    -maxdepth 1 \
+    -type f \
+    -name "*.tsv" \
+    -exec cp {} "$PACKAGE_DIR/" \;
+
+#
+# Build archive
+#
+
+(
+    cd "$PACKAGE_DIR"
+
+    zip -rq \
+        "$SCRIPT_DIR/metadata.zip" \
+        .
+)
+
+sha256sum \
+    "$SCRIPT_DIR/metadata.zip" \
+    > "$SCRIPT_DIR/metadata.zip.sha256"
+
+#
+# Status
+#
+
+echo
+echo "[8/8] Database status..."
+
+python3 "$SCRIPT_DIR/main.py" \
+    --db "$DB" \
+    --status
+
+echo
+echo "=========================================================="
+echo "METADATA WORKFLOW COMPLETE"
+echo "=========================================================="
+
+echo
+echo "Created:"
+echo "  $SCRIPT_DIR/metadata.zip"
+echo "  $SCRIPT_DIR/metadata.zip.sha256"
+
+ls -lh \
+    "$SCRIPT_DIR/metadata.zip" \
+    "$SCRIPT_DIR/metadata.zip.sha256"
