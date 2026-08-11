@@ -162,8 +162,6 @@ def write_db_record(db_conn, pid, record, coll_path):
     except Exception as e:
         logger.exception(f"Failed to insert... {pid}: {e}")
 
-    db_conn.commit()
-
 
 def write_author_record(db_conn, author):
     cursor = db_conn.cursor()

@@ -11,6 +11,9 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 
 logger = logging.getLogger('figshare_db_map')
 logging.basicConfig(level=logging.DEBUG)
+logging.getLogger("botocore").setLevel(logging.WARNING)
+logging.getLogger("boto3").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 if __name__ == '__main__':
 

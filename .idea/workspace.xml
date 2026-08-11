@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -426,7 +424,7 @@
       <workItem from="1785946246922" duration="8957000" />
       <workItem from="1785966928855" duration="17810000" />
       <workItem from="1786364024569" duration="4890000" />
-      <workItem from="1786382421500" duration="5541000" />
+      <workItem from="1786382421500" duration="6020000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -748,7 +746,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786454561843</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="i/o streaming error">
+      <option name="closed" value="true" />
+      <created>1786455328055</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1786455328055</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -767,7 +773,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="QA SQL" />
     <MESSAGE value="Refined Field of Research category mappings" />
     <MESSAGE value="Refined item types, batch commiting to DB" />
     <MESSAGE value="license QA" />
@@ -792,7 +797,8 @@
     <MESSAGE value="Fix for objects with multiple children (i.e. book with pages)" />
     <MESSAGE value="remove ftp_upload.py (use lftp instead)" />
     <MESSAGE value="run layer for s3 input source" />
-    <option name="LAST_COMMIT_MESSAGE" value="run layer for s3 input source" />
+    <MESSAGE value="i/o streaming error" />
+    <option name="LAST_COMMIT_MESSAGE" value="i/o streaming error" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
