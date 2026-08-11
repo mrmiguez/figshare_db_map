@@ -81,4 +81,4 @@ if [[ "$S3_MODE" != "true" ]]; then
 
 else
 
-    echo "Skipping
+    echo "Skipping"
