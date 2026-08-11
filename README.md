@@ -48,45 +48,157 @@ python3 figshare_db_map/main.py \
 
 ---
 
+### S3 Mode (EC2 Migration Environment)
+
+In the EC2 migration environment, MODS metadata can be read directly from an S3 bucket.
+
+Example:
+
+```bash
+python3 figshare_db_map/main.py \
+    --db figshare.db \
+    --run \
+    --s3 \
+    --bucket migration-ir-1014030
+```
+
+Optionally limit processing to a specific prefix:
+
+```bash
+python3 figshare_db_map/main.py \
+    --db figshare.db \
+    --run \
+    --s3 \
+    --bucket migration-ir-1014030 \
+    --prefix root/fsu_research_repository
+```
+
+This mode uses the instance IAM role and reads MODS XML directly from S3 without requiring a local repository checkout.
+
+The traditional filesystem mode remains supported.
+
+---
+
 ## Command-Line Usage
 
-```text
-usage: main.py [-h] [-s] [-v] [-b] [-r] [--db DB]
-               record_directory
+### Filesystem Mode
 
-Figshare data-mapping DB utility
+```bash
+python3 main.py \
+    --run \
+    --db figshare.db \
+    /path/to/mods/root
+```
 
-positional arguments:
-  record_directory     path to XML records
+### S3 Mode
 
-options:
-  -h, --help           show this help message and exit
-  -r, --run            populate database
-  -s, --status         database statistics
-  -b, --burndown       destroy and recreate database
-  -v, --verbose        verbose logging
-  --db DB              SQLite database path
+```bash
+python3 main.py \
+    --run \
+    --db figshare.db \
+    --s3 \
+    --bucket migration-ir-1014030
+```
+
+### Status
+
+```bash
+python3 main.py \
+    --db figshare.db \
+    --status
+```
+
+### Burndown
+
+```bash
+python3 main.py \
+    --db figshare.db \
+    --burndown
 ```
 
 ---
 
 ## Migration Workflow
 
-The preferred method is to run the entire migration pipeline:
+The migration process is divided into three independent workflows:
+
+1. Metadata Processing
+2. Asset Packaging
+3. Figshare Delivery
+
+Separating these stages allows metadata generation, asset packaging, and delivery to be rerun independently.
+
+### Metadata Processing
 
 ```bash
-./run_migration.sh /path/to/mods/root
+./process_metadata.sh
 ```
 
-This performs:
+Builds the migration database and creates:
+
+```text
+figshare.db
+metadata.zip
+metadata.zip.sha256
+```
+
+Metadata processing includes:
 
 1. MODS → SQLite transformation
 2. Embargo enrichment
-3. Spreadsheet-driven metadata corrections
-4. Keyword deduplication
-5. PDF/OBJ file staging
-6. QA CSV exports
-7. Database status reporting
+3. SQL-based corrections
+4. Spreadsheet-driven metadata corrections
+5. Keyword deduplication
+6. CSV exports
+7. Metadata package creation
+8. Migration QA reporting
+
+### Asset Packaging
+
+```bash
+./process_assets.sh
+```
+
+Builds a flattened asset structure from S3 and creates:
+
+```text
+files.zip
+files.zip.sha256
+```
+
+This workflow:
+
+1. Reads source assets from S3
+2. Reorganizes PDF and OBJ datastreams into Figshare ingest structure
+3. Builds a local packaging directory
+4. Creates a ZIP package
+5. Generates SHA256 checksums
+
+### Figshare Delivery
+
+```bash
+./transfer_to_figshare.sh
+```
+
+Uploads migration packages to Figshare FTPS.
+
+Uploaded destinations:
+
+```text
+data/files/files.zip
+data/files/files.zip.sha256
+
+data/metadata/metadata.zip
+data/metadata/metadata.zip.sha256
+```
+
+FTP credentials are read from:
+
+```bash
+FIGSHARE_FTP_HOST
+FIGSHARE_FTP_USER
+FIGSHARE_FTP_PASS
+```
 
 ---
 
@@ -162,16 +274,44 @@ Deduplication is case-insensitive while preserving the first occurrence.
 
 ### flatten_asset_tree.py
 
-Moves files matching:
+Reorganizes Islandora assets into a Figshare-friendly layout.
+
+Assets matching:
 
 ```text
 *_PDF*
 *_OBJ*
 ```
 
-from nested collection directories to the repository root.
+are transformed into a flattened object-centric structure.
 
-This is used to stage files for bulk transfer workflows.
+Example:
+
+```text
+root/.../fsu_1064943_PDF.pdf
+```
+
+becomes:
+
+```text
+fsu_1064943/
+    fsu_1064943.pdf
+```
+
+Compound object example:
+
+```text
+root/.../fsu_107473/fsu_107474_OBJ.tiff
+```
+
+becomes:
+
+```text
+fsu_107473/
+    fsu_107474.tiff
+```
+
+This utility is primarily used by `process_assets.sh` when building the Figshare asset package.
 
 ### dump_db_tables.py
 
@@ -187,17 +327,29 @@ exports/
 └── subjects.csv
 ```
 
-### FTP upload utilities
+### transfer_to_figshare.sh
 
-FTP utilities read credentials from environment variables rather than storing secrets in source code.
+Uploads migration packages directly to the Figshare FTPS endpoint using `lftp`.
 
-Example:
+Required environment variables:
 
 ```bash
-export FIGSHARE_FTP_HOST=ftp.example.org
+export FIGSHARE_FTP_HOST=ftps.example.org
 export FIGSHARE_FTP_USER=myuser
 export FIGSHARE_FTP_PASS=secret
 ```
+
+The script uploads:
+
+```text
+metadata.zip
+metadata.zip.sha256
+
+files.zip
+files.zip.sha256
+```
+
+Transfer logging is enabled through verbose `lftp` settings and upload logs are written locally during execution.
 
 ---
 
@@ -223,17 +375,21 @@ figshare_db_map/
 ├── figshare_db_map/
 │   ├── main.py
 │   └── assets/
+│       ├── cli.py
+│       ├── parser.py
 │       ├── data_maps.py
 │       ├── db.py
 │       └── records.py
+│
+├── process_metadata.sh
+├── process_assets.sh
+├── transfer_to_figshare.sh
 │
 ├── update_db_embargoes.py
 ├── update_DB_by_CSV.py
 ├── dedupe_keywords.py
 ├── flatten_asset_tree.py
 ├── dump_db_tables.py
-│
-├── run_migration.sh
 │
 ├── sql/
 ├── updates/
@@ -247,26 +403,47 @@ figshare_db_map/
 
 ## End-to-End Workflow
 
-A typical migration run follows this sequence:
+### Metadata Pipeline
 
 ```text
 MODS XML
-    ↓
+        ↓
 figshare_db_map
-    ↓
+        ↓
 SQLite DB
-    ↓
+        ↓
 Embargo updates
-    ↓
-QA spreadsheet updates
-    ↓
-Keyword deduplication
-    ↓
-File staging (PDF / OBJ)
-    ↓
+        ↓
+QA updates
+        ↓
+Keyword cleanup
+        ↓
 CSV exports
-    ↓
-Figshare ingest package
+        ↓
+metadata.zip
 ```
 
-The SQLite database serves as the authoritative staging layer throughout the migration process.
+### Asset Pipeline
+
+```text
+S3 Asset Repository
+        ↓
+flatten_asset_tree.py
+        ↓
+Local packaging directory
+        ↓
+files.zip
+```
+
+### Delivery Pipeline
+
+```text
+metadata.zip
+files.zip
+        ↓
+FTPS Upload
+        ↓
+Figshare STAGE / PROD Ingest
+```
+
+The SQLite database remains the authoritative metadata staging layer throughout the migration process.
