@@ -59,6 +59,23 @@ def argument_parser():
         help='path to XML records'
     )
 
+    run_args_group.add_argument(
+        '--s3',
+        action='store_true',
+        help='Run against S3 bucket'
+    )
+
+    run_args_group.add_argument(
+        '--bucket',
+        help='Source S3 bucket'
+    )
+
+    run_args_group.add_argument(
+        '--prefix',
+        default='',
+        help='Optional S3 prefix'
+    )
+
     # hack to show help when no arguments supplied
     if len(sys.argv) == 1:
         args.print_help()
