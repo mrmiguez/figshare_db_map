@@ -2,33 +2,76 @@
 
 set -euo pipefail
 
-FILES_DIR="${FILES_DIR:-/data/files}"
-
-rm -rf "$FILES_DIR"
-mkdir -p "$FILES_DIR"
-
-echo
-echo "[1/4] Flattening assets..."
-
-python3 flatten_asset_tree.py \
-    --local-root "$FILES_DIR"
+: "${FIGSHARE_FTP_HOST:?}"
+: "${FIGSHARE_FTP_USER:?}"
+: "${FIGSHARE_FTP_PASS:?}"
 
 echo
-echo "[2/4] Creating files.zip..."
+echo "=========================================================="
+echo "FIGSHARE FTP TRANSFER"
+echo "=========================================================="
+echo "Host : $FIGSHARE_FTP_HOST"
+echo "=========================================================="
+echo
 
-cd /data
+echo "[1/2] Uploading metadata package..."
 
-zip -rq files.zip files
+lftp \
+  -u "$FIGSHARE_FTP_USER","$FIGSHARE_FTP_PASS" \
+  "$FIGSHARE_FTP_HOST" \
+  -e "
+    set cmd:trace yes;
+    set ftp:ssl-force true;
+    set ftp:ssl-protect-data true;
+    set net:max-retries 100;
+    set net:timeout 30;
+    set xfer:clobber on;
+
+    debug 3;
+
+    pwd;
+    cls -l;
+
+    cd data/metadata;
+
+    pwd;
+
+    put -c metadata.zip;
+    put -c metadata.zip.sha256;
+
+    bye
+  " | tee metadata_upload.log
 
 echo
-echo "[3/4] Generating checksum..."
+echo "[2/2] Uploading asset package..."
 
-sha256sum files.zip \
-    > files.zip.sha256
+lftp \
+  -u "$FIGSHARE_FTP_USER","$FIGSHARE_FTP_PASS" \
+  "$FIGSHARE_FTP_HOST" \
+  -e "
+    set cmd:trace yes;
+    set ftp:ssl-force true;
+    set ftp:ssl-protect-data true;
+    set net:max-retries 100;
+    set net:timeout 30;
+    set xfer:clobber on;
+
+    debug 3;
+
+    pwd;
+    cls -l;
+
+    cd data/files;
+
+    pwd;
+
+    put -c files.zip;
+    put -c files.zip.sha256;
+
+    bye
+  " | tee files_upload.log
 
 echo
-echo "[4/4] Done"
-
-ls -lh \
-    files.zip \
-    files.zip.sha256
+echo "=========================================================="
+echo "TRANSFER COMPLETE"
+echo "=========================================================="
