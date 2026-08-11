@@ -1,6 +1,7 @@
 import logging
 import os
 from pathlib import Path
+from io import BytesIO
 
 import boto3
 import pymods
@@ -15,15 +16,12 @@ logger.addHandler(logging.NullHandler())
 def parse_mods_stream(source):
 
     if hasattr(source, "read"):
-        xml_data = source.read()
+        records = pymods.MODSReader(BytesIO(source.read()))
 
     else:
-        with open(source, "rb") as fh:
-            xml_data = fh.read()
+        records = pymods.MODSReader(source)
 
-    records = pymods.MODSReader(xml_data)
     for record in records:
-
         yield record
 
 

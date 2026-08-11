@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ftp_upload.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -430,7 +426,7 @@
       <workItem from="1785946246922" duration="8957000" />
       <workItem from="1785966928855" duration="17810000" />
       <workItem from="1786364024569" duration="4890000" />
-      <workItem from="1786382421500" duration="4614000" />
+      <workItem from="1786382421500" duration="5541000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -736,7 +732,23 @@
       <option name="project" value="LOCAL" />
       <updated>1786029575339</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="remove ftp_upload.py (use lftp instead)">
+      <option name="closed" value="true" />
+      <created>1786454525023</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1786454525023</updated>
+    </task>
+    <task id="LOCAL-00040" summary="run layer for s3 input source">
+      <option name="closed" value="true" />
+      <created>1786454561843</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1786454561843</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -755,8 +767,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="item_types tuned a bit with priority term matching" />
-    <MESSAGE value="init category mapping" />
     <MESSAGE value="QA SQL" />
     <MESSAGE value="Refined Field of Research category mappings" />
     <MESSAGE value="Refined item types, batch commiting to DB" />
@@ -780,7 +790,9 @@
     <MESSAGE value="rewriting flatten_asset_tree.py for native ec2/s3 env" />
     <MESSAGE value="outfile filename bug" />
     <MESSAGE value="Fix for objects with multiple children (i.e. book with pages)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix for objects with multiple children (i.e. book with pages)" />
+    <MESSAGE value="remove ftp_upload.py (use lftp instead)" />
+    <MESSAGE value="run layer for s3 input source" />
+    <option name="LAST_COMMIT_MESSAGE" value="run layer for s3 input source" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
