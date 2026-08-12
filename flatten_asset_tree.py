@@ -8,7 +8,7 @@ from pathlib import PurePosixPath
 import boto3
 
 SRCBUCK = os.environ["SRCBUCK"]
-TGTBUCK = os.environ["TGTBUCK"]
+TGTBUCK = os.environ.get("TGTBUCK")
 
 PID_RE = re.compile(
     r"(fsu_\d+)_(?:PDF|OBJ)",
@@ -24,19 +24,24 @@ PARENT_PID_RE = re.compile(
 def parse_args():
 
     parser = argparse.ArgumentParser(
-        description="Reorganize Islandora assets in S3 for Figshare ingest."
+        description="Reorganize Islandora assets for Figshare ingest."
     )
 
     parser.add_argument(
         "--execute",
         action="store_true",
-        help="Actually perform S3 copies"
+        help="Actually perform copy/download"
     )
 
     parser.add_argument(
         "--limit",
         type=int,
         help="Process at most N matching files"
+    )
+
+    parser.add_argument(
+        "--local-root",
+        help="Write flattened assets to local filesystem"
     )
 
     return parser.parse_args()
@@ -49,10 +54,26 @@ def main():
     s3 = boto3.resource("s3")
 
     src_bucket = s3.Bucket(SRCBUCK)
-    tgt_bucket = s3.Bucket(TGTBUCK)
 
-    print(f"SOURCE: s3://{SRCBUCK}")
-    print(f"TARGET: s3://{TGTBUCK}")
+    local_mode = bool(args.local_root)
+
+    if local_mode:
+
+        print(f"SOURCE: s3://{SRCBUCK}")
+        print(f"TARGET: {args.local_root}")
+
+    else:
+
+        if not TGTBUCK:
+            raise RuntimeError(
+                "TGTBUCK must be defined "
+                "for S3->S3 mode"
+            )
+
+        tgt_bucket = s3.Bucket(TGTBUCK)
+
+        print(f"SOURCE: s3://{SRCBUCK}")
+        print(f"TARGET: s3://{TGTBUCK}")
 
     if not args.execute:
         print("\n*** DRY RUN ***\n")
@@ -65,10 +86,6 @@ def main():
 
         filename = os.path.basename(key)
 
-        #
-        # Only process PDF and OBJ assets
-        #
-
         m = PID_RE.search(filename)
 
         if not m:
@@ -76,78 +93,108 @@ def main():
 
         child_pid = m.group(1)
 
-        #
-        # Use parent PID directory if this is a page child
-        #
-        # Example:
-        #
-        # .../fsu_107473/fsu_107474_OBJ.tiff
-        #
-        # becomes:
-        #
-        # fsu_107473/fsu_107474.tiff
-        #
-        # Otherwise:
-        #
-        # fsu_1064943_PDF.pdf
-        #
-        # becomes:
-        #
-        # fsu_1064943/fsu_1064943.pdf
-        #
+        parent_name = PurePosixPath(
+            key
+        ).parent.name
 
-        parent_name = PurePosixPath(key).parent.name
+        if PARENT_PID_RE.fullmatch(
+                parent_name):
 
-        if PARENT_PID_RE.fullmatch(parent_name):
             destination_dir = parent_name
+
         else:
+
             destination_dir = child_pid
 
-        extension = os.path.splitext(filename)[1]
+        extension = os.path.splitext(
+            filename
+        )[1]
 
         destination_filename = (
             f"{child_pid}{extension}"
         )
 
-        destination_key = (
-            f"{destination_dir}/{destination_filename}"
-        )
+        if local_mode:
 
-        print(
-            f"s3://{SRCBUCK}/{key}\n"
-            f"    -> s3://{TGTBUCK}/{destination_key}\n"
-        )
-
-        if args.execute:
-
-            tgt_bucket.copy(
-                {
-                    "Bucket": SRCBUCK,
-                    "Key": key,
-                },
-                destination_key
+            destination_path = (
+                os.path.join(
+                    args.local_root,
+                    destination_dir,
+                    destination_filename
+                )
             )
+
+            print(
+                f"s3://{SRCBUCK}/{key}\n"
+                f"    -> {destination_path}\n"
+            )
+
+            if args.execute:
+
+                os.makedirs(
+                    os.path.dirname(
+                        destination_path
+                    ),
+                    exist_ok=True
+                )
+
+                src_bucket.download_file(
+                    key,
+                    destination_path
+                )
+
+        else:
+
+            destination_key = (
+                f"{destination_dir}/"
+                f"{destination_filename}"
+            )
+
+            print(
+                f"s3://{SRCBUCK}/{key}\n"
+                f"    -> "
+                f"s3://{TGTBUCK}/"
+                f"{destination_key}\n"
+            )
+
+            if args.execute:
+
+                tgt_bucket.copy(
+                    {
+                        "Bucket": SRCBUCK,
+                        "Key": key,
+                    },
+                    destination_key
+                )
 
         count += 1
 
         if count % 1000 == 0:
+
             print(
-                f"Processed {count:,} files..."
+                f"Processed "
+                f"{count:,} files..."
             )
 
-        if args.limit and count >= args.limit:
+        if (
+            args.limit
+            and count >= args.limit
+        ):
             print(
-                f"\nReached limit of {args.limit:,} files."
+                f"\nReached limit "
+                f"of {args.limit:,} files."
             )
             break
 
     print(
-        f"\nProcessed {count:,} files"
+        f"\nProcessed "
+        f"{count:,} files"
     )
 
     if not args.execute:
         print(
-            "\nNo files copied (dry run mode)."
+            "\nNo assets copied "
+            "(dry run mode)."
         )
 
 

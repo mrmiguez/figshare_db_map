@@ -70,8 +70,8 @@ lftp \
 
     pwd;
 
-    put -c $METADATA_ZIP;
-    put -c $METADATA_SHA;
+    put -c "$METADATA_ZIP";
+    put -c "$METADATA_SHA";
 
     bye
   " | tee "$SCRIPT_DIR/metadata_upload.log"
@@ -99,8 +99,8 @@ lftp \
 
     pwd;
 
-    put -c $FILES_ZIP;
-    put -c $FILES_SHA;
+    put -c "$FILES_ZIP";
+    put -c "$FILES_SHA";
 
     bye
   " | tee "$SCRIPT_DIR/files_upload.log"

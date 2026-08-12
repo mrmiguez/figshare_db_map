@@ -150,49 +150,88 @@ echo "[6/8] Exporting database tables..."
 python3 "$SCRIPT_DIR/dump_db_tables.py" "$DB"
 
 #
-# Build metadata package
+# Package metadata
 #
 
 echo
-echo "[7/8] Creating metadata.zip..."
+echo "[7/8] Creating metadata packages..."
 
-PACKAGE_DIR="$SCRIPT_DIR/metadata_package"
+ARCHIVE_DIR="$SCRIPT_DIR/metadata_archive"
+FIGSHARE_DIR="$SCRIPT_DIR/metadata_figshare"
 
-rm -rf "$PACKAGE_DIR"
-mkdir -p "$PACKAGE_DIR"
+rm -rf "$ARCHIVE_DIR"
+rm -rf "$FIGSHARE_DIR"
 
-#
-# Include database
-#
-
-cp "$DB" "$PACKAGE_DIR/"
+mkdir -p "$ARCHIVE_DIR"
+mkdir -p "$FIGSHARE_DIR"
 
 #
-# Include exported CSVs
+# Local preservation package
 #
 
-find "$SCRIPT_DIR" \
-    -maxdepth 1 \
-    -type f \
-    -name "*.csv" \
-    -exec cp {} "$PACKAGE_DIR/" \;
+echo "    Building metadata_archive.zip..."
 
-#
-# Include TSV logs
-#
+cp "$DB" "$ARCHIVE_DIR/"
+
+if [[ -d "$SCRIPT_DIR/exports" ]]; then
+    cp -r "$SCRIPT_DIR/exports" "$ARCHIVE_DIR/"
+fi
 
 find "$SCRIPT_DIR" \
     -maxdepth 1 \
     -type f \
     -name "*.tsv" \
-    -exec cp {} "$PACKAGE_DIR/" \;
+    -exec cp {} "$ARCHIVE_DIR/" \;
 
-#
-# Build archive
-#
+if [[ -f "$SCRIPT_DIR/README.md" ]]; then
+    cp "$SCRIPT_DIR/README.md" "$ARCHIVE_DIR/"
+fi
 
 (
-    cd "$PACKAGE_DIR"
+    cd "$ARCHIVE_DIR"
+
+    zip -rq \
+        "$SCRIPT_DIR/metadata_archive.zip" \
+        .
+)
+
+sha256sum \
+    "$SCRIPT_DIR/metadata_archive.zip" \
+    > "$SCRIPT_DIR/metadata_archive.zip.sha256"
+
+#
+# Preservation copy to S3
+#
+
+if [[ -n "${SRCBUCK:-}" ]]; then
+
+    echo
+    echo "    Uploading preservation copy to:"
+    echo "        s3://$SRCBUCK/archive/"
+
+    aws s3 cp \
+        "$SCRIPT_DIR/metadata_archive.zip" \
+        "s3://$SRCBUCK/archive/metadata_archive.zip"
+
+    aws s3 cp \
+        "$SCRIPT_DIR/metadata_archive.zip.sha256" \
+        "s3://$SRCBUCK/archive/metadata_archive.zip.sha256"
+
+fi
+
+#
+# Figshare delivery package
+#
+
+echo
+echo "    Building metadata.zip..."
+
+if [[ -d "$SCRIPT_DIR/exports" ]]; then
+    cp -r "$SCRIPT_DIR/exports" "$FIGSHARE_DIR/"
+fi
+
+(
+    cd "$FIGSHARE_DIR"
 
     zip -rq \
         "$SCRIPT_DIR/metadata.zip" \
@@ -202,6 +241,7 @@ find "$SCRIPT_DIR" \
 sha256sum \
     "$SCRIPT_DIR/metadata.zip" \
     > "$SCRIPT_DIR/metadata.zip.sha256"
+
 
 #
 # Status
@@ -221,9 +261,13 @@ echo "=========================================================="
 
 echo
 echo "Created:"
+echo "  $SCRIPT_DIR/metadata_archive.zip"
+echo "  $SCRIPT_DIR/metadata_archive.zip.sha256"
 echo "  $SCRIPT_DIR/metadata.zip"
 echo "  $SCRIPT_DIR/metadata.zip.sha256"
 
 ls -lh \
+    "$SCRIPT_DIR/metadata_archive.zip" \
+    "$SCRIPT_DIR/metadata_archive.zip.sha256" \
     "$SCRIPT_DIR/metadata.zip" \
     "$SCRIPT_DIR/metadata.zip.sha256"
