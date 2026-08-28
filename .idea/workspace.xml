@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dump_db_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/dump_db_tables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flatten_asset_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/flatten_asset_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process_metadata.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_metadata.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transfer_to_figshare.sh" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_to_figshare.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +65,7 @@
     &quot;Shell Script.run_migration.executor&quot;: &quot;Run&quot;,
     &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/mmiguez/bin/figshare_db_map&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mmiguez/bin/aspace-api&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
@@ -367,12 +363,12 @@
       <item itemvalue="Python.main --burndown" />
       <item itemvalue="Python.main --help" />
       <item itemvalue="Python.main --run full" />
-      <item itemvalue="Python.main --run sample" />
       <item itemvalue="Python.main --status" />
       <item itemvalue="Python.main test-data" />
       <item itemvalue="Python.scratch" />
       <item itemvalue="Python.update_db_embargoes" />
       <item itemvalue="Python.update_db_item_types" />
+      <item itemvalue="Python.main --run sample" />
       <item itemvalue="Shell Script.run_migration" />
     </list>
     <recent_temporary>
@@ -432,7 +428,8 @@
       <workItem from="1786364024569" duration="4890000" />
       <workItem from="1786382421500" duration="12147000" />
       <workItem from="1786471745747" duration="199000" />
-      <workItem from="1786548756573" duration="1075000" />
+      <workItem from="1786548756573" duration="1185000" />
+      <workItem from="1787157507804" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -802,7 +799,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786471924738</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="aligning utilities and driver scripts">
+      <option name="closed" value="true" />
+      <created>1786549930254</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1786549930254</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -821,7 +826,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="update_db_embargoes.py" />
     <MESSAGE value="Second pass embargo enrichment complete" />
     <MESSAGE value="Enriched FOR category mapping" />
     <MESSAGE value="Emitting category codes instead of terms" />
@@ -846,7 +850,8 @@
     <MESSAGE value="explicit paths in shell scripts" />
     <MESSAGE value="typo" />
     <MESSAGE value="copy errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="copy errors" />
+    <MESSAGE value="aligning utilities and driver scripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="aligning utilities and driver scripts" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
