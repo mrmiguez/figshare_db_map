@@ -554,14 +554,14 @@ class ObjectRecord:
                     return fallback
 
                 logger.info(
-                    f"Unmatched license value: {raw[:120]}"
+                    f"Unmatched license value... {self.pid}: {raw[:120]}"
                 )
 
         logger.info(
             f"Assigning default statement... {self.pid}"
         )
 
-        return None
+        return 'http://rightsstatements.org/vocab/CNE/1.0/'
 
     # ---- notes
     @property

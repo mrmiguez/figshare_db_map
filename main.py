@@ -108,137 +108,94 @@ if __name__ == '__main__':
                     stream):
 
                 if args.verbose:
-                    print(
-                        f"Parsed... {pid}"
-                    )
+                    print(f"Parsed... {pid}")
 
                 author_names = []
 
-                # Pass 1 - explicit creators/authors
+                # Pass 1: explicit author-like roles
                 for name in parsed_record.names:
 
-                    role = getattr(
-                        name,
-                        "role",
-                        None
-                    )
-
-                    if not role:
-                        continue
-
                     role_code = (
-                            getattr(
-                                role,
-                                "code",
-                                None
-                            ) or ""
+                            getattr(getattr(name, "role", None), "code", "")
+                            or ""
                     ).lower()
 
-                    if role_code in (
-                            "aut",
-                            "cre"):
-                        author_names.append(
-                            name
-                        )
+                    if role_code in {"aut", "cre", "inv"}:
+                        author_names.append(name)
 
-                # Pass 2 - primary personal name
+                # Pass 2: primary personal
                 if not author_names:
 
                     primary_names = [
-                        n
-                        for n in parsed_record.names
-                        if getattr(
-                            n,
-                            "type",
-                            None
-                        ) == "personal"
-                           and n.elem.get(
-                            "usage"
-                        ) == "primary"
+                        n for n in parsed_record.names
+                        if getattr(n, "type", None) == "personal"
+                           and n.elem.get("usage") == "primary"
                     ]
 
                     if primary_names:
-                        author_names.append(
-                            primary_names[0]
-                        )
-
+                        author_names.append(primary_names[0])
                         fallback_primary_count += 1
 
                         logger.debug(
-                            f"{pid}... "
-                            f"Using primary personal "
-                            f"name as author: "
+                            f"{pid}: using primary personal name as author: "
                             f"{primary_names[0].text}"
                         )
 
-                # Pass 3 - first personal name
+                # Pass 3: first personal
                 if not author_names:
 
                     personal_names = [
-                        n
-                        for n in parsed_record.names
-                        if getattr(
-                            n,
-                            "type",
-                            None
-                        ) == "personal"
+                        n for n in parsed_record.names
+                        if getattr(n, "type", None) == "personal"
                     ]
 
                     if personal_names:
-                        author_names.append(
-                            personal_names[0]
-                        )
-
+                        author_names.append(personal_names[0])
                         fallback_personal_count += 1
 
                         logger.debug(
-                            f"{pid}... "
-                            f"Using first personal "
-                            f"name as author: "
+                            f"{pid}: using first personal name as author: "
                             f"{personal_names[0].text}"
                         )
 
-                # write authors
-                for name in author_names:
+                # Write authors preserving MODS order
+                for position, name in enumerate(author_names, start=1):
 
-                    author = assets.AuthorRecord(
-                        name
-                    )
+                    author = assets.AuthorRecord(name)
 
-                    author_data = {
-                        "firstname":
-                            author.firstname,
-                        "surname":
-                            author.surname,
-                        "email":
-                            author.email,
-                        "orcid":
-                            author.orcid,
-                        "identity":
-                            author.identity_key,
-                    }
-
-                    author_id = (
-                        write_author_record(
-                            db_conn,
-                            author_data
-                        )
+                    author_id = write_author_record(
+                        db_conn,
+                        {
+                            "firstname": author.firstname,
+                            "surname": author.surname,
+                            "email": author.email,
+                            "orcid": author.orcid,
+                            "identity": author.identity_key,
+                        }
                     )
 
                     if author_id:
                         link_author_to_object(
                             db_conn,
                             pid,
-                            author_id
+                            author_id,
+                            position
                         )
+                        logger.debug(
+                            f"Linking author...{pid} "
+                            f"{position}/{len(author_names)} "
+                            f"{author.identity_key}"
+                        )
+                    elif author_id is None:
+                        logger.error(
+                            f"{pid}: failed author insert at position "
+                            f"{position}: {author.identity_key}"
+                        )
+
 
                 logger.info(
                     "Writing record",
-                    extra={
-                        "pid": pid,
-                        "collection":
-                            collection,
-                    }
+                    extra={"pid": pid, "collection": collection,}
                 )
 
                 assets.write_db_record(

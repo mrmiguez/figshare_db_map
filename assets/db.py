@@ -8,69 +8,79 @@ logger.addHandler(logging.NullHandler())
 
 
 def connect_db(DB_PATH):
-    """init sqlite3 database and return connection"""
-    db_exists = os.path.exists(DB_PATH)
-    logger.info(f'DB path... {DB_PATH}')
+    """Initialize sqlite database and return connection."""
 
-    # Connect creates the database if it doesn't exist
+    db_exists = os.path.exists(DB_PATH)
+    logger.info(f"DB path... {DB_PATH}")
+
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode = OFF")
     conn.execute("PRAGMA synchronous = OFF")
+
     cursor = conn.cursor()
 
-    if not (db_exists):
-        logger.info(f'Initializing database... {DB_PATH}')
+    if not db_exists:
+
+        logger.info(f"Initializing database... {DB_PATH}")
+
         cursor.executescript("""
-                             CREATE TABLE IF NOT EXISTS authors
-                             (
-                                 id        INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 firstname TEXT,
-                                 surname   TEXT,
-                                 email     TEXT,
-                                 orcid     TEXT,
-                                 identity  TEXT UNIQUE
-                             );
+            CREATE TABLE IF NOT EXISTS authors (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                firstname TEXT,
+                surname TEXT,
+                email TEXT,
+                orcid TEXT,
+                identity TEXT UNIQUE
+            );
 
-                             CREATE TABLE IF NOT EXISTS objects
-                             (
-                                 pid               TEXT PRIMARY KEY,
-                                 title             TEXT NOT NULL,
-                                 category          TEXT,
-                                 item_type         TEXT NOT NULL,
-                                 keywords          TEXT,
-                                 description       TEXT,
-                                 publication_date  TEXT,
-                                 license           TEXT,
-                                 embargo_date      TEXT,
-                                 embargo_type      TEXT,
-                                 embargo_reason    TEXT,
-                                 identifier        TEXT, -- doi or handle
-                                 language          TEXT,
-                                 publisher         TEXT,
-                                 journal           TEXT,
-                                 volume            TEXT,
-                                 issue             TEXT,
-                                 physical_location TEXT,
-                                 purl              TEXT,
-                                 notes             TEXT,
-                                 other_identifiers TEXT,
-                                 contributors      TEXT,
-                                 subjects          TEXT,
-                                 source_collection TEXT
+            CREATE TABLE IF NOT EXISTS objects (
+                pid TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                category TEXT,
+                item_type TEXT NOT NULL,
+                keywords TEXT,
+                description TEXT,
+                publication_date TEXT,
+                license TEXT,
+                embargo_date TEXT,
+                embargo_type TEXT,
+                embargo_reason TEXT,
+                identifier TEXT,
+                language TEXT,
+                publisher TEXT,
+                journal TEXT,
+                volume TEXT,
+                issue TEXT,
+                physical_location TEXT,
+                purl TEXT,
+                notes TEXT,
+                other_identifiers TEXT,
+                contributors TEXT,
+                subjects TEXT,
+                source_collection TEXT
+            );
 
-                             );
+            CREATE TABLE IF NOT EXISTS object_authors (
+                object_id       TEXT NOT NULL,
+                author_id       INTEGER NOT NULL,
+                author_position INTEGER NOT NULL,
+            
+                PRIMARY KEY (object_id, author_position),
+            
+                FOREIGN KEY (object_id)
+                    REFERENCES objects(pid)
+                    ON DELETE CASCADE,
+            
+                FOREIGN KEY (author_id)
+                    REFERENCES authors(id)
+                    ON DELETE CASCADE
+            );
 
+            CREATE INDEX IF NOT EXISTS idx_object_authors_object_position
+                ON object_authors(object_id, author_position);
+        """)
 
-                             CREATE TABLE IF NOT EXISTS object_authors
-                             (
-                                 object_id TEXT    NOT NULL,
-                                 author_id INTEGER NOT NULL,
-                                 PRIMARY KEY (object_id, author_id),
-                                 FOREIGN KEY (object_id) REFERENCES objects (pid) ON DELETE CASCADE,
-                                 FOREIGN KEY (author_id) REFERENCES authors (id) ON DELETE CASCADE
-                             );
-
-                             """)
+        conn.commit()
 
     return conn
 
@@ -168,6 +178,9 @@ def write_author_record(db_conn, author):
 
     identity = author["identity"]
 
+    if identity is None:
+        logger.error(f"Missing identity... {author}")
+
     # Try insert
     cursor.execute(
         """
@@ -201,13 +214,13 @@ def write_author_record(db_conn, author):
     return row[0]
 
 
-def link_author_to_object(db_conn, pid, author_id):
+def link_author_to_object(db_conn, pid, author_id, author_position):
     cursor = db_conn.cursor()
 
     cursor.execute(
         """
-        INSERT OR IGNORE INTO object_authors (object_id, author_id)
-        VALUES (?, ?)
+        INSERT OR IGNORE INTO object_authors (object_id, author_id, author_position)
+        VALUES (?, ?, ?)
         """,
-        (pid, author_id)
+        (pid, author_id, author_position)
     )

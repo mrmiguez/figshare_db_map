@@ -30,19 +30,50 @@ LICENSE_TEXT_MAP = {
 
     "creative commons attribution-public domain (cc0 1.0)":
         "https://creativecommons.org/publicdomain/zero/1.0/",
+
+    "copyright not evaluated":
+        "http://rightsstatements.org/vocab/CNE/1.0/",
 }
 
 LICENSE_URL_MAP = {
 
+    # --------------------------------------------------
     # CC BY
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by/3.0/":
+        "https://creativecommons.org/licenses/by/4.0/",
+
     "http://creativecommons.org/licenses/by/4.0/":
         "https://creativecommons.org/licenses/by/4.0/",
 
+    # --------------------------------------------------
     # CC BY-NC
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by-nc/3.0/":
+        "https://creativecommons.org/licenses/by-nc/4.0/",
+
     "http://creativecommons.org/licenses/by-nc/4.0/":
         "https://creativecommons.org/licenses/by-nc/4.0/",
 
+    # --------------------------------------------------
+    # CC BY-NC-SA
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by-nc-sa/3.0/":
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+
+    "http://creativecommons.org/licenses/by-nc-sa/4.0/":
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+
+    # --------------------------------------------------
     # CC BY-NC-ND
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by-nc-nd/3.0/":
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+
     "http://creativecommons.org/licenses/by-nc-nd/4.0/":
         "https://creativecommons.org/licenses/by-nc-nd/4.0/",
 
@@ -52,7 +83,30 @@ LICENSE_URL_MAP = {
     "https://creativecommons.org/licenses/by-nc-nd//4.0/":
         "https://creativecommons.org/licenses/by-nc-nd/4.0/",
 
+    # --------------------------------------------------
+    # CC BY-ND
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by-nd/3.0/":
+        "https://creativecommons.org/licenses/by-nd/4.0/",
+
+    "http://creativecommons.org/licenses/by-nd/4.0/":
+        "https://creativecommons.org/licenses/by-nd/4.0/",
+
+    # --------------------------------------------------
+    # CC BY-SA
+    # --------------------------------------------------
+
+    "http://creativecommons.org/licenses/by-sa/3.0/":
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+
+    "http://creativecommons.org/licenses/by-sa/4.0/":
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+
+    # --------------------------------------------------
     # CC0
+    # --------------------------------------------------
+
     "https://creativecommons.org/public-domain/cc0/":
         "https://creativecommons.org/publicdomain/zero/1.0/",
 }
