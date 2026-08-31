@@ -117,6 +117,13 @@ def write_db_record(db_conn, pid, record, coll_path):
     obj = ObjectRecord(pid, record, coll_path)
     cursor = db_conn.cursor()
 
+    source_collection = str(obj.collection_path)
+
+    prefix = "/home/mmiguez/Downloads/root/"
+
+    if source_collection.startswith(prefix):
+        source_collection = source_collection[len(prefix):]
+
     try:
         cursor.execute(
             '''
@@ -165,7 +172,7 @@ def write_db_record(db_conn, pid, record, coll_path):
                 obj.subjects,
                 obj.other_identifiers,
                 obj.contributors,
-                str(obj.collection_path)
+                source_collection
             )
         )
 
