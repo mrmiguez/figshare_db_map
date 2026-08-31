@@ -1,262 +1,134 @@
 #!/usr/bin/env python3
 
-import sqlite3
+import csv
+import os
 from pathlib import Path
-import xml.etree.ElementTree as ET
-from collections import defaultdict
 
-NS = {
-    "mods": "http://www.loc.gov/mods/v3"
-}
+import assets
+from assets.parser import iter_local_mods
 
-DB = "/home/mmiguez/bin/figshare_migration/figshare_records.sqlite3"
-ROOT = "/home/mmiguez/Downloads/root/fsu_research_repository/"
 
-#
-# Classify feed records
-#
+OUTPUT_CSV = "scholarly_feed_audit.csv"
 
-feed_pids = defaultdict(set)
 
-for f in Path(ROOT).rglob("*_MODS.xml"):
+def get_identifier(record, ident_type):
 
-    try:
-        tree = ET.parse(f)
-        root = tree.getroot()
+    for ident in getattr(record, "identifiers", []):
 
-        iid = root.find(
-            ".//mods:identifier[@type='IID']",
-            NS
+        if (
+            ident.type
+            and ident.type.upper() == ident_type.upper()
+        ):
+            return ident.text
+
+    return None
+
+
+def detect_feed(record):
+
+    iid = get_identifier(record, "IID")
+
+    if iid:
+
+        iid_lower = iid.lower()
+
+        if "libsubv1_wos" in iid_lower:
+            return "Web of Science"
+
+        if iid_lower.startswith("fsu_pmch_"):
+            return "PubMed Central"
+
+    if get_identifier(record, "PMCID"):
+        return "PubMed Central"
+
+    return None
+
+
+with open(
+    OUTPUT_CSV,
+    "w",
+    newline="",
+    encoding="utf-8"
+) as csvfile:
+
+    writer = csv.DictWriter(
+        csvfile,
+        fieldnames=[
+            "pid",
+            "feed_source",
+            "iid",
+            "pmcid",
+            "doi",
+            "purl",
+            "title",
+            "publication_date",
+            "source_collection",
+            "mods_file",
+        ]
+    )
+
+    writer.writeheader()
+
+    for record in iter_local_mods(
+            "/home/mmiguez/Downloads/root/fsu_research_repository"):
+
+        source_path = record["path"]
+        collection = record["collection"]
+
+        filename = os.path.basename(
+            str(source_path)
         )
 
-        if iid is None:
-            continue
-
-        iid_text = (iid.text or "").strip()
-
         pid = (
-            f.stem
+            Path(filename)
+            .stem
             .replace("fsu_", "fsu:")
+            .replace("FSU_", "fsu:")
             .removesuffix("_MODS")
         )
 
-        #
-        # Web of Science
-        #
+        for parsed_record in assets.parse_mods_stream(
+                record["stream"]):
 
-        if iid_text.startswith(
-                "FSU_libsubv1_wos_"):
+            feed_source = detect_feed(
+                parsed_record
+            )
 
-            feed_pids["WOS"].add(pid)
-            continue
+            if not feed_source:
+                continue
 
-        #
-        # PubMed Central harvest
-        #
+            obj = assets.ObjectRecord(
+                pid,
+                parsed_record,
+                collection
+            )
 
-        if iid_text.startswith(
-                "FSU_pmch_"):
-
-            feed_pids["PMCH"].add(pid)
-            continue
-
-    except Exception as e:
-
-        print(
-            f"ERROR: {f}: {e}"
-        )
-
-#
-# Report feed counts
-#
-
-print()
-print("Feed records identified")
-print("----------------------")
-
-for feed, pids in sorted(
-        feed_pids.items()):
-
-    print(
-        f"{feed:8s}: "
-        f"{len(pids):,}"
-    )
-
-#
-# Query DB
-#
-
-conn = sqlite3.connect(DB)
-
-author_counts = {}
-
-for pid, count in conn.execute("""
-    SELECT
-        o.pid,
-        COUNT(oa.author_id)
-    FROM objects o
-    LEFT JOIN object_authors oa
-        ON o.pid = oa.object_id
-    GROUP BY o.pid
-"""):
-
-    author_counts[pid] = count
-
-#
-# Per-feed stats
-#
-
-for feed, pids in sorted(
-        feed_pids.items()):
-
-    counts = [
-        author_counts.get(pid, 0)
-        for pid in pids
-    ]
-
-    if not counts:
-        continue
-
-    print()
-    print(
-        f"{feed} statistics"
-    )
-    print(
-        "-" * (
-            len(feed) + 11
-        )
-    )
-
-    print(
-        f"Records: "
-        f"{len(counts):,}"
-    )
-
-    print(
-        f"Min authors: "
-        f"{min(counts):,}"
-    )
-
-    print(
-        f"Avg authors: "
-        f"{sum(counts)/len(counts):.2f}"
-    )
-
-    print(
-        f"Max authors: "
-        f"{max(counts):,}"
-    )
-
-    print()
-    print(
-        f"Top {feed} author counts"
-    )
-    print(
-        "-" * (
-            len(feed) + 18
-        )
-    )
-
-    for pid, count in sorted(
-            (
-                (
-                    pid,
-                    author_counts.get(
-                        pid,
-                        0
-                    )
-                )
-                for pid in pids
-            ),
-            key=lambda x: x[1],
-            reverse=True
-    )[:20]:
-
-        print(
-            f"{count:4d}  {pid}"
-        )
-
-#
-# Non-feed records
-#
-
-all_feed_pids = set()
-
-for pids in feed_pids.values():
-    all_feed_pids.update(pids)
-
-non_feed_counts = [
-    count
-    for pid, count
-    in author_counts.items()
-    if pid not in all_feed_pids
-]
-
-max_non_feed = max(
-    non_feed_counts
-)
-
-print()
-print(
-    "Non-feed statistics"
-)
-print(
-    "-------------------"
-)
+            writer.writerow({
+                "pid": pid,
+                "feed_source": feed_source,
+                "iid": get_identifier(
+                    parsed_record,
+                    "IID"
+                ),
+                "pmcid": get_identifier(
+                    parsed_record,
+                    "PMCID"
+                ),
+                "doi": get_identifier(
+                    parsed_record,
+                    "DOI"
+                ),
+                "purl": obj.purl,
+                "title": obj.title,
+                "publication_date":
+                    obj.publication_date,
+                "source_collection":
+                    collection,
+                "mods_file":
+                    source_path,
+            })
 
 print(
-    f"Records: "
-    f"{len(non_feed_counts):,}"
+    f"Wrote feed audit to "
+    f"{OUTPUT_CSV}"
 )
-
-print(
-    f"Max authors: "
-    f"{max_non_feed:,}"
-)
-
-print()
-print(
-    "Largest non-feed records"
-)
-print(
-    "------------------------"
-)
-
-for pid, count in author_counts.items():
-
-    if pid in all_feed_pids:
-        continue
-
-    if count != max_non_feed:
-        continue
-
-    row = conn.execute(
-        """
-        SELECT
-            pid,
-            title,
-            source_collection
-        FROM objects
-        WHERE pid = ?
-        """,
-        (pid,)
-    ).fetchone()
-
-    print()
-    print(
-        f"PID: {row[0]}"
-    )
-
-    print(
-        f"Authors: {count:,}"
-    )
-
-    print(
-        f"Title: {row[1]}"
-    )
-
-    print(
-        f"Collection: {row[2]}"
-    )
-
-conn.close()
