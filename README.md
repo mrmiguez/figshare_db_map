@@ -14,6 +14,8 @@ The project transforms MODS records into a structured SQLite staging database, a
 - Normalize and deduplicate keywords
 - Apply embargo updates
 - Apply QA spreadsheet corrections
+- Audit scholarly feed records (Web of Science and PubMed Central)
+- Exclude scholarly feed records from production migration datasets
 - Export database tables to CSV for review
 - Flatten PDF and OBJ files for bulk transfer workflows
 
@@ -148,10 +150,14 @@ Metadata processing includes:
 2. Embargo enrichment
 3. SQL-based corrections
 4. Spreadsheet-driven metadata corrections
-5. Keyword deduplication
-6. CSV exports
-7. Metadata package creation
-8. Migration QA reporting
+5. Scholarly feed audit generation
+6. Scholarly feed record removal
+7. Keyword deduplication
+8. CSV exports
+9. Metadata package creation
+10. Migration QA reporting
+
+The feed audit report is preserved in the metadata archive package for QA documentation purposes.
 
 ### Asset Packaging
 
@@ -254,6 +260,60 @@ fsu:862008,Thesis
 fsu:912587,Model
 ```
 
+### audit_feed_records.py
+
+Generates an audit report of scholarly feed records identified in the migration dataset.
+
+Currently supported feed sources:
+
+```text
+Web of Science
+PubMed Central
+```
+
+Output:
+
+```text
+exports/scholarly_feed_audit.csv
+```
+
+The audit report includes identifiers and provenance information needed to review records excluded from the production migration.
+
+### stats_on_feed_records.py
+
+Generates summary statistics and reporting for scholarly feed records.
+
+Typical reporting includes:
+
+```text
+Record counts by feed source
+Collection distribution
+Identifier analysis
+Quality assurance metrics
+```
+
+This utility is used for migration QA and feed inventory analysis.
+
+### update_db_remove_scholarly_feed_records.py
+
+Removes scholarly feed records from the SQLite migration database after audit generation and before export.
+
+Currently removed feed sources:
+
+```text
+Web of Science
+PubMed Central
+```
+
+The script removes matching records from:
+
+```text
+objects
+object_authors
+```
+
+This utility is executed as part of the metadata processing workflow and ensures excluded feed records are not included in final Figshare export packages.
+
 ### dedupe_keywords.py
 
 Removes duplicate pipe-delimited keywords.
@@ -271,6 +331,20 @@ Archaeology|Italy excavations
 ```
 
 Deduplication is case-insensitive while preserving the first occurrence.
+
+### dump_db_tables.py
+
+Exports all SQLite tables to CSV.
+
+Example output:
+
+```text
+exports/
+├── objects.csv
+├── contributors.csv
+├── files.csv
+└── subjects.csv
+```
 
 ### flatten_asset_tree.py
 
@@ -313,20 +387,6 @@ fsu_107473/
 
 This utility is primarily used by `process_assets.sh` when building the Figshare asset package.
 
-### dump_db_tables.py
-
-Exports all SQLite tables to CSV.
-
-Example output:
-
-```text
-exports/
-├── objects.csv
-├── contributors.csv
-├── files.csv
-└── subjects.csv
-```
-
 ### transfer_to_figshare.sh
 
 Uploads migration packages directly to the Figshare FTPS endpoint using `lftp`.
@@ -367,6 +427,81 @@ These scripts are intended for QA-approved metadata corrections that should be r
 
 ---
 
+## Scholarly Feed Records 
+
+The production migration excludes records harvested from external scholarly feeds. 
+
+Currently excluded feed sources: 
+
+- Web of Science 
+- PubMed Central 
+ 
+These records are first ingested into the SQLite staging database to support QA review and auditing. 
+
+### Feed Audit 
+
+Feed records are identified using source-system identifiers stored in MODS metadata. 
+
+Examples: 
+
+    FSU_libsubv1_wos_000440090400002 
+    FSU_pmch_26855607 
+
+An audit report is generated using: 
+
+```bash
+python3 audit_feed_records.py figshare.db
+```
+
+Output: 
+
+    exports/scholarly_feed_audit.csv 
+
+The audit CSV includes: 
+
+    pid 
+    feed_source 
+    iid 
+    doi 
+    pmcid 
+    purl 
+    title 
+    publication_date 
+    journal 
+    source_collection 
+
+Feed inventory identified during migration QA: 
+
+    Web of Science : 1,718 records 
+    PubMed Central : 1,443 records 
+    Total : 3,161 records 
+
+### Feed Record Removal 
+
+After audit generation, scholarly feed records are removed from the migration database: 
+
+```bash
+python3 update_db_remove_scholarly_feed_records.py figshare.db 
+```
+
+This removal occurs before CSV exports and Figshare delivery package generation. The audit CSV remains available for QA review and is included in metadata archive packages. 
+
+### Related Utilities 
+
+audit_feed_records.py 
+    
+    Generates exports/scholarly_feed_audit.csv. 
+
+stats_on_feed_records.py 
+
+    Generates summary statistics and reporting on scholarly feed content. 
+
+update_db_remove_scholarly_feed_records.py 
+
+    Removes approved scholarly feed records from the migration database.
+
+---
+
 ## Repository Layout
 
 ```text
@@ -387,6 +522,9 @@ figshare_db_map/
 │
 ├── update_db_embargoes.py
 ├── update_DB_by_CSV.py
+├── audit_feed_records.py
+├── stats_on_feed_records.py
+├── update_db_remove_scholarly_feed_records.py
 ├── dedupe_keywords.py
 ├── flatten_asset_tree.py
 ├── dump_db_tables.py
@@ -415,6 +553,10 @@ SQLite DB
 Embargo updates
         ↓
 QA updates
+        ↓
+Feed audit
+        ↓
+Feed removal
         ↓
 Keyword cleanup
         ↓
@@ -446,4 +588,4 @@ FTPS Upload
 Figshare STAGE / PROD Ingest
 ```
 
-The SQLite database remains the authoritative metadata staging layer throughout the migration process.
+The SQLite database remains the authoritative metadata staging layer throughout the migration process. The production migration excludes records harvested from Web of Science and PubMed Central. These records are audited, documented, and removed from the staging database prior to metadata export.

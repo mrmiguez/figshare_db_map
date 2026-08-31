@@ -44,7 +44,7 @@ echo
 # Rebuild database
 #
 
-echo "[1/8] Building migration database..."
+echo "[1/10] Building migration database..."
 
 if [[ "$S3_MODE" == "true" ]]; then
 
@@ -71,7 +71,7 @@ fi
 #
 
 echo
-echo "[2/8] Applying embargo updates..."
+echo "[2/10] Applying embargo updates..."
 
 if [[ "$S3_MODE" != "true" ]]; then
 
@@ -90,7 +90,7 @@ fi
 #
 
 echo
-echo "[3/8] Applying SQL corrections..."
+echo "[3/10] Applying SQL corrections..."
 
 if [[ -d "$SCRIPT_DIR/sql" ]]; then
 
@@ -112,7 +112,7 @@ fi
 #
 
 echo
-echo "[4/8] Applying override spreadsheets..."
+echo "[4/10] Applying override spreadsheets..."
 
 if [[ -d "$UPDATES_DIR" ]]; then
 
@@ -132,11 +132,29 @@ if [[ -d "$UPDATES_DIR" ]]; then
 fi
 
 #
+# Feed audit
+#
+
+echo
+echo "[5/10] Auditing scholarly feed records..."
+
+python3 "$SCRIPT_DIR/audit_feed_records.py" "$DB"
+
+#
+# Feed removal
+#
+
+echo
+echo "[6/10] Removing Web of Science and PubMed Central records..."
+
+python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" "$DB"
+
+#
 # Keyword cleanup
 #
 
 echo
-echo "[5/8] Deduplicating keywords..."
+echo "[7/10] Deduplicating keywords..."
 
 python3 "$SCRIPT_DIR/dedupe_keywords.py" "$DB"
 
@@ -145,7 +163,7 @@ python3 "$SCRIPT_DIR/dedupe_keywords.py" "$DB"
 #
 
 echo
-echo "[6/8] Exporting database tables..."
+echo "[8/10] Exporting database tables..."
 
 python3 "$SCRIPT_DIR/dump_db_tables.py" "$DB"
 
@@ -154,7 +172,7 @@ python3 "$SCRIPT_DIR/dump_db_tables.py" "$DB"
 #
 
 echo
-echo "[7/8] Creating metadata packages..."
+echo "[9/10] Creating metadata packages..."
 
 ARCHIVE_DIR="$SCRIPT_DIR/metadata_archive"
 FIGSHARE_DIR="$SCRIPT_DIR/metadata_figshare"
@@ -248,7 +266,7 @@ sha256sum \
 #
 
 echo
-echo "[8/8] Database status..."
+echo "[10/10] Database status..."
 
 python3 "$SCRIPT_DIR/main.py" \
     --db "$DB" \

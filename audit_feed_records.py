@@ -2,133 +2,139 @@
 
 import csv
 import os
-from pathlib import Path
+import sqlite3
+import sys
+from assets import feed_records as assets
 
-import assets
-from assets.parser import iter_local_mods
+SCRIPT_DIR = os.path.dirname(
+    os.path.realpath(__file__)
+)
 
+exports_dir = os.path.join(
+    SCRIPT_DIR,
+    "exports"
+)
 
-OUTPUT_CSV = "scholarly_feed_audit.csv"
+def main():
 
+    if len(sys.argv) != 2:
 
-def get_identifier(record, ident_type):
+        print(
+            f"Usage: {sys.argv[0]} <database>"
+        )
+        sys.exit(1)
 
-    for ident in getattr(record, "identifiers", []):
+    db_path = sys.argv[1]
 
-        if (
-            ident.type
-            and ident.type.upper() == ident_type.upper()
-        ):
-            return ident.text
+    os.makedirs(exports_dir, exist_ok=True)
 
-    return None
-
-
-def detect_feed(record):
-
-    iid = get_identifier(record, "IID")
-
-    if iid:
-
-        iid_lower = iid.lower()
-
-        if "libsubv1_wos" in iid_lower:
-            return "Web of Science"
-
-        if iid_lower.startswith("fsu_pmch_"):
-            return "PubMed Central"
-
-    if get_identifier(record, "PMCID"):
-        return "PubMed Central"
-
-    return None
-
-
-with open(
-    OUTPUT_CSV,
-    "w",
-    newline="",
-    encoding="utf-8"
-) as csvfile:
-
-    writer = csv.DictWriter(
-        csvfile,
-        fieldnames=[
-            "pid",
-            "feed_source",
-            "iid",
-            "pmcid",
-            "doi",
-            "purl",
-            "title",
-            "publication_date",
-            "source_collection",
-            "mods_file",
-        ]
+    output_csv = os.path.join(
+        exports_dir,
+        "scholarly_feed_audit.csv"
     )
 
-    writer.writeheader()
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
 
-    for record in iter_local_mods(
-            "/home/mmiguez/Downloads/root/fsu_research_repository"):
+    cur = conn.cursor()
 
-        source_path = record["path"]
-        collection = record["collection"]
+    cur.execute(
+        """
+        SELECT
+            pid,
+            title,
+            publication_date,
+            purl,
+            other_identifiers,
+            source_collection
+        FROM objects
+        ORDER BY pid
+        """
+    )
 
-        filename = os.path.basename(
-            str(source_path)
+    results = []
+
+    wos_count = 0
+    pmc_count = 0
+
+    for row in cur:
+
+        iid = assets.extract_iid(
+            row["other_identifiers"]
         )
 
-        pid = (
-            Path(filename)
-            .stem
-            .replace("fsu_", "fsu:")
-            .replace("FSU_", "fsu:")
-            .removesuffix("_MODS")
+        feed_source = assets.detect_feed(
+            iid,
+            row["purl"]
         )
 
-        for parsed_record in assets.parse_mods_stream(
-                record["stream"]):
+        if not feed_source:
+            continue
 
-            feed_source = detect_feed(
-                parsed_record
-            )
+        if feed_source == "Web of Science":
+            wos_count += 1
 
-            if not feed_source:
-                continue
+        if feed_source == "PubMed Central":
+            pmc_count += 1
 
-            obj = assets.ObjectRecord(
-                pid,
-                parsed_record,
-                collection
-            )
-
-            writer.writerow({
-                "pid": pid,
-                "feed_source": feed_source,
-                "iid": get_identifier(
-                    parsed_record,
-                    "IID"
+        results.append({
+            "pid":
+                row["pid"],
+            "feed_source":
+                feed_source,
+            "iid":
+                iid,
+            "doi":
+                assets.extract_doi(
+                    row["other_identifiers"]
                 ),
-                "pmcid": get_identifier(
-                    parsed_record,
-                    "PMCID"
-                ),
-                "doi": get_identifier(
-                    parsed_record,
-                    "DOI"
-                ),
-                "purl": obj.purl,
-                "title": obj.title,
-                "publication_date":
-                    obj.publication_date,
-                "source_collection":
-                    collection,
-                "mods_file":
-                    source_path,
-            })
+            "purl":
+                row["purl"],
+            "title":
+                row["title"],
+            "publication_date":
+                row["publication_date"],
+            "source_collection":
+                row["source_collection"],
+        })
 
-print(
-    f"Wrote feed audit to "
-    f"{OUTPUT_CSV}"
-)
+    with open(
+        output_csv,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as fh:
+
+        writer = csv.DictWriter(
+            fh,
+            fieldnames=[
+                "pid",
+                "feed_source",
+                "iid",
+                "doi",
+                "purl",
+                "title",
+                "publication_date",
+                "source_collection",
+            ]
+        )
+
+        writer.writeheader()
+        writer.writerows(results)
+
+    print(
+        f"Wrote {len(results):,} feed records to "
+        f"{output_csv}"
+    )
+
+    print(
+        f"    Web of Science : {wos_count:,}"
+    )
+
+    print(
+        f"    PubMed Central : {pmc_count:,}"
+    )
+
+
+if __name__ == "__main__":
+    main()
