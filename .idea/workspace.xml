@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/feed_records.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/update_db_remove_scholarly_feed_records.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/updates/bad_date_updates.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/audit_feed_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/audit_feed_records.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process_metadata.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_metadata.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +65,7 @@
     "Shell Script.run_migration.executor": "Run",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mmiguez/bin/figshare_db_map/updates",
+    "last_opened_file_path": "/home/mmiguez/bin/figshare_migration",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "aDefault",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
@@ -99,7 +92,7 @@
       <recent name="$PROJECT_DIR$/updates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main --run full">
+  <component name="RunManager" selected="Shell Script.run_migration">
     <configuration name="dump_db_tables" type="PythonConfigurationType" factoryName="Python">
       <module name="figshare_db_map" />
       <option name="ENV_FILES" value="" />
@@ -357,13 +350,14 @@
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
       <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="EXECUTE_IN_TERMINAL" value="true" />
       <option name="EXECUTE_SCRIPT_FILE" value="true" />
       <envs>
         <env name="DB" value="$PROJECT_DIR$/../figshare_migration/figshare_records.sqlite3" />
         <env name="ROOT" value="$USER_HOME$/Downloads/root/fsu_research_repository" />
+        <env name="S3_MODE" value="false" />
       </envs>
       <method v="2" />
     </configuration>
@@ -440,23 +434,7 @@
       <workItem from="1786548756573" duration="1185000" />
       <workItem from="1787157507804" duration="12000" />
       <workItem from="1787920964649" duration="7028000" />
-      <workItem from="1788182118239" duration="9492000" />
-    </task>
-    <task id="LOCAL-00004" summary="Cleaning logging msgs">
-      <option name="closed" value="true" />
-      <created>1773848408117</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1773848408118</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Updating progress">
-      <option name="closed" value="true" />
-      <created>1774301959203</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1774301959203</updated>
+      <workItem from="1788182118239" duration="11402000" />
     </task>
     <task id="LOCAL-00006" summary="Add readme.md">
       <option name="closed" value="true" />
@@ -834,7 +812,23 @@
       <option name="project" value="LOCAL" />
       <updated>1788196233400</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Adding update CSV for bad dates">
+      <option name="closed" value="true" />
+      <created>1788209048415</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1788209048415</updated>
+    </task>
+    <task id="LOCAL-00054" summary="implemented audit and removal of scholarly feed records">
+      <option name="closed" value="true" />
+      <created>1788209083870</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1788209083870</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -853,8 +847,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Small edits" />
-    <MESSAGE value="More utils" />
     <MESSAGE value="structuring for migration run" />
     <MESSAGE value="documenting" />
     <MESSAGE value="add Casto Map pids and item_type = Model" />
@@ -878,7 +870,9 @@
     <MESSAGE value="Adding PURLs to other identifiers" />
     <MESSAGE value="trimming local path prefix from `source_collection`" />
     <MESSAGE value="audits for records coming from WoS and PubMed" />
-    <option name="LAST_COMMIT_MESSAGE" value="audits for records coming from WoS and PubMed" />
+    <MESSAGE value="Adding update CSV for bad dates" />
+    <MESSAGE value="implemented audit and removal of scholarly feed records" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented audit and removal of scholarly feed records" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
