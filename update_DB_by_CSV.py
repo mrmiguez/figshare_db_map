@@ -31,7 +31,7 @@ def main():
 
         with csv_path.open(
             newline="",
-            encoding="utf-8"
+            encoding="utf-8-sig"
         ) as fh:
 
             reader = csv.DictReader(fh)
