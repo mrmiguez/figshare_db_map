@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/data_maps.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/data_maps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/records.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/records.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,12 +363,12 @@
       <item itemvalue="Python.main --burndown" />
       <item itemvalue="Python.main --help" />
       <item itemvalue="Python.main --run full" />
-      <item itemvalue="Python.main --run sample" />
       <item itemvalue="Python.main --status" />
       <item itemvalue="Python.main test-data" />
       <item itemvalue="Python.scratch" />
       <item itemvalue="Python.update_db_embargoes" />
       <item itemvalue="Python.update_db_item_types" />
+      <item itemvalue="Python.main --run sample" />
       <item itemvalue="Shell Script.run_migration" />
     </list>
     <recent_temporary>
@@ -435,6 +431,7 @@
       <workItem from="1786548756573" duration="1185000" />
       <workItem from="1787157507804" duration="12000" />
       <workItem from="1787920964649" duration="7028000" />
+      <workItem from="1788182118239" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="Begin scaffold">
       <option name="closed" value="true" />
@@ -820,7 +817,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787921032559</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Updated license mapping. Name order explicitly preserved through order sequencing">
+      <option name="closed" value="true" />
+      <created>1788182302362</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1788182302362</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -839,7 +844,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Enriched FOR category mapping" />
     <MESSAGE value="Emitting category codes instead of terms" />
     <MESSAGE value="Shuffle subject terms to keywords" />
     <MESSAGE value="small DB update util" />
@@ -864,7 +868,8 @@
     <MESSAGE value="copy errors" />
     <MESSAGE value="aligning utilities and driver scripts" />
     <MESSAGE value="audit scripts" />
-    <option name="LAST_COMMIT_MESSAGE" value="audit scripts" />
+    <MESSAGE value="Updated license mapping. Name order explicitly preserved through order sequencing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated license mapping. Name order explicitly preserved through order sequencing" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />

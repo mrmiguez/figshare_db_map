@@ -597,6 +597,13 @@ class ObjectRecord:
             if normalized:
                 vals.append(normalized)
 
+        # Add PURLs
+        for purl in getattr(self.record, "purl", []):
+            if not purl:
+                continue
+            if purl and purl not in vals:
+                vals.append(purl)
+
         return self._join_pipe(vals)
 
     # ---- physical location
