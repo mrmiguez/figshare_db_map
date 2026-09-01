@@ -9,9 +9,11 @@ db = sys.argv[1]
 
 conn = sqlite3.connect(db)
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+db_path = Path(db)
 
-outdir = SCRIPT_DIR / "exports"
+run_dir = db_path.parent
+
+outdir = run_dir / "exports"
 outdir.mkdir(exist_ok=True)
 
 tables = conn.execute("""

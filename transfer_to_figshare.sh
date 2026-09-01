@@ -4,21 +4,24 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+RUN_DIR="${RUN_DIR:-$PWD}"
+
 : "${FIGSHARE_FTP_HOST:?}"
 : "${FIGSHARE_FTP_USER:?}"
 : "${FIGSHARE_FTP_PASS:?}"
 
-METADATA_ZIP="${METADATA_ZIP:-$SCRIPT_DIR/metadata.zip}"
-METADATA_SHA="${METADATA_SHA:-$SCRIPT_DIR/metadata.zip.sha256}"
+METADATA_ZIP="${METADATA_ZIP:-$RUN_DIR/metadata.zip}"
+METADATA_SHA="${METADATA_SHA:-$RUN_DIR/metadata.zip.sha256}"
 
-FILES_ZIP="${FILES_ZIP:-$SCRIPT_DIR/files.zip}"
-FILES_SHA="${FILES_SHA:-$SCRIPT_DIR/files.zip.sha256}"
+FILES_ZIP="${FILES_ZIP:-$RUN_DIR/files.zip}"
+FILES_SHA="${FILES_SHA:-$RUN_DIR/files.zip.sha256}"
 
 echo
 echo "=========================================================="
 echo "FIGSHARE FTP TRANSFER"
 echo "=========================================================="
-echo "Host : $FIGSHARE_FTP_HOST"
+echo "Host    : $FIGSHARE_FTP_HOST"
+echo "Run dir : $RUN_DIR"
 echo
 echo "Metadata:"
 echo "  $METADATA_ZIP"
@@ -74,7 +77,7 @@ lftp \
     put -c "$METADATA_SHA";
 
     bye
-  " | tee "$SCRIPT_DIR/metadata_upload.log"
+  " | tee "$RUN_DIR/metadata_upload.log"
 
 echo
 echo "[2/2] Uploading asset package..."
@@ -103,7 +106,7 @@ lftp \
     put -c "$FILES_SHA";
 
     bye
-  " | tee "$SCRIPT_DIR/files_upload.log"
+  " | tee "$RUN_DIR/files_upload.log"
 
 echo
 echo "=========================================================="

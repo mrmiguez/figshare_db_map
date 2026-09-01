@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/update_DB_by_CSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/update_DB_by_CSV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit_feed_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/audit_feed_records.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dump_db_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/dump_db_tables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process_assets.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_assets.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process_metadata.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_metadata.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transfer_to_figshare.sh" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_to_figshare.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +70,7 @@
     "Shell Script.run_migration.executor": "Run",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mmiguez/bin/figshare_db_map",
+    "last_opened_file_path": "/home/mmiguez/bin",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "aDefault",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
@@ -349,7 +353,7 @@
       <option name="SCRIPT_PATH" value="$PROJECT_DIR$/process_metadata.sh" />
       <option name="SCRIPT_OPTIONS" value="" />
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
       <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -435,15 +439,8 @@
       <workItem from="1786548756573" duration="1185000" />
       <workItem from="1787157507804" duration="12000" />
       <workItem from="1787920964649" duration="7028000" />
-      <workItem from="1788182118239" duration="13004000" />
-    </task>
-    <task id="LOCAL-00007" summary="Add LICENSE">
-      <option name="closed" value="true" />
-      <created>1774380596513</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1774380596513</updated>
+      <workItem from="1788182118239" duration="13904000" />
+      <workItem from="1788269053017" duration="4808000" />
     </task>
     <task id="LOCAL-00008" summary="Switch to pymods parser">
       <option name="closed" value="true" />
@@ -829,7 +826,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788212952570</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="BOM bug">
+      <option name="closed" value="true" />
+      <created>1788214610042</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1788214610042</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -848,7 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="documenting" />
     <MESSAGE value="add Casto Map pids and item_type = Model" />
     <MESSAGE value="requirements.txt" />
     <MESSAGE value="SQL error" />
@@ -873,7 +877,8 @@
     <MESSAGE value="Adding update CSV for bad dates" />
     <MESSAGE value="implemented audit and removal of scholarly feed records" />
     <MESSAGE value="package relative import" />
-    <option name="LAST_COMMIT_MESSAGE" value="package relative import" />
+    <MESSAGE value="BOM bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="BOM bug" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
@@ -884,7 +889,7 @@
     <SUITE FILE_PATH="coverage/figshare_db_map$main___help.coverage" NAME="main --help Coverage Results" MODIFIED="1774380240885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$FileDir$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run_full.coverage" NAME="main --run full Coverage Results" MODIFIED="1787937464423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main___run_sample.coverage" NAME="main --run sample Coverage Results" MODIFIED="1782399809363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1788214013629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/figshare_db_map$main___burndown.coverage" NAME="main --burndown Coverage Results" MODIFIED="1788282810056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main_dev_data.coverage" NAME="main test-data Coverage Results" MODIFIED="1780676275106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$main.coverage" NAME="main --run Coverage Results" MODIFIED="1773776670977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figshare_db_map$update_db_embargoes.coverage" NAME="update_db_embargoes Coverage Results" MODIFIED="1785252222598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

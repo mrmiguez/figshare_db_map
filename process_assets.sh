@@ -4,9 +4,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-FILES_DIR="${FILES_DIR:-/data/files}"
-FILES_ZIP="${FILES_ZIP:-$SCRIPT_DIR/files.zip}"
-FILES_SHA="${FILES_SHA:-$SCRIPT_DIR/files.zip.sha256}"
+RUN_DIR="${RUN_DIR:-$PWD}"
+
+FILES_DIR="${FILES_DIR:-$RUN_DIR/files}"
+FILES_ZIP="${FILES_ZIP:-$RUN_DIR/files.zip}"
+FILES_SHA="${FILES_SHA:-$RUN_DIR/files.zip.sha256}"
 
 : "${SRCBUCK:?}"
 
@@ -16,6 +18,7 @@ echo "FIGSHARE ASSET PACKAGING"
 echo "=========================================================="
 echo "Repository : $SCRIPT_DIR"
 echo "Source     : $SRCBUCK"
+echo "Run dir    : $RUN_DIR"
 echo "Files Dir  : $FILES_DIR"
 echo "Output ZIP : $FILES_ZIP"
 echo "=========================================================="

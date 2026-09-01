@@ -6,25 +6,25 @@ import sqlite3
 import sys
 from assets import feed_records as assets
 
-SCRIPT_DIR = os.path.dirname(
-    os.path.realpath(__file__)
-)
-
-exports_dir = os.path.join(
-    SCRIPT_DIR,
-    "exports"
-)
 
 def main():
 
     if len(sys.argv) != 2:
-
         print(
             f"Usage: {sys.argv[0]} <database>"
         )
         sys.exit(1)
 
     db_path = sys.argv[1]
+
+    run_dir = os.path.dirname(
+        os.path.abspath(db_path)
+    )
+
+    exports_dir = os.path.join(
+        run_dir,
+        "exports"
+    )
 
     os.makedirs(exports_dir, exist_ok=True)
 

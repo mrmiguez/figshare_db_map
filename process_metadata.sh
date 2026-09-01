@@ -9,6 +9,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 DB="${DB:-$SCRIPT_DIR/figshare.db}"
+RUN_DIR="$(dirname "$DB")"
 UPDATES_DIR="${UPDATES_DIR:-$SCRIPT_DIR/updates}"
 
 S3_MODE="${S3_MODE:-true}"
@@ -34,6 +35,7 @@ echo "FIGSHARE METADATA WORKFLOW"
 echo "=========================================================="
 echo "Repository      : $SCRIPT_DIR"
 echo "Database        : $DB"
+echo "Run Dir         : $RUN_DIR"
 echo "Updates Dir     : $UPDATES_DIR"
 echo "S3 Mode         : $S3_MODE"
 echo "Bucket          : $BUCKET"
@@ -174,8 +176,8 @@ python3 "$SCRIPT_DIR/dump_db_tables.py" "$DB"
 echo
 echo "[9/10] Creating metadata packages..."
 
-ARCHIVE_DIR="$SCRIPT_DIR/metadata_archive"
-FIGSHARE_DIR="$SCRIPT_DIR/metadata_figshare"
+ARCHIVE_DIR="$RUN_DIR/metadata_archive"
+FIGSHARE_DIR="$RUN_DIR/metadata_figshare"
 
 rm -rf "$ARCHIVE_DIR"
 rm -rf "$FIGSHARE_DIR"
@@ -191,8 +193,8 @@ echo "    Building metadata_archive.zip..."
 
 cp "$DB" "$ARCHIVE_DIR/"
 
-if [[ -d "$SCRIPT_DIR/exports" ]]; then
-    cp -r "$SCRIPT_DIR/exports" "$ARCHIVE_DIR/"
+if [[ -d "$RUN_DIR/exports" ]]; then
+    cp -r "$RUN_DIR/exports" "$ARCHIVE_DIR/"
 fi
 
 find "$SCRIPT_DIR" \
@@ -209,13 +211,13 @@ fi
     cd "$ARCHIVE_DIR"
 
     zip -rq \
-        "$SCRIPT_DIR/metadata_archive.zip" \
+        "$RUN_DIR/metadata_archive.zip" \
         .
 )
 
 sha256sum \
-    "$SCRIPT_DIR/metadata_archive.zip" \
-    > "$SCRIPT_DIR/metadata_archive.zip.sha256"
+    "$RUN_DIR/metadata_archive.zip" \
+    > "$RUN_DIR/metadata_archive.zip.sha256"
 
 #
 # Preservation copy to S3
@@ -228,11 +230,11 @@ if [[ -n "${SRCBUCK:-}" ]]; then
     echo "        s3://$SRCBUCK/archive/"
 
     aws s3 cp \
-        "$SCRIPT_DIR/metadata_archive.zip" \
+        "$RUN_DIR/metadata_archive.zip" \
         "s3://$SRCBUCK/archive/metadata_archive.zip"
 
     aws s3 cp \
-        "$SCRIPT_DIR/metadata_archive.zip.sha256" \
+        "$RUN_DIR/metadata_archive.zip.sha256" \
         "s3://$SRCBUCK/archive/metadata_archive.zip.sha256"
 
 fi
@@ -244,21 +246,21 @@ fi
 echo
 echo "    Building metadata.zip..."
 
-if [[ -d "$SCRIPT_DIR/exports" ]]; then
-    cp -r "$SCRIPT_DIR/exports" "$FIGSHARE_DIR/"
+if [[ -d "$RUN_DIR/exports" ]]; then
+    cp -r "$RUN_DIR/exports" "$FIGSHARE_DIR/"
 fi
 
 (
     cd "$FIGSHARE_DIR"
 
     zip -rq \
-        "$SCRIPT_DIR/metadata.zip" \
+        "$RUN_DIR/metadata.zip" \
         .
 )
 
 sha256sum \
-    "$SCRIPT_DIR/metadata.zip" \
-    > "$SCRIPT_DIR/metadata.zip.sha256"
+    "$RUN_DIR/metadata.zip" \
+    > "$RUN_DIR/metadata.zip.sha256"
 
 
 #
@@ -279,13 +281,13 @@ echo "=========================================================="
 
 echo
 echo "Created:"
-echo "  $SCRIPT_DIR/metadata_archive.zip"
-echo "  $SCRIPT_DIR/metadata_archive.zip.sha256"
-echo "  $SCRIPT_DIR/metadata.zip"
-echo "  $SCRIPT_DIR/metadata.zip.sha256"
+echo "  $RUN_DIR/metadata_archive.zip"
+echo "  $RUN_DIR/metadata_archive.zip.sha256"
+echo "  $RUN_DIR/metadata.zip"
+echo "  $RUN_DIR/metadata.zip.sha256"
 
 ls -lh \
-    "$SCRIPT_DIR/metadata_archive.zip" \
-    "$SCRIPT_DIR/metadata_archive.zip.sha256" \
-    "$SCRIPT_DIR/metadata.zip" \
-    "$SCRIPT_DIR/metadata.zip.sha256"
+    "$RUN_DIR/metadata_archive.zip" \
+    "$RUN_DIR/metadata_archive.zip.sha256" \
+    "$RUN_DIR/metadata.zip" \
+    "$RUN_DIR/metadata.zip.sha256"

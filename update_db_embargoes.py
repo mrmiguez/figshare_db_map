@@ -6,7 +6,6 @@ import sqlite3
 import sys
 from pathlib import Path
 
-PATH = os.path.dirname(os.path.abspath(__file__))
 
 FILE_EMBARGO_TYPES = {
     "PDF datastream",
