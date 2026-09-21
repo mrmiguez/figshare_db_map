@@ -117,9 +117,8 @@ class ObjectRecord:
         if "non-commercial use" in text and "freely accessible" not in text:
             return "http://rightsstatements.org/vocab/NoC-NC/1.0/"
 
-        # logger.info(f'Assigning default statement... {self.pid}')
-        # return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
-        return None
+        logger.info(f'Assigning default statement... {self.pid}')
+        return 'http://rightsstatements.org/vocab/CNE/1.0/' # default rights URI
 
     def _normalize_genre(self, text):
         if not text:
