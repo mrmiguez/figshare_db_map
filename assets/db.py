@@ -57,20 +57,28 @@ def connect_db(DB_PATH):
                 other_identifiers TEXT,
                 contributors TEXT,
                 subjects TEXT,
-                source_collection TEXT
+                source_collection TEXT,
+                group_id TEXT,
+                collection_id TEXT,
+                format TEXT,
+                extent TEXT,
+                archival_collection TEXT,
+                issuance TEXT,
+                patent_number TEXT,
+                thesis_type TEXT
             );
 
             CREATE TABLE IF NOT EXISTS object_authors (
                 object_id       TEXT NOT NULL,
                 author_id       INTEGER NOT NULL,
                 author_position INTEGER NOT NULL,
-            
+
                 PRIMARY KEY (object_id, author_position),
-            
+
                 FOREIGN KEY (object_id)
                     REFERENCES objects(pid)
                     ON DELETE CASCADE,
-            
+
                 FOREIGN KEY (author_id)
                     REFERENCES authors(id)
                     ON DELETE CASCADE
@@ -91,14 +99,15 @@ def get_db_status(db_conn):
     for all non-internal SQLite tables.
     """
 
-    # Get all user-defined tables (skip sqlite_* internals)
     cursor = db_conn.cursor()
+
     cursor.execute("""
-                   SELECT name
-                   FROM sqlite_master
-                   WHERE type = 'table'
-                     AND name NOT LIKE 'sqlite_%';
-                   """)
+        SELECT name
+        FROM sqlite_master
+        WHERE type = 'table'
+          AND name NOT LIKE 'sqlite_%';
+    """)
+
     tables = [row[0] for row in cursor.fetchall()]
 
     status = {}
@@ -126,32 +135,43 @@ def write_db_record(db_conn, pid, record, coll_path):
 
     try:
         cursor.execute(
-            '''
-            INSERT OR IGNORE INTO objects (pid,
-                                           title,
-                                           category,
-                                           item_type,
-                                           keywords,
-                                           description,
-                                           license,
-                                           publication_date,
-                                           language,
-                                           publisher,
-                                           journal,
-                                           volume,
-                                           issue,
-                                           physical_location,
-                                           purl,
-                                           notes,
-                                           subjects,
-                                           other_identifiers,
-                                           contributors,
-                                           source_collection)
-            VALUES (?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?,
-                    ?, ?)
-            ''',
+            """
+            INSERT OR IGNORE INTO objects (
+                pid,
+                title,
+                category,
+                item_type,
+                keywords,
+                description,
+                license,
+                publication_date,
+                language,
+                publisher,
+                journal,
+                volume,
+                issue,
+                physical_location,
+                purl,
+                notes,
+                subjects,
+                other_identifiers,
+                contributors,
+                source_collection,
+                group_id,
+                collection_id,
+                format,
+                extent,
+                archival_collection,
+                issuance,
+                patent_number,
+                thesis_type
+            )
+            VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?, ?, ?
+            )
+            """,
             (
                 pid,
                 obj.title or "[no title]",
@@ -172,7 +192,19 @@ def write_db_record(db_conn, pid, record, coll_path):
                 obj.subjects,
                 obj.other_identifiers,
                 obj.contributors,
-                source_collection
+                source_collection,
+
+                # Populated later from source_collection mapping.
+                None,
+                None,
+
+                # MODS-derived fields to be implemented in ObjectRecord.
+                getattr(obj, "format", None),
+                getattr(obj, "extent", None),
+                getattr(obj, "archival_collection", None),
+                getattr(obj, "issuance", None),
+                getattr(obj, "patent_number", None),
+                getattr(obj, "thesis_type", None),
             )
         )
 
@@ -188,7 +220,6 @@ def write_author_record(db_conn, author):
     if identity is None:
         logger.error(f"Missing identity... {author}")
 
-    # Try insert
     cursor.execute(
         """
         INSERT OR IGNORE INTO authors
@@ -204,7 +235,6 @@ def write_author_record(db_conn, author):
         )
     )
 
-    # Always fetch ID
     cursor.execute(
         "SELECT id FROM authors WHERE identity = ?",
         (identity,)
@@ -226,7 +256,11 @@ def link_author_to_object(db_conn, pid, author_id, author_position):
 
     cursor.execute(
         """
-        INSERT OR IGNORE INTO object_authors (object_id, author_id, author_position)
+        INSERT OR IGNORE INTO object_authors (
+            object_id,
+            author_id,
+            author_position
+        )
         VALUES (?, ?, ?)
         """,
         (pid, author_id, author_position)
