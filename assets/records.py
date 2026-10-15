@@ -78,6 +78,9 @@ class ObjectRecord:
         text = re.sub(r'T\d{2}:\d{2}:\d{2}Z', '', text)
         text = _fix_mojibake(text)
 
+        # Collapse runs of whitespace
+        text = re.sub(r"\s+", " ", text)
+
         return text.strip()
 
     def _first(self, values):
@@ -250,8 +253,29 @@ class ObjectRecord:
     # Metadata properties
     # -----------------------
 
-    # ---- category Figshare Field of Research (FoR)
+    # ---- archival collection
+    @property
+    def archival_collection(self):
 
+        description_standard = self.record.xpath(
+            ".//mods:recordInfo/mods:descriptionStandard/text()",
+            namespaces=NS
+        )
+
+        if not description_standard:
+            return None
+
+        if self._clean_text(description_standard[0]).casefold() != "dacs":
+            return None
+
+        collection = self.record.collection
+
+        if collection is None or not collection.title:
+            return None
+
+        return self._clean_text(collection.title)
+
+    # ---- category Figshare Field of Research (FoR)
     @property
     def categories(self):
 
@@ -310,6 +334,50 @@ class ObjectRecord:
         texts = [a.text for a in self.record.abstract if a.text]
         return "\n\n".join(self._clean_text(t) for t in texts) if texts else None
 
+    # ---- extent
+    @property
+    def extent(self):
+        return self._join_pipe(getattr(self.record, "extent", []))
+
+    # ---- format
+    @property
+    def format(self):
+
+        values = [
+            genre.text
+            for genre in getattr(self.record, "genre", [])
+            if genre.text
+        ]
+
+        type_of_resource = getattr(
+            self.record,
+            "type_of_resource",
+            None
+        )
+
+        if type_of_resource:
+            values.append(type_of_resource)
+
+        seen = set()
+        deduped = []
+
+        for value in values:
+
+            value = self._clean_text(value)
+
+            if not value:
+                continue
+
+            key = value.casefold()
+
+            if key in seen:
+                continue
+
+            seen.add(key)
+            deduped.append(value)
+
+        return self._join_pipe(deduped)
+
     # ---- journal issue
     @property
     def issue(self):
@@ -326,9 +394,26 @@ class ObjectRecord:
 
         return None
 
+    # ---- issuance
+    @property
+    def issuance(self):
+        return self._join_pipe(getattr(self.record, "issuance", []))
+
     # ---- item_type (genre mapping)
     @property
     def item_type(self):
+
+        # ETD degree metadata is an explicit thesis/dissertation signal.
+        levels = self.record.xpath(
+            ".//*[local-name()='degree']"
+            "/*[local-name()='level']/text()"
+        )
+
+        if any(
+                self._clean_text(level)
+                for level in levels
+        ):
+            return "Thesis"
 
         candidates = set()
 
@@ -605,6 +690,20 @@ class ObjectRecord:
 
         return self._join_pipe(vals)
 
+    # ---- patent number
+    @property
+    def patent_number(self):
+
+        values = [
+            ident.text
+            for ident in getattr(self.record, "identifiers", [])
+            if ident.text
+               and ident.type
+               and ident.type.strip().lower() == "patent number"
+        ]
+
+        return self._join_pipe(values)
+
     # ---- physical location
     @property
     def physical_location(self):
@@ -798,6 +897,99 @@ class ObjectRecord:
                 values.append(subject.text)
 
         return self._join_pipe(values)
+
+    # ---- thesis type
+    @property
+    def thesis_type(self):
+
+        THESIS_TYPE_MAP = {
+            "doctoral thesis": "Doctoral",
+            "doctoral": "Doctoral",
+            "doctorate": "Doctoral",
+
+            "licentiate thesis": "Licentiate",
+            "licentiate": "Licentiate",
+
+            "master thesis": "Masters",
+            "master's thesis": "Masters",
+            "masters thesis": "Masters",
+            "masters": "Masters",
+            "master": "Masters",
+
+            "undergraduate thesis": "Undergraduate",
+            "undergraduate": "Undergraduate",
+            "bachelor thesis": "Undergraduate",
+            "bachelor's thesis": "Undergraduate",
+        }
+
+        # -----------------------------------
+        # 1. COAR genre
+        # -----------------------------------
+
+        for genre in getattr(self.record, "genre", []):
+
+            authority = (
+                (genre.authority or "")
+                .strip()
+                .lower()
+            )
+
+            authority_uri = (
+                (genre.authorityURI or "")
+                .strip()
+                .lower()
+            )
+
+            if (
+                    authority == "coar"
+                    or authority_uri == "http://purl.org/coar/resource_type"
+            ):
+
+                value = self._clean_text(
+                    genre.text
+                )
+
+                if not value:
+                    continue
+
+                mapped = THESIS_TYPE_MAP.get(
+                    value.lower()
+                )
+
+                if mapped:
+                    return mapped
+
+        # -----------------------------------
+        # 2. ETD degree level fallback
+        # -----------------------------------
+
+        levels = self.record.xpath(
+            ".//*[local-name()='degree']"
+            "/*[local-name()='level']/text()"
+        )
+
+        for level in levels:
+
+            value = self._clean_text(level)
+
+            if not value:
+                continue
+
+            mapped = THESIS_TYPE_MAP.get(
+                value.lower()
+            )
+
+            if mapped:
+                return mapped
+
+        # -----------------------------------
+        # Thesis exists, but type is unknown
+        # -----------------------------------
+
+        if self.item_type == "Thesis":
+            return "Other"
+
+        return None
 
     # ---- title
     @property
