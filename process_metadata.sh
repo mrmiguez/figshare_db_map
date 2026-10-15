@@ -125,7 +125,7 @@ if [[ -d "$UPDATES_DIR" ]]; then
 
         echo "    Applying: $(basename "$CSV")"
 
-        python3 "$SCRIPT_DIR/update_DB_by_CSV.py" \
+        python3 "$SCRIPT_DIR/update_db_by_csv.py" \
             "$DB" \
             "$CSV"
 
@@ -158,7 +158,7 @@ python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" "$DB"
 echo
 echo "[7/10] Deduplicating keywords..."
 
-python3 "$SCRIPT_DIR/dedupe_keywords.py" "$DB"
+python3 "$SCRIPT_DIR/update_db_dedupe_keywords.py" "$DB"
 
 #
 # Export tables

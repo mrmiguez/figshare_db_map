@@ -233,7 +233,7 @@ fsu:912587,Model
 Applied using:
 
 ```bash
-python3 update_DB_by_CSV.py \
+python3 update_db_by_csv.py \
     figshare.db \
     updates/item_type_updates.csv
 ```
