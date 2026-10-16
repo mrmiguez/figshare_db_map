@@ -1,37 +1,23 @@
 #!/usr/bin/env python3
 
-import os
 import csv
 import sqlite3
 import sys
 from pathlib import Path
 
-
-FILE_EMBARGO_TYPES = {
-    "PDF datastream",
-    "OBJ datastream",
-    "FULL_TEXT datastream",
-    "MP4 datastream",
-    "PREVIEW datastream",
-}
-
-ARTICLE_EMBARGO_TYPES = {
-    "object",
-}
-
-ACCESS_RESTRICTION_TYPES = {
-    "IP",
-}
-
-UNKNOWN_TYPES = set()
+from assets.embargoes import (
+    classify_embargo,
+    is_indefinite,
+)
 
 
 def embargo_files(record_directory):
-    yield from Path(record_directory).rglob("*child-embargoes.csv")
+    yield from Path(record_directory).rglob(
+        "*child-embargoes.csv"
+    )
 
 
 def parse_row(row):
-
     return (
         row[0].strip(),
         row[1].strip(),
@@ -39,20 +25,73 @@ def parse_row(row):
     )
 
 
-def update_embargo(conn, pid, embargo_target, embargo_value):
+def insert_embargo(
+    conn,
+    pid,
+    embargo_target,
+    embargo_value,
+):
+    """
+    Preserve the source embargo as a row in the embargoes table.
+    """
 
-    is_indefinite = embargo_value.lower() == "indefinite"
+    embargo_class = classify_embargo(
+        embargo_target
+    )
 
+    conn.execute(
+        """
+        INSERT OR IGNORE INTO embargoes (
+            object_id,
+            target,
+            embargo_value,
+            embargo_class
+        )
+        VALUES (?, ?, ?, ?)
+        """,
+        (
+            pid,
+            embargo_target,
+            embargo_value,
+            embargo_class,
+        )
+    )
+
+    return embargo_class
+
+
+def project_embargo_to_object(
+    conn,
+    pid,
+    embargo_target,
+    embargo_value,
+    embargo_class,
+):
+    """
+    Project source embargo information onto the existing
+    objects embargo fields used by the Figshare migration.
+
+    The normalized embargoes table remains the authoritative
+    source for all embargo conditions.
+    """
+
+    indefinite = is_indefinite(
+        embargo_value
+    )
+
+    # -------------------------
     # File-level restrictions
-    if embargo_target in FILE_EMBARGO_TYPES:
+    # -------------------------
 
-        if is_indefinite:
+    if embargo_class == "file":
+
+        if indefinite:
 
             conn.execute(
                 """
                 UPDATE objects
-                SET embargo_type   = 'file',
-                    embargo_date   = NULL,
+                SET embargo_type = 'file',
+                    embargo_date = NULL,
                     embargo_reason = 'perpetual file embargo'
                 WHERE pid = ?
                 """,
@@ -68,21 +107,27 @@ def update_embargo(conn, pid, embargo_target, embargo_value):
                     embargo_date = ?
                 WHERE pid = ?
                 """,
-                (embargo_value, pid)
+                (
+                    embargo_value,
+                    pid,
+                )
             )
 
         return
 
-    # Whole-object restrictions
-    if embargo_target in ARTICLE_EMBARGO_TYPES:
+    # -------------------------
+    # Whole-record restrictions
+    # -------------------------
 
-        if is_indefinite:
+    if embargo_class == "article":
+
+        if indefinite:
 
             conn.execute(
                 """
                 UPDATE objects
-                SET embargo_type   = 'article',
-                    embargo_date   = NULL,
+                SET embargo_type = 'article',
+                    embargo_date = NULL,
                     embargo_reason = 'perpetual article embargo'
                 WHERE pid = ?
                 """,
@@ -98,13 +143,19 @@ def update_embargo(conn, pid, embargo_target, embargo_value):
                     embargo_date = ?
                 WHERE pid = ?
                 """,
-                (embargo_value, pid)
+                (
+                    embargo_value,
+                    pid,
+                )
             )
 
         return
 
+    # -------------------------
     # IP restrictions
-    if embargo_target in ACCESS_RESTRICTION_TYPES:
+    # -------------------------
+
+    if embargo_class == "access":
 
         conn.execute(
             """
@@ -112,33 +163,39 @@ def update_embargo(conn, pid, embargo_target, embargo_value):
             SET embargo_reason = ?
             WHERE pid = ?
             """,
-            (f"IP restriction ({embargo_value})", pid)
+            (
+                f"IP restriction ({embargo_value})",
+                pid,
+            )
         )
 
         return
 
-    # Unknowns
-    UNKNOWN_TYPES.add(embargo_target)
 
-    print(
-        f"UNKNOWN: {pid} {embargo_target} {embargo_value}"
-    )
-
-
-def update_embargoes(db_path, record_directory):
+def update_embargoes(
+    db_path,
+    record_directory,
+):
 
     conn = sqlite3.connect(db_path)
 
+    conn.execute(
+        "PRAGMA foreign_keys = ON"
+    )
+
     conn.execute("BEGIN")
 
-    count = 0
+    source_rows = 0
+    inserted_rows = 0
+    unknown_types = set()
 
-    for embargo_file in embargo_files(record_directory):
+    for embargo_file in embargo_files(
+        record_directory
+    ):
 
-        with open(
-            embargo_file,
+        with embargo_file.open(
             newline="",
-            encoding="utf-8"
+            encoding="utf-8",
         ) as fh:
 
             reader = csv.reader(fh)
@@ -148,33 +205,93 @@ def update_embargoes(db_path, record_directory):
                 if len(row) < 3:
                     continue
 
-                pid, target, value = parse_row(row)
+                pid, target, value = parse_row(
+                    row
+                )
 
-                update_embargo(
+                if not pid or not target or not value:
+                    continue
+
+                source_rows += 1
+
+                before = conn.total_changes
+
+                embargo_class = insert_embargo(
                     conn,
                     pid,
                     target,
-                    value
+                    value,
                 )
 
-                count += 1
+                if conn.total_changes > before:
+                    inserted_rows += 1
 
-                if count % 1000 == 0:
+                if embargo_class == "unknown":
+                    unknown_types.add(target)
+
+                project_embargo_to_object(
+                    conn,
+                    pid,
+                    target,
+                    value,
+                    embargo_class,
+                )
+
+                if source_rows % 1000 == 0:
 
                     conn.commit()
                     conn.execute("BEGIN")
 
     conn.commit()
+
+    embargo_count = conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM embargoes
+        """
+    ).fetchone()[0]
+
+    object_count = conn.execute(
+        """
+        SELECT COUNT(
+            DISTINCT object_id
+        )
+        FROM embargoes
+        """
+    ).fetchone()[0]
+
     conn.close()
 
-    print(f"\nUpdated {count:,} embargo rows")
+    print()
+    print(
+        f"Processed {source_rows:,} "
+        "source embargo rows"
+    )
 
-    if UNKNOWN_TYPES:
+    print(
+        f"Inserted {inserted_rows:,} "
+        "new embargo rows"
+    )
 
-        print("\nUnknown embargo types:")
+    print(
+        f"Embargo table contains "
+        f"{embargo_count:,} rows"
+    )
 
-        for t in sorted(UNKNOWN_TYPES):
-            print(f"  {t}")
+    print(
+        f"Embargoed objects: "
+        f"{object_count:,}"
+    )
+
+    if unknown_types:
+
+        print()
+        print("Unknown embargo types:")
+
+        for target in sorted(
+            unknown_types
+        ):
+            print(f"  {target}")
 
 
 if __name__ == "__main__":
@@ -182,7 +299,8 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
 
         print(
-            f"Usage: {sys.argv[0]} DATABASE REPOSITORY_ROOT"
+            f"Usage: {sys.argv[0]} "
+            "DATABASE REPOSITORY_ROOT"
         )
 
         sys.exit(1)
@@ -192,5 +310,5 @@ if __name__ == "__main__":
 
     update_embargoes(
         db_path,
-        repository_root
+        repository_root,
     )

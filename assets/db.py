@@ -33,6 +33,24 @@ def connect_db(DB_PATH):
                 identity TEXT UNIQUE
             );
 
+            CREATE TABLE IF NOT EXISTS embargoes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                object_id TEXT NOT NULL,
+                target TEXT NOT NULL,
+                embargo_value TEXT NOT NULL,
+                embargo_class TEXT NOT NULL,
+                
+                UNIQUE (
+                    object_id,
+                    target,
+                    embargo_value
+                ),
+            
+                FOREIGN KEY (object_id)
+                    REFERENCES objects(pid)
+                    ON DELETE CASCADE
+            );
+            
             CREATE TABLE IF NOT EXISTS objects (
                 pid TEXT PRIMARY KEY,
                 title TEXT NOT NULL,
@@ -86,6 +104,12 @@ def connect_db(DB_PATH):
 
             CREATE INDEX IF NOT EXISTS idx_object_authors_object_position
                 ON object_authors(object_id, author_position);
+                
+            CREATE INDEX IF NOT EXISTS idx_embargoes_object
+                ON embargoes(object_id);
+            
+            CREATE INDEX IF NOT EXISTS idx_embargoes_class_value
+                ON embargoes(embargo_class, embargo_value);
         """)
 
         conn.commit()
