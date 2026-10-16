@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/audit_perpetual_embargoes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/update_db_remove_perpetual_embargoes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/update_db_embargoes.py" beforeDir="false" afterPath="$PROJECT_DIR$/update_db_embargoes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process_metadata.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_metadata.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -442,23 +440,7 @@
       <workItem from="1788269053017" duration="6671000" />
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
-      <workItem from="1791904643482" duration="18984000" />
-    </task>
-    <task id="LOCAL-00014" summary="item_types tuned a bit with priority term matching">
-      <option name="closed" value="true" />
-      <created>1782759125885</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1782759125885</updated>
-    </task>
-    <task id="LOCAL-00015" summary="init category mapping">
-      <option name="closed" value="true" />
-      <created>1782856916798</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1782856916798</updated>
+      <workItem from="1791904643482" duration="21480000" />
     </task>
     <task id="LOCAL-00016" summary="QA SQL">
       <option name="closed" value="true" />
@@ -836,7 +818,23 @@
       <option name="project" value="LOCAL" />
       <updated>1792114498463</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="perpetual whole objects embargoes audited and removed">
+      <option name="closed" value="true" />
+      <created>1792120415620</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1792120415620</updated>
+    </task>
+    <task id="LOCAL-00064" summary="add s3 layer to update_db_embargoes.py">
+      <option name="closed" value="true" />
+      <created>1792120448855</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1792120448855</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -855,8 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Fix for objects with multiple children (i.e. book with pages)" />
-    <MESSAGE value="remove ftp_upload.py (use lftp instead)" />
     <MESSAGE value="run layer for s3 input source" />
     <MESSAGE value="i/o streaming error" />
     <MESSAGE value="sqlite batching error" />
@@ -880,7 +876,9 @@
     <MESSAGE value="implemented new fields archival_collection, extent, format, issuance, patent_number, thesis_type" />
     <MESSAGE value="cleaning up" />
     <MESSAGE value="adding more robust embargo information in embargo table" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding more robust embargo information in embargo table" />
+    <MESSAGE value="perpetual whole objects embargoes audited and removed" />
+    <MESSAGE value="add s3 layer to update_db_embargoes.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="add s3 layer to update_db_embargoes.py" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
