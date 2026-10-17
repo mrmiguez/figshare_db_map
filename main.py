@@ -5,17 +5,25 @@ import assets
 import logging
 from pathlib import Path
 
-from assets import write_author_record, link_author_to_object, iter_local_mods, iter_s3_mods
+from assets import (
+    write_author_record,
+    link_author_to_object,
+    iter_local_mods,
+    iter_s3_mods,
+)
+
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 
-logger = logging.getLogger('figshare_db_map')
+logger = logging.getLogger("figshare_db_map")
 logging.basicConfig(level=logging.DEBUG)
+
 logging.getLogger("botocore").setLevel(logging.WARNING)
 logging.getLogger("boto3").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     # Parse args
     args = assets.argument_parser().parse_args()
@@ -25,12 +33,12 @@ if __name__ == '__main__':
     db_dir = os.path.dirname(DB_PATH)
     db_stem = Path(DB_PATH).stem
 
-    # create parent directory if needed
+    # Create parent directory if needed
     os.makedirs(db_dir, exist_ok=True)
 
     TSV_LOG_PATH = os.path.join(
         db_dir,
-        f"{db_stem}.tsv"
+        f"{db_stem}.tsv",
     )
 
     # TSV logging
@@ -44,13 +52,14 @@ if __name__ == '__main__':
     # Connect DB
     db_conn = assets.connect_db(DB_PATH)
 
-    logger.debug(f'Args... {args}')
+    logger.debug(f"Args... {args}")
 
     # CLI run
     if args.run:
 
         # Select record source
         if getattr(args, "s3", False):
+
             logger.info(
                 f"Running in S3 mode "
                 f"(bucket={args.bucket}, prefix={args.prefix})"
@@ -58,10 +67,11 @@ if __name__ == '__main__':
 
             mods_records = iter_s3_mods(
                 args.bucket,
-                args.prefix
+                args.prefix,
             )
 
         else:
+
             logger.info(
                 f"Running in filesystem mode "
                 f"(record_directory={args.record_directory})"
@@ -73,13 +83,15 @@ if __name__ == '__main__':
 
         # DB commit batching
         db_conn.execute("BEGIN")
+
         BATCH_SIZE = 1000
         count = 0
         start = time.perf_counter()
 
-        # gathering author stats for log
+        # Gathering run stats for log
         fallback_primary_count = 0
         fallback_personal_count = 0
+        zero_parse_count = 0
 
         for record in mods_records:
 
@@ -103,9 +115,14 @@ if __name__ == '__main__':
                 .removesuffix("_MODS")
             )
 
-            # parse records
+            # Parse records
+            parsed_count = 0
+
             for parsed_record in assets.parse_mods_stream(
-                    stream):
+                stream
+            ):
+
+                parsed_count += 1
 
                 if args.verbose:
                     print(f"Parsed... {pid}")
@@ -116,28 +133,54 @@ if __name__ == '__main__':
                 for name in parsed_record.names:
 
                     role_code = (
-                            getattr(getattr(name, "role", None), "code", "")
-                            or ""
+                        getattr(
+                            getattr(
+                                name,
+                                "role",
+                                None,
+                            ),
+                            "code",
+                            "",
+                        )
+                        or ""
                     ).lower()
 
-                    if role_code in {"aut", "cre", "inv"}:
+                    if role_code in {
+                        "aut",
+                        "cre",
+                        "inv",
+                    }:
                         author_names.append(name)
 
                 # Pass 2: primary personal
                 if not author_names:
 
                     primary_names = [
-                        n for n in parsed_record.names
-                        if getattr(n, "type", None) == "personal"
-                           and n.elem.get("usage") == "primary"
+                        n
+                        for n in parsed_record.names
+                        if (
+                            getattr(
+                                n,
+                                "type",
+                                None,
+                            )
+                            == "personal"
+                            and n.elem.get("usage")
+                            == "primary"
+                        )
                     ]
 
                     if primary_names:
-                        author_names.append(primary_names[0])
+
+                        author_names.append(
+                            primary_names[0]
+                        )
+
                         fallback_primary_count += 1
 
                         logger.debug(
-                            f"{pid}: using primary personal name as author: "
+                            f"{pid}: using primary personal "
+                            f"name as author: "
                             f"{primary_names[0].text}"
                         )
 
@@ -145,72 +188,107 @@ if __name__ == '__main__':
                 if not author_names:
 
                     personal_names = [
-                        n for n in parsed_record.names
-                        if getattr(n, "type", None) == "personal"
+                        n
+                        for n in parsed_record.names
+                        if getattr(
+                            n,
+                            "type",
+                            None,
+                        )
+                        == "personal"
                     ]
 
                     if personal_names:
-                        author_names.append(personal_names[0])
+
+                        author_names.append(
+                            personal_names[0]
+                        )
+
                         fallback_personal_count += 1
 
                         logger.debug(
-                            f"{pid}: using first personal name as author: "
+                            f"{pid}: using first personal "
+                            f"name as author: "
                             f"{personal_names[0].text}"
                         )
 
                 # Write authors preserving MODS order
-                for position, name in enumerate(author_names, start=1):
+                for position, name in enumerate(
+                    author_names,
+                    start=1,
+                ):
 
-                    author = assets.AuthorRecord(name)
+                    author = assets.AuthorRecord(
+                        name
+                    )
 
                     author_id = write_author_record(
                         db_conn,
                         {
-                            "firstname": author.firstname,
-                            "surname": author.surname,
-                            "email": author.email,
-                            "orcid": author.orcid,
-                            "identity": author.identity_key,
-                        }
+                            "firstname": (
+                                author.firstname
+                            ),
+                            "surname": (
+                                author.surname
+                            ),
+                            "email": (
+                                author.email
+                            ),
+                            "orcid": (
+                                author.orcid
+                            ),
+                            "identity": (
+                                author.identity_key
+                            ),
+                        },
                     )
 
                     if author_id:
+
                         link_author_to_object(
                             db_conn,
                             pid,
                             author_id,
-                            position
-                        )
-                        logger.debug(
-                            f"Linking author...{pid} "
-                            f"{position}/{len(author_names)} "
-                            f"{author.identity_key}"
-                        )
-                    elif author_id is None:
-                        logger.error(
-                            f"{pid}: failed author insert at position "
-                            f"{position}: {author.identity_key}"
+                            position,
                         )
 
+                        logger.debug(
+                            f"Linking author...{pid} "
+                            f"{position}/"
+                            f"{len(author_names)} "
+                            f"{author.identity_key}"
+                        )
+
+                    elif author_id is None:
+
+                        logger.error(
+                            f"{pid}: failed author insert "
+                            f"at position {position}: "
+                            f"{author.identity_key}"
+                        )
 
                 logger.info(
                     "Writing record",
-                    extra={"pid": pid, "collection": collection,}
+                    extra={
+                        "pid": pid,
+                        "collection": collection,
+                    },
                 )
 
                 assets.write_db_record(
                     db_conn,
                     pid,
                     parsed_record,
-                    collection
+                    collection,
                 )
 
                 count += 1
 
                 if count % BATCH_SIZE == 0:
+
                     elapsed = (
-                            time.perf_counter()
-                            - start
+                        time.perf_counter()
+                        - start
                     )
 
                     db_conn.commit()
@@ -227,6 +305,25 @@ if __name__ == '__main__':
                         count / elapsed,
                     )
 
+            #
+            # Every MODS source should yield at least
+            # one parsed MODS record.
+            #
+            # Do not silently lose a source file if
+            # pymods recognizes zero records.
+            #
+
+            if parsed_count == 0:
+
+                zero_parse_count += 1
+
+                logger.error(
+                    "%s: MODS source yielded zero "
+                    "parsed records: %s",
+                    pid,
+                    source_path,
+                )
+
         db_conn.commit()
 
         logger.info(
@@ -239,27 +336,53 @@ if __name__ == '__main__':
             f"{fallback_personal_count:,}"
         )
 
+        if zero_parse_count:
+
+            logger.error(
+                "MODS sources yielding zero "
+                "parsed records: %s",
+                f"{zero_parse_count:,}",
+            )
+
+        else:
+
+            logger.info(
+                "MODS sources yielding zero "
+                "parsed records: 0"
+            )
+
     # CLI status
     if args.status:
-        print(assets.get_db_status(db_conn))
+
+        print(
+            assets.get_db_status(
+                db_conn
+            )
+        )
 
     # CLI burndown
     if args.burndown:
 
         for fpath in (
-                DB_PATH,
-                TSV_LOG_PATH,
+            DB_PATH,
+            TSV_LOG_PATH,
         ):
 
             try:
+
                 os.remove(fpath)
-                logger.info(f"Removed... {fpath}")
+
+                logger.info(
+                    f"Removed... {fpath}"
+                )
 
             except FileNotFoundError:
+
                 logger.info(
                     f"Already absent... {fpath}"
                 )
 
     # Close DB connection
     db_conn.close()
+
     sys.exit(0)
