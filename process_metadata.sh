@@ -237,3 +237,154 @@ python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" \
 #
 # Keyword cleanup
 #
+
+echo
+echo "[9/12] Deduplicating keywords..."
+
+python3 "$SCRIPT_DIR/update_db_dedupe_keywords.py" \
+    "$DB"
+
+#
+# Export tables
+#
+
+echo
+echo "[10/12] Exporting database tables..."
+
+python3 "$SCRIPT_DIR/dump_db_tables.py" \
+    "$DB"
+
+#
+# Package metadata
+#
+
+echo
+echo "[11/12] Creating metadata packages..."
+
+ARCHIVE_DIR="$RUN_DIR/metadata_archive"
+FIGSHARE_DIR="$RUN_DIR/metadata_figshare"
+
+rm -rf "$ARCHIVE_DIR"
+rm -rf "$FIGSHARE_DIR"
+
+mkdir -p "$ARCHIVE_DIR"
+mkdir -p "$FIGSHARE_DIR"
+
+#
+# Preservation package
+#
+
+echo "    Building metadata_archive.zip..."
+
+cp "$DB" "$ARCHIVE_DIR/"
+
+if [[ -d "$RUN_DIR/exports" ]]; then
+    cp -r "$RUN_DIR/exports" "$ARCHIVE_DIR/"
+fi
+
+if [[ -d "$RUN_DIR/audits" ]]; then
+    cp -r "$RUN_DIR/audits" "$ARCHIVE_DIR/"
+fi
+
+find "$RUN_DIR" \
+    -maxdepth 1 \
+    -type f \
+    -name "*.tsv" \
+    -exec cp {} "$ARCHIVE_DIR/" \;
+
+if [[ -f "$SCRIPT_DIR/README.md" ]]; then
+    cp "$SCRIPT_DIR/README.md" "$ARCHIVE_DIR/"
+fi
+
+(
+    cd "$ARCHIVE_DIR"
+
+    zip -rq \
+        "$RUN_DIR/metadata_archive.zip" \
+        .
+)
+
+sha256sum \
+    "$RUN_DIR/metadata_archive.zip" \
+    > "$RUN_DIR/metadata_archive.zip.sha256"
+
+#
+# Upload preservation copy
+#
+
+if [[ -n "$TGTBUCK" ]]; then
+
+    echo
+    echo "    Uploading preservation copy to:"
+    echo "        s3://$TGTBUCK/archive/"
+
+    aws s3 cp \
+        "$RUN_DIR/metadata_archive.zip" \
+        "s3://$TGTBUCK/archive/metadata_archive.zip"
+
+    aws s3 cp \
+        "$RUN_DIR/metadata_archive.zip.sha256" \
+        "s3://$TGTBUCK/archive/metadata_archive.zip.sha256"
+
+else
+
+    echo
+    echo "    TGTBUCK not set; skipping preservation upload."
+
+fi
+
+#
+# Figshare delivery package
+#
+
+echo
+echo "    Building metadata.zip..."
+
+if [[ -d "$RUN_DIR/exports" ]]; then
+    cp -r "$RUN_DIR/exports" "$FIGSHARE_DIR/"
+fi
+
+(
+    cd "$FIGSHARE_DIR"
+
+    zip -rq \
+        "$RUN_DIR/metadata.zip" \
+        .
+)
+
+sha256sum \
+    "$RUN_DIR/metadata.zip" \
+    > "$RUN_DIR/metadata.zip.sha256"
+
+#
+# Status
+#
+
+echo
+echo "[12/12] Database status..."
+
+python3 "$SCRIPT_DIR/main.py" \
+    --db "$DB" \
+    --status
+
+echo
+echo "=========================================================="
+echo "METADATA WORKFLOW COMPLETE"
+echo "=========================================================="
+
+echo
+echo "Created:"
+echo "  $RUN_DIR/metadata_archive.zip"
+echo "  $RUN_DIR/metadata_archive.zip.sha256"
+echo "  $RUN_DIR/metadata.zip"
+echo "  $RUN_DIR/metadata.zip.sha256"
+
+if [[ -d "$RUN_DIR/audits" ]]; then
+    echo "  $RUN_DIR/audits/"
+fi
+
+ls -lh \
+    "$RUN_DIR/metadata_archive.zip" \
+    "$RUN_DIR/metadata_archive.zip.sha256" \
+    "$RUN_DIR/metadata.zip" \
+    "$RUN_DIR/metadata.zip.sha256"
