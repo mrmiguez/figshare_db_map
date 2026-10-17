@@ -378,6 +378,58 @@ class ObjectRecord:
 
         return self._join_pipe(deduped)
 
+    # ---- identifier (DOI)
+    @property
+    def identifier(self):
+
+        values = []
+
+        for ident in getattr(
+            self.record,
+            "identifiers",
+            [],
+        ):
+
+            if not ident.text:
+                continue
+
+            ident_type = (
+                ident.type.strip().lower()
+                if ident.type
+                else None
+            )
+
+            if ident_type != "doi":
+                continue
+
+            value = self._clean_text(
+                ident.text
+            )
+
+            if not value:
+                continue
+
+            value = re.sub(
+                r"^doi:\s*",
+                "",
+                value,
+                flags=re.I,
+            )
+
+            value = re.sub(
+                r"^https?://(dx\.)?doi\.org/",
+                "",
+                value,
+                flags=re.I,
+            )
+
+            value = value.strip()
+
+            if value:
+                values.append(value)
+
+        return self._join_pipe(values)
+
     # ---- journal issue
     @property
     def issue(self):
@@ -662,30 +714,49 @@ class ObjectRecord:
 
         return self._join_pipe(values)
 
-    # ---- other identifiers (doi &/or handle)
+    # ---- other identifiers
     @property
     def other_identifiers(self):
 
         vals = []
 
-        for ident in getattr(self.record, "identifiers", []):
+        for ident in getattr(
+            self.record,
+            "identifiers",
+            [],
+        ):
 
-            if ident.type and ident.type.lower() == "iid":
+            ident_type = (
+                ident.type.strip().lower()
+                if ident.type
+                else None
+            )
+
+            if ident_type in {
+                "iid",
+                "doi",
+            }:
                 continue
 
             normalized = self._normalize_identifier(
                 ident.type,
-                ident.text
+                ident.text,
             )
 
             if normalized:
                 vals.append(normalized)
 
         # Add PURLs
-        for purl in getattr(self.record, "purl", []):
+        for purl in getattr(
+            self.record,
+            "purl",
+            [],
+        ):
+
             if not purl:
                 continue
-            if purl and purl not in vals:
+
+            if purl not in vals:
                 vals.append(purl)
 
         return self._join_pipe(vals)

@@ -169,6 +169,7 @@ def write_db_record(db_conn, pid, record, coll_path):
                 description,
                 license,
                 publication_date,
+                identifier,
                 language,
                 publisher,
                 journal,
@@ -193,7 +194,7 @@ def write_db_record(db_conn, pid, record, coll_path):
             VALUES (
                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                ?, ?, ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?
             )
             """,
             (
@@ -205,6 +206,7 @@ def write_db_record(db_conn, pid, record, coll_path):
                 obj.description,
                 obj.license,
                 obj.publication_date,
+                obj.identifier,
                 obj.language,
                 obj.publisher,
                 obj.journal_title,

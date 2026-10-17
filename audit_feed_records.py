@@ -21,15 +21,18 @@ def main():
         os.path.abspath(db_path)
     )
 
-    exports_dir = os.path.join(
+    audits_dir = os.path.join(
         run_dir,
-        "exports"
+        "audits"
     )
 
-    os.makedirs(exports_dir, exist_ok=True)
+    os.makedirs(
+        audits_dir,
+        exist_ok=True
+    )
 
     output_csv = os.path.join(
-        exports_dir,
+        audits_dir,
         "scholarly_feed_audit.csv"
     )
 
