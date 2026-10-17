@@ -7,27 +7,65 @@ import boto3
 import pymods
 
 
-# register namespaces
-NS = {"mods": "http://www.loc.gov/mods/v3",}
+# MODS namespaces
+NS = {
+    "mods": "http://www.loc.gov/mods/v3",
+}
+
+VALID_MODS_NAMESPACE = (
+    b"http://www.loc.gov/mods/v3"
+)
+
+PROXIED_MODS_NAMESPACE = (
+    b"http://www.loc.gov.proxy.lib.fsu.edu/mods/v3"
+)
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 
 def parse_mods_stream(source):
+    """
+    Parse a MODS document from either a file-like object or local path.
+
+    A small number of legacy FSU records contain a proxy-contaminated
+    MODS namespace:
+
+        http://www.loc.gov.proxy.lib.fsu.edu/mods/v3
+
+    Normalize that namespace to the canonical MODS namespace before
+    passing the document to pymods.
+    """
 
     if hasattr(source, "read"):
-        records = pymods.MODSReader(BytesIO(source.read()))
+        data = source.read()
 
     else:
-        records = pymods.MODSReader(source)
+        data = Path(source).read_bytes()
 
-    for record in records:
-        yield record
+    if PROXIED_MODS_NAMESPACE in data:
+
+        logger.warning(
+            "Normalizing proxied MODS namespace"
+        )
+
+        data = data.replace(
+            PROXIED_MODS_NAMESPACE,
+            VALID_MODS_NAMESPACE,
+        )
+
+    records = pymods.MODSReader(
+        BytesIO(data)
+    )
+
+    yield from records
 
 
 def iter_local_mods(record_directory):
 
-    for f in Path(record_directory).rglob('*MODS.xml'):
+    for f in Path(record_directory).rglob(
+        "*MODS.xml"
+    ):
 
         yield {
             "path": f,
@@ -45,28 +83,31 @@ def iter_s3_mods(bucket, prefix=""):
     )
 
     for page in paginator.paginate(
-            Bucket=bucket,
-            Prefix=prefix):
+        Bucket=bucket,
+        Prefix=prefix,
+    ):
 
         for obj in page.get(
-                "Contents",
-                []):
+            "Contents",
+            [],
+        ):
 
             key = obj["Key"]
 
             if not key.endswith(
-                    "_MODS.xml"):
+                "_MODS.xml"
+            ):
                 continue
 
             response = s3.get_object(
                 Bucket=bucket,
-                Key=key
+                Key=key,
             )
 
             yield {
                 "path": key,
-                "collection":
-                    os.path.dirname(key),
-                "stream":
-                    response["Body"],
+                "collection": os.path.dirname(
+                    key
+                ),
+                "stream": response["Body"],
             }

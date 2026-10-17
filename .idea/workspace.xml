@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process_metadata.sh" beforeDir="false" afterPath="$PROJECT_DIR$/process_metadata.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -440,15 +440,7 @@
       <workItem from="1788269053017" duration="6671000" />
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
-      <workItem from="1791904643482" duration="21480000" />
-    </task>
-    <task id="LOCAL-00016" summary="QA SQL">
-      <option name="closed" value="true" />
-      <created>1782856944577</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1782856944577</updated>
+      <workItem from="1791904643482" duration="27699000" />
     </task>
     <task id="LOCAL-00017" summary="Refined Field of Research category mappings">
       <option name="closed" value="true" />
@@ -834,7 +826,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792120448855</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh">
+      <option name="closed" value="true" />
+      <created>1792157906705</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1792157906705</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -853,7 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="run layer for s3 input source" />
     <MESSAGE value="i/o streaming error" />
     <MESSAGE value="sqlite batching error" />
     <MESSAGE value="update migration scripts and docs" />
@@ -878,7 +877,8 @@
     <MESSAGE value="adding more robust embargo information in embargo table" />
     <MESSAGE value="perpetual whole objects embargoes audited and removed" />
     <MESSAGE value="add s3 layer to update_db_embargoes.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="add s3 layer to update_db_embargoes.py" />
+    <MESSAGE value="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh" />
+    <option name="LAST_COMMIT_MESSAGE" value="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
