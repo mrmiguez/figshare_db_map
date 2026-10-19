@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/records.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/records.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/audit_feed_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/audit_feed_records.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -442,15 +440,7 @@
       <workItem from="1788269053017" duration="6671000" />
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
-      <workItem from="1791904643482" duration="31437000" />
-    </task>
-    <task id="LOCAL-00020" summary="refining identifiers and ORCIDs">
-      <option name="closed" value="true" />
-      <created>1783710671390</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1783710671390</updated>
+      <workItem from="1791904643482" duration="34635000" />
     </task>
     <task id="LOCAL-00021" summary="Massaging encoding errors">
       <option name="closed" value="true" />
@@ -836,7 +826,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792238893128</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="promoting all doi's to identifier field">
+      <option name="closed" value="true" />
+      <created>1792240990051</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1792240990051</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -855,7 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="explicit paths in shell scripts" />
     <MESSAGE value="typo" />
     <MESSAGE value="copy errors" />
     <MESSAGE value="aligning utilities and driver scripts" />
@@ -880,7 +877,8 @@
     <MESSAGE value="defensive handling for proxied namespaces" />
     <MESSAGE value="adding zero parsed record detection to main.py" />
     <MESSAGE value="process_metadata.sh was truncated" />
-    <option name="LAST_COMMIT_MESSAGE" value="process_metadata.sh was truncated" />
+    <MESSAGE value="promoting all doi's to identifier field" />
+    <option name="LAST_COMMIT_MESSAGE" value="promoting all doi's to identifier field" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />

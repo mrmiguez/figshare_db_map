@@ -204,6 +204,54 @@ class ObjectRecord:
 
         return val
 
+    def _split_long_note(self, text, max_length=5000):
+
+        text = self._clean_text(text)
+
+        if not text or len(text) <= max_length:
+            return [text] if text else []
+
+        match = re.match(
+            r"^((?:January|February|March|April|May|June|July|August|"
+            r"September|October|November|December)\s+\d{1,2}\s+\d{4}:)\s*(.*)$",
+            text,
+        )
+
+        if not match:
+            return [text]
+
+        prefix = match.group(1)
+        body = match.group(2)
+
+        references = [
+            value.strip()
+            for value in body.split(",")
+            if value.strip()
+        ]
+
+        if not references:
+            return [text]
+
+        chunks = []
+        current = prefix
+
+        for reference in references:
+
+            separator = " " if current == prefix else ", "
+            candidate = f"{current}{separator}{reference}"
+
+            if len(candidate) <= max_length:
+                current = candidate
+                continue
+
+            chunks.append(current)
+            current = f"{prefix} {reference}"
+
+        if current != prefix:
+            chunks.append(current)
+
+        return chunks
+
     # ------------------------------------------------------------------
     # Category helpers
     # ------------------------------------------------------------------
@@ -702,15 +750,59 @@ class ObjectRecord:
     # ---- notes
     @property
     def notes(self):
+
         values = []
 
-        for note in getattr(self.record, "note", []):
+        for note in getattr(
+            self.record,
+            "note",
+            [],
+        ):
 
-            if self._normalize_label(note.displayLabel) == "keywords":
+            if self._normalize_label(
+                note.displayLabel
+            ) == "keywords":
                 continue
 
-            if note.text:
-                values.append(note.text)
+            if not note.text:
+                continue
+
+            text = self._clean_text(
+                note.text
+            )
+
+            if not text:
+                continue
+
+            if len(text) > 10000:
+
+                chunks = self._split_long_note(
+                    text,
+                    max_length=5000,
+                )
+
+                if len(chunks) == 1:
+
+                    logger.warning(
+                        "%s: note exceeds 10,000 characters "
+                        "but could not be safely split",
+                        self.pid,
+                    )
+
+                else:
+
+                    logger.info(
+                        "%s: split oversized note into "
+                        "%d values",
+                        self.pid,
+                        len(chunks),
+                    )
+
+                values.extend(chunks)
+
+            else:
+
+                values.append(text)
 
         return self._join_pipe(values)
 
