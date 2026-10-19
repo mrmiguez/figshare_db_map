@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="" />
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mappings/collections.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mappings/collections.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit_structural_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/audit_structural_objects.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -438,31 +442,7 @@
       <workItem from="1788269053017" duration="6671000" />
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
-      <workItem from="1791904643482" duration="37370000" />
-    </task>
-    <task id="LOCAL-00024" summary="Enriched FOR category mapping">
-      <option name="closed" value="true" />
-      <created>1784831527676</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1784831527676</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Emitting category codes instead of terms">
-      <option name="closed" value="true" />
-      <created>1784832905377</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1784832905377</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Shuffle subject terms to keywords">
-      <option name="closed" value="true" />
-      <created>1784834403094</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1784834403094</updated>
+      <workItem from="1791904643482" duration="42087000" />
     </task>
     <task id="LOCAL-00027" summary="small DB update util">
       <option name="closed" value="true" />
@@ -832,7 +812,31 @@
       <option name="project" value="LOCAL" />
       <updated>1792414054613</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="init auditing and removal of Islandora collection objects">
+      <option name="closed" value="true" />
+      <created>1792415619396</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1792415619396</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Islandora collections DB removal script">
+      <option name="closed" value="true" />
+      <created>1792415880374</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1792415880374</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Islandora collection audit and removal complete">
+      <option name="closed" value="true" />
+      <created>1792416188162</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1792416188162</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,9 +855,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="audit scripts" />
-    <MESSAGE value="Updated license mapping. Name order explicitly preserved through order sequencing" />
-    <MESSAGE value="Adding PURLs to other identifiers" />
     <MESSAGE value="trimming local path prefix from `source_collection`" />
     <MESSAGE value="audits for records coming from WoS and PubMed" />
     <MESSAGE value="Adding update CSV for bad dates" />
@@ -876,7 +877,10 @@
     <MESSAGE value="exceptional handling for single note over 10K Figshare field limit" />
     <MESSAGE value="dedupe and cap keywords at 100 using source ordering" />
     <MESSAGE value="stage group and collection CSVs for final mapping decision" />
-    <option name="LAST_COMMIT_MESSAGE" value="stage group and collection CSVs for final mapping decision" />
+    <MESSAGE value="init auditing and removal of Islandora collection objects" />
+    <MESSAGE value="Islandora collections DB removal script" />
+    <MESSAGE value="Islandora collection audit and removal complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Islandora collection audit and removal complete" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />

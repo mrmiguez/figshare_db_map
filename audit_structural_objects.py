@@ -7,10 +7,9 @@ import sqlite3
 
 
 def parse_args():
-
     parser = argparse.ArgumentParser(
         description=(
-            "Audit repository structural objects that should "
+            "Audit Fedora collection objects that should "
             "not be migrated to Figshare as items."
         )
     )
@@ -20,13 +19,44 @@ def parse_args():
         help="SQLite migration database",
     )
 
+    parser.add_argument(
+        "collection_pids",
+        help=(
+            "Text file containing Fedora collectionCModel "
+            "PIDs, one PID per line"
+        ),
+    )
+
     return parser.parse_args()
 
 
-def get_structural_objects(conn):
+def load_collection_pids(path):
+    with open(
+        path,
+        "r",
+        encoding="utf-8",
+    ) as fh:
+        pids = sorted({
+            line.strip()
+            for line in fh
+            if line.strip()
+        })
+
+    if not pids:
+        raise RuntimeError(
+            f"No Fedora collection PIDs found in {path}"
+        )
+
+    return pids
+
+
+def get_structural_objects(conn, collection_pids):
+    placeholders = ",".join(
+        "?" for _ in collection_pids
+    )
 
     return conn.execute(
-        """
+        f"""
         SELECT
             o.pid,
             o.title,
@@ -39,9 +69,7 @@ def get_structural_objects(conn):
         LEFT JOIN object_authors oa
             ON oa.object_id = o.pid
 
-        WHERE
-            SUBSTR(o.pid, 5) = ''
-            OR SUBSTR(o.pid, 5) GLOB '*[^0-9]*'
+        WHERE o.pid IN ({placeholders})
 
         GROUP BY
             o.pid,
@@ -53,22 +81,18 @@ def get_structural_objects(conn):
         ORDER BY
             o.source_collection,
             o.pid
-        """
+        """,
+        collection_pids,
     ).fetchall()
 
 
-def write_audit(
-    rows,
-    output_csv,
-):
-
+def write_audit(rows, output_csv):
     with open(
         output_csv,
         "w",
         newline="",
         encoding="utf-8",
     ) as fh:
-
         writer = csv.writer(fh)
 
         writer.writerow([
@@ -84,11 +108,14 @@ def write_audit(
 
 
 def main():
-
     args = parse_args()
 
     db_path = os.path.abspath(
         args.database
+    )
+
+    collection_pids_path = os.path.abspath(
+        args.collection_pids
     )
 
     run_dir = os.path.dirname(
@@ -110,19 +137,23 @@ def main():
         "structural_objects.csv",
     )
 
+    collection_pids = load_collection_pids(
+        collection_pids_path
+    )
+
     conn = sqlite3.connect(
         db_path
     )
 
     try:
-
         rows = get_structural_objects(
-            conn
+            conn,
+            collection_pids,
         )
 
         structural_count = len(rows)
 
-        author_count = sum(
+        author_links = sum(
             row[5]
             for row in rows
         )
@@ -143,18 +174,23 @@ def main():
         print("-----------------------")
 
         print(
-            f"Structural objects: "
+            f"Fedora collectionCModel PIDs: "
+            f"{len(collection_pids):,}"
+        )
+
+        print(
+            f"Collection objects present in DB: "
             f"{structural_count:,}"
         )
 
         print(
-            f"Structural objects with authors: "
+            f"Collection objects with authors: "
             f"{structural_with_authors:,}"
         )
 
         print(
-            f"Author links on structural objects: "
-            f"{author_count:,}"
+            f"Author links on collection objects: "
+            f"{author_links:,}"
         )
 
         print()
@@ -164,10 +200,8 @@ def main():
         )
 
     finally:
-
         conn.close()
 
 
 if __name__ == "__main__":
-
     main()
