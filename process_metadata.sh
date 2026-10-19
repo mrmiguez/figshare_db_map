@@ -11,6 +11,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DB="${DB:-$SCRIPT_DIR/figshare.db}"
 RUN_DIR="$(dirname "$DB")"
 UPDATES_DIR="${UPDATES_DIR:-$SCRIPT_DIR/updates}"
+MAPPINGS_DIR="${MAPPINGS_DIR:-$SCRIPT_DIR/assets/mappings}"
 
 S3_MODE="${S3_MODE:-true}"
 
@@ -73,6 +74,7 @@ echo "Repository      : $SCRIPT_DIR"
 echo "Database        : $DB"
 echo "Run Dir         : $RUN_DIR"
 echo "Updates Dir     : $UPDATES_DIR"
+echo "Mappings Dir : $MAPPINGS_DIR"
 echo "S3 Mode         : $S3_MODE"
 
 if [[ "$S3_MODE" == "true" ]]; then
@@ -95,7 +97,7 @@ echo
 # Rebuild database
 #
 
-echo "[1/12] Building migration database..."
+echo "[1/11] Building migration database..."
 
 if [[ "$S3_MODE" == "true" ]]; then
 
@@ -125,7 +127,7 @@ fi
 #
 
 echo
-echo "[2/12] Applying embargo updates..."
+echo "[2/11] Applying embargo updates..."
 
 python3 "$SCRIPT_DIR/update_db_embargoes.py" \
     "$DB" \
@@ -140,7 +142,7 @@ python3 "$SCRIPT_DIR/update_db_embargoes.py" \
 #
 
 echo
-echo "[3/12] Auditing perpetual article embargoes..."
+echo "[3/11] Auditing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
     "$DB"
@@ -163,7 +165,7 @@ python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
 #
 
 echo
-echo "[4/12] Removing perpetual article embargoes..."
+echo "[4/11] Removing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
     "$DB"
@@ -173,7 +175,7 @@ python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
 #
 
 echo
-echo "[5/12] Applying SQL corrections..."
+echo "[5/11] Applying SQL corrections..."
 
 if [[ -d "$SCRIPT_DIR/sql" ]]; then
 
@@ -195,7 +197,7 @@ fi
 #
 
 echo
-echo "[6/12] Applying override spreadsheets..."
+echo "[6/11] Applying override spreadsheets..."
 
 if [[ -d "$UPDATES_DIR" ]]; then
 
@@ -219,7 +221,7 @@ fi
 #
 
 echo
-echo "[7/12] Auditing scholarly feed records..."
+echo "[7/11] Auditing scholarly feed records..."
 
 python3 "$SCRIPT_DIR/audit_feed_records.py" \
     "$DB"
@@ -229,19 +231,9 @@ python3 "$SCRIPT_DIR/audit_feed_records.py" \
 #
 
 echo
-echo "[8/12] Removing Web of Science and PubMed Central records..."
+echo "[8/11] Removing Web of Science and PubMed Central records..."
 
 python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" \
-    "$DB"
-
-#
-# Keyword cleanup
-#
-
-echo
-echo "[9/12] Deduplicating keywords..."
-
-python3 "$SCRIPT_DIR/update_db_dedupe_keywords.py" \
     "$DB"
 
 #
@@ -249,17 +241,41 @@ python3 "$SCRIPT_DIR/update_db_dedupe_keywords.py" \
 #
 
 echo
-echo "[10/12] Exporting database tables..."
+echo "[9/11] Exporting database tables..."
 
 python3 "$SCRIPT_DIR/dump_db_tables.py" \
     "$DB"
+
+#
+# Add Figshare group / collection maps to exports
+#
+
+for MAPPING in groups.csv collections.csv
+do
+
+    if [[ ! -f "$MAPPINGS_DIR/$MAPPING" ]]; then
+
+        echo \
+            "ERROR: Missing required mapping file: " \
+            "$MAPPINGS_DIR/$MAPPING" \
+            >&2
+
+        exit 1
+
+    fi
+
+    cp \
+        "$MAPPINGS_DIR/$MAPPING" \
+        "$RUN_DIR/exports/$MAPPING"
+
+done
 
 #
 # Package metadata
 #
 
 echo
-echo "[11/12] Creating metadata packages..."
+echo "[10/11] Creating metadata packages..."
 
 ARCHIVE_DIR="$RUN_DIR/metadata_archive"
 FIGSHARE_DIR="$RUN_DIR/metadata_figshare"
@@ -361,7 +377,7 @@ sha256sum \
 #
 
 echo
-echo "[12/12] Database status..."
+echo "[11/11] Database status..."
 
 python3 "$SCRIPT_DIR/main.py" \
     --db "$DB" \

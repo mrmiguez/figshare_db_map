@@ -624,10 +624,18 @@ class ObjectRecord:
 
         terms = []
 
-        # Existing keywords
-        for note in getattr(self.record, "note", []):
+        # Existing keyword-note values come first so that
+        # source-supplied keywords take priority when the
+        # Figshare 100-keyword limit is reached.
+        for note in getattr(
+            self.record,
+            "note",
+            [],
+        ):
 
-            if self._normalize_label(note.displayLabel) != "keywords":
+            if self._normalize_label(
+                note.displayLabel
+            ) != "keywords":
                 continue
 
             if not note.text:
@@ -639,19 +647,31 @@ class ObjectRecord:
                 if kw.strip()
             )
 
-        # Add subject terms
-        for subject in self.subjects.split("|") if self.subjects else []:
+        # Add subject terms after explicit keywords.
+        for subject in (
+            self.subjects.split("|")
+            if self.subjects
+            else []
+        ):
 
             subject = subject.strip()
 
             if subject:
                 terms.append(subject)
 
-        # Case-insensitive deduplication preserving first occurrence
+        # Clean and case-insensitively deduplicate while
+        # preserving the first occurrence and source order.
         seen = set()
         deduped = []
 
         for term in terms:
+
+            term = self._clean_text(
+                term
+            )
+
+            if not term:
+                continue
 
             key = term.casefold()
 
@@ -661,7 +681,24 @@ class ObjectRecord:
             seen.add(key)
             deduped.append(term)
 
-        return self._join_pipe(sorted(deduped, key=str.casefold))
+        # Figshare accepts at most 100 keywords.
+        #
+        # Preserve source ordering rather than alphabetizing
+        # before applying the limit. Explicit keyword-note
+        # values therefore take precedence over subjects.
+        if len(deduped) > 100:
+
+            logger.warning(
+                "%s: limiting keywords from %d to 100",
+                self.pid,
+                len(deduped),
+            )
+
+            deduped = deduped[:100]
+
+        return self._join_pipe(
+            deduped
+        )
 
     # ---- language
     @property
