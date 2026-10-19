@@ -1,0 +1,395 @@
+group_id,group_label
+1,Florida State University 
+2,"Panama City, Florida, campus"
+3,College of Applied Studies
+4,Doctor of Nurse Anesthesia Practice Program 
+5,Organizational Management & Communication 
+6,College of Arts and Sciences
+7,Aerospace Studies (Air Force ROTC)
+8,Anthropology
+9,Castro Archaeological Site  
+10,Administrative Documents 
+11,Artifact Analysis Documents 
+12,Bead Analysis Documents 
+13,Controlled Surface Collection Analysis Documents 
+14,Excavation Unit Status Documents 
+15,Feature Forms 
+16,Fieldnotes and Specimen Catalogs 
+17,"Field Specimen Catalog, Fall 2001 and 2002 "
+18,Maps and Map Logs 
+19,Photographs & Video 
+20,Posthole Test and Analysis Documents 
+21,Unit Summary Forms 
+22,Video Ethnography 
+23,Biological Science
+24,Chemistry & Biochemistry
+25,Classics
+26,Cosa Excavations
+27,Terme Excavations
+28,Cetamura del Chianti
+29,Computer Science
+30,"Earth, Ocean & Atmospheric Science"
+31,3D Models
+32,English
+33,History
+34,Mathematics
+35,Military Science (Army ROTC)
+36,Modern Languages & Linguistics
+37,Philosophy
+38,Physics
+39,Psychology
+40,Religion
+41,Scientific Computing
+42,Statistics
+43,Centers & Institutes (College of Arts and Sciences)
+44,Center for Ocean-Atmospheric Prediction Studies (COAPS)
+45,Center for Security and Assurance in Information Technology
+46,Geophysical Fluid Dynamics Institute
+47,Institute of Molecular Biophysics
+48,Institute on Napoleon and the French Revolution
+49,Institute on World War II and the Human Experience
+50,Middle East Center
+51,Reichelt Oral History Program
+52,Statistical Consulting Center
+53,Winthrop-King Institute for Contemporary French and Francophone Studies
+54,Interdisciplinary Programs (College of Arts and Sciences) 
+55,FSU-Teach
+56,History of Text Technologies (HoTT)
+57,Interdisciplinary Data Science Program
+58,Program in Interdisciplinary Humanities
+59,Materials Science Program
+60,Program in Neuroscience
+61,Office of STEM Teaching Activities
+62,Women's Studies Program
+63,Herbert Wertheim College of Business
+64,Graduate & Online Programs
+65,Undergraduate Programs & Advising Center
+66,Schools & Departments (College of Business)
+67,Accounting
+68,"Business Analytics, Information Systems & Supply Chain"
+69,Finance
+70,Management
+71,Dr. Persis E. Rockwood School of Marketing
+72,"Risk Management/Insurance, Real Estate & Legal Studies"
+73,Centers & Institutes (College of Business)
+74,Institute for Applied Business Research
+75,"Banking and Financial Studies, Gene Taylor/Bank of America Center for"
+76,"Executive Management Education, Carl DeSantis Center for"
+77,Truist Free Enterprise Center
+78,FSU Real Estate Center
+79,Center for Human Resource Management
+80,Jim Moran Institute for Global Entrepreneurship
+81,Risk Management & Insurance Center
+82,Sales Institute
+83,College of Communication and Information
+84,School of Communication
+85,School of Communication Science and Disorders
+86,School of Information
+87,Centers & Institutes (College of Communication and Information)
+88,Communication and Early Childhood Research and Practice (CEC-RAP)
+89,Institute for Digital Information and Scientific Communication (iDigInfo)
+90,Information Use Management & Policy Institute
+91,Center for the Study of Hispanic Marketing Communication
+92,L.L Schendel Speech and Hearing Clinic
+93,iSensor Lab
+94,Machine Learning Lab (MLab)
+95,College of Criminology and Criminal Justice
+96,Undergraduate Programs (College of Criminology and Criminal Justice)
+97,Graduate Programs (College of Criminology and Criminal Justice)
+98,Online Degree Programs
+99,Centers (College of Criminology and Criminal Justice)
+100,Center for Criminology and Public Policy Research
+101,Dedman College of Hospitality
+102,Centers (Dedman College of Hospitality)
+103,International Center for Hospitality Research & Development
+104,"Anne Spencer Daves College of Education, Health, and Human Sciences "
+105,Educational Leadership and Policy Studies
+106,Educational Psychology and Learning Systems
+107,"Health, Nutrition, and Food Sciences "
+108,Human Development and Family Science 
+109,Sport Management 
+110,Education Commission of the States 
+111,School of Teacher Education 
+112,Online programs (Anne's College)
+113,Graduate programs (Anne's College) 
+114,Undergraduate Programs
+115,Certificate Programs
+116,Educational Centers & Institutes
+117,Center for Athletic Coaching
+118,Center on Better Health and Life for Underserved Populations
+119,Center for Couple and Family Therapy (CCFT)
+120,"Center for Education Research in Mathematics, Engineering and Science (CERMES)"
+121,Center for Integrative Nutrition and Food Research (CINFR)
+122,Center for Postsecondary Success (CPS)
+123,"Center for Sport, Health, and Ecological Development (SHED)"
+124,Center for Study of Technology in Counseling and Career Development
+125,Family Institute
+126,Florida Center for Reading Research (FCRR)
+127,Florida State University School
+128,Hardee Center for Leadership and Ethics in Higher Education 
+129,Institute of Sports Sciences and Medicine
+130,Leadership Learning Research Center
+131,Learning Systems Institute (Anne's College)
+132,ADAPT Research Team
+133,Bullying Prevention Research Team
+134,Career Development & Technology Research Team
+135,Cardiovascular & Applied Physiology Laboratory (CAP)
+136,Collaborative Lab for the Advancement of Student Success (CLASS)
+137,GEMS Collaborative Research Team
+138,Gut Biome Lab
+139,Intervention for Victimized Youth (IVY)
+140,Kinetic Futures Laboratory 
+141,The LEGO: Laboratory for Emotions in Groups and Organizations 
+142,Parvatiyar Lab
+143,Promote Successful Transition to Higher Education and Work for Minority Individuals 
+144,Seminoles ASPIRE: Alliance for Supporting Positive Growth & Inspiring Resilience in Education 
+145,Social Development Lab
+146,STRIDES 
+147,Suicide Prevention Research Team
+148,FAMU-FSU College of Engineering
+149,Chemical & Biomedical Engineering
+150,Civil & Environmental Engineering
+151,Electrical & Computer Engineering
+152,Industrial & Manufacturing Engineering
+153,Mechanical Engineering
+154,Material Science and Engineering 
+155,"Centers, Labs, & Institutes (FAMU-FSU College of Engineering)"
+156,"Aero-propulsion, Mechatronics, and Energy Center (AME)"
+157,AEROMORPH Center of Excellence
+158,Applied Superconductivity Center (ASC) 
+159,CEE Environmental Engineering Laboratory
+160,CEE Laboratory for Material and Structural Testing 
+161,Center for Accessibility and Safety for an Aging Population 
+162,Center for Advanced Power Systems (CAPS)
+163,"Center for Intelligent, Systems, Control, and Robotics (CISCOR)"
+164,Crashworthiness & Impact Analysis Laboratory
+165,Energy and Sustainability Center (ESC)
+166,Florida Center for Advanced Aero-Propulsion (FCAAP)
+167,Future Renewable Electric Energy Delivery and Management (FREEDMSC)
+168,High-Performance Materials Institute (HPMI)
+169,Machine Shop
+170,MagLab (National High Magnetic Field Laboratory)
+171,NSF CREST
+172,Resilient Infrastructure & Disaster Response Center (RIDER)
+173,Rural Safe Efficient and Advanced Transportation (R-SEAT) Center
+174,Transportation Engineering Laboratory 
+175,College of Fine Arts
+176,Art
+177,Art Education
+178,Art History
+179,Dance
+180,School of Design
+181,Theatre
+182,Museums (College of Fine Arts) 
+183,Museum of Fine Arts
+184,Ringling Museum of Art
+185,Centers & Facilities (College of Fine Arts) 
+186,Maggie Allesee National Center for Choreography
+187,Facility for Arts Research
+188,FSU/Asolo Conservatory for Actor Training
+189,Lab Theatre
+190,Richard G. Fallon Theatre
+191,Augusta Conradi Studio Theatre
+192,Jim Moran College of Entrepreneurship
+193,College of Law
+194,Center for the Advancement of Human Rights
+195,College of Medicine
+196,Behavioral Sciences and Social Medicine
+197,Biomedical Sciences
+198,Clinical Sciences
+199,Family Medicine and Rural Health
+200,Geriatrics
+201,Internal Medicine Residency Program
+202,Isabel Collier Read Medical Campus
+203,PLAID: People Living with and Inspired by Diabetes
+204,Communication and Diabetes
+205,It's Complicated
+206,One Day at a Time
+207,Partner Perspectives
+208,Patient's Perspectives
+209,Pregnancy and Diabetes
+210,Social Support
+211,Program in Neuroscience
+212,School of Physician Assistant Practice
+213,Centers & Institutes (College of Medicine)
+214,Area Health Education Center
+215,Autism Institute
+216,Center for Behavioral Health Integration
+217,Center for Brain Repair
+218,Center for Child Stress & Health
+219,Center on Global Health
+220,Center for Innovative Collaboration in Medicine & Law
+221,Center for Medicine and Public Health Policy and Practice
+222,Center for Translational Behavioral Science
+223,Florida Blue Center for Rural Health Research and Policy
+224,Institute for Connecting Nutrition and Health
+225,Institute for Pediatric Rare Diseases 
+226,College of Motion Picture Arts
+227,College of Music
+228,Arts Administration
+229,Bands
+230,Brass and Woodwinds
+231,Choral
+232,Ethnomusicology/World Music
+233,Historical Musicology
+234,Jazz
+235,Keyboard
+236,Music Education
+237,Music Theatre
+238,Music Therapy
+239,Music Theory
+240,Opera
+241,Percussion
+242,Strings
+243,Voice
+244,Centers & Institutes (College of Music)
+245,National Institute for Infant and Child Medical Music Therapy
+246,Center for Music of the Americas
+247,Center for Music Research
+248,College of Nursing
+249,"Centers, Labs, and Programs"
+250,Brain Science and Symptom Management Center
+251,Center of Population Science for Health Equity
+252,Florida First Health Science Brigade
+253,Institute on Digital Health and Innovation
+254,Intervention Research and Implementation Science (IRIS) Lab
+255,TMH Center for Research and Evidenced-Based Practice
+256,Doctor of Nursing Practice program
+257,College of Social Sciences and Public Policy
+258,Economics
+259,Environment and Society
+260,Geography
+261,Political Science
+262,Askew School of Public Administration and Policy
+263,Sociology
+264,Urban and Regional Planning
+265,Interdisciplinary Programs (College of Social Sciences and Public Policy) 
+266,African-American Studies
+267,Asian Studies
+268,Demography
+269,Interdisciplinary Social Science
+270,International Affairs
+271,Latin America and Caribbean Studies
+272,Public Health
+273,Russian and East European Studies
+274,Other Programs
+275,BS in Interdisciplinary Social Science through Distance Learning
+276,Research Intensive Bachelor's Certificate Program in Political Science
+277,"Centers, Labs, & Institutes (College of Social Sciences and Public Policy)"
+278,Center for Demography and Population Health
+279,Center for Disaster Risk Policy
+280,Civil Rights Institute
+281,Claude Pepper Center
+282,DeVoe L. Moore Institute for the Study of Critical Issues in Economic Policy and Government 
+283,Florida Center for Public Management
+284,GIS (Geographic Information Systems) Laboratory
+285,L. Charles Hilton Jr. Center for the Study of Economic Prosperity and Individual Opportunity
+286,LeRoy Collins Institute
+287,Osher Lifelong Learning Institute
+288,Pepper Institute on Aging & Public Policy
+289,Stavros Center for Economic Education
+290,William A. Kerr Intercultural Education and Dialogue Initiative
+291,College of Social Work
+292,Institute for Family Violence Studies
+293,Institute for Justice Research and Development
+294,Institute for Trauma & Resilience Studies 
+295,Institute for Quality Children's Services 
+296,Justice and Health Innovation Research Institute 
+297,Multidisciplinary Evaluation & Consulting Center (MDC)
+298,"Stoops Center for Communities, Families, and Children"
+299,Florida Institute for Child Welfare
+300,Maura's Voice Research Fund
+301,International Programs
+302,Florida State University - Panama
+303,Republic of Panama campus
+304,Continuing Education and University Outreach
+305,Center for Academic and Professional Development
+306,Distance (Online) Learning
+307,Libraries
+308,University Libraries
+309,Open Textbooks 
+310,Claude Pepper
+311,Goldstein Library
+312,Dirac Science Library
+313,Engineering Library
+314,Law Research Center
+315,Charlotte Edwards Maguire Medical Library 
+316,Digital Library
+317,Music Library
+318,Special Collections
+319,Information Technology Services
+320,Research Computing Center
+321,"Centers, Facilities, Labs, and Institutes"
+322,Institute for Academic Leadership
+323,Center for Biomedical and Toxicological Research
+324,Institute for Cooperative Environmental Research
+325,Center for Economic Forecasting and Analysis
+326,Florida Climate Institue
+327,Florida Conflict Resolution Consortium
+328,Florida Resources and Environmental Analysis Center
+329,Florida Natural Areas Inventory
+330,Florida State Conference Center
+331,Center for Information Management and Education Services
+332,John Scott Dailey Institute of Government
+333,Frederick L Jenks Center for Intensive English Studies
+334,Center for Prevention and Early Intervention Policy
+335,Center for Prevention Research
+336,Institute of Science and Public Affairs
+337,Academic Center for Excellence
+338,Center for Career Research
+339,Center for Genomics and Personalized Medicine
+340,Center for Global Engagement
+341,Center for Population Sciences and Health Empowerment
+342,Center for the Advancement of Teaching
+343,FCRC Consensus Center
+344,Florida Geological Survey
+345,Florida Learning Disability Research Center
+346,Information Institute
+347,Institute for Governance and Civics
+348,Data Collections
+349,Data by Congressional District
+350,Data by County
+351,Data by School District
+352,Polling
+353,Polling Data
+354,Polling Reports
+355,School Directory Data
+356,Common Core of Data
+357,Private School Survey
+358,Institute for Successful Longevity
+359,St. Andrew and St. Joseph Bay Estuary Program
+360,Translational Science Laboratory
+361,iDigBio
+362,Research
+363,Center for Advanced Power Systems
+364,Future Fuels Institute
+365,Coastal and Marine Laboratory 
+366,Office for Human Subjects Protection
+367,Office of Commercialization
+368,Florida State University Patents 
+369,Office of Proposal Development
+370,Research Foundation
+371,Sponsored Research Administration
+372,Office of the President
+373,Provost/Academic Affairs
+374,Provost & Vice President for Academic Affairs
+375,Office of Faculty Development and Advancement
+376,Faculty Senate
+377,The Graduate School
+378,Digitized Theses and Dissertations
+379,Professional Development Workshop Series
+380,Theses and Dissertations
+381,Honors Program
+382,Historical Undergraduate Honors Theses
+383,Undergraduate Honors Theses
+384,Institutional Research
+385,Learning Systems Institute (Provost/Academic Affairs)
+386,Center for Undergraduate Research and Academic Engagement (CRE)
+387,Showcase of Undergraduate Research Excellence 
+388,Program for Instructional Excellence (PIE)
+389,Center for Academic Retention & Enhancement
+390,Division of Undergraduate Studies
+391,FSU - Panama
+392,Interdisciplinary Research
+393,Deep-C Consortium
+394,Living with Diabetes: Research and Perspectives
