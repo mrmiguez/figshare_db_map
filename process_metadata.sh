@@ -20,11 +20,15 @@ SRCBUCK="${SRCBUCK:-}"
 TGTBUCK="${TGTBUCK:-}"
 PREFIX="${PREFIX:-}"
 
+AUDITS_DIR="$RUN_DIR/audits"
+FEDORA_COLLECTION_PIDS="$AUDITS_DIR/fedora_collection_pids.txt"
+
 #
-# Ensure run directory exists
+# Ensure run directories exist
 #
 
 mkdir -p "$RUN_DIR"
+mkdir -p "$AUDITS_DIR"
 
 #
 # Validate source configuration
@@ -77,10 +81,8 @@ for MAPPING in groups.csv collections.csv
 do
 
     if [[ ! -f "$MAPPINGS_DIR/$MAPPING" ]]; then
-
         echo "ERROR: Missing required mapping file: $MAPPINGS_DIR/$MAPPING" >&2
         exit 1
-
     fi
 
 done
@@ -98,6 +100,7 @@ echo "Database        : $DB"
 echo "Run Dir         : $RUN_DIR"
 echo "Updates Dir     : $UPDATES_DIR"
 echo "Mappings Dir    : $MAPPINGS_DIR"
+echo "Audits Dir      : $AUDITS_DIR"
 echo "S3 Mode         : $S3_MODE"
 
 if [[ "$S3_MODE" == "true" ]]; then
@@ -120,7 +123,7 @@ echo
 # Rebuild database
 #
 
-echo "[1/13] Building migration database..."
+echo "[1/14] Building migration database..."
 
 if [[ "$S3_MODE" == "true" ]]; then
 
@@ -150,7 +153,7 @@ fi
 #
 
 echo
-echo "[2/13] Applying embargo updates..."
+echo "[2/14] Applying embargo updates..."
 
 python3 "$SCRIPT_DIR/update_db_embargoes.py" \
     "$DB" \
@@ -165,7 +168,7 @@ python3 "$SCRIPT_DIR/update_db_embargoes.py" \
 #
 
 echo
-echo "[3/13] Auditing perpetual article embargoes..."
+echo "[3/14] Auditing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
     "$DB"
@@ -173,22 +176,9 @@ python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
 #
 # Perpetual whole-object embargo removal
 #
-# Removal criterion:
-#
-#     embargo_class = article
-#     embargo_value = indefinite
-#
-# Source representation:
-#
-#     target = object
-#     value  = indefinite
-#
-# Indefinite IP restrictions and indefinite file embargoes
-# are NOT whole-object exclusion conditions.
-#
 
 echo
-echo "[4/13] Removing perpetual article embargoes..."
+echo "[4/14] Removing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
     "$DB"
@@ -198,7 +188,7 @@ python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
 #
 
 echo
-echo "[5/13] Applying SQL corrections..."
+echo "[5/14] Applying SQL corrections..."
 
 if [[ -d "$SCRIPT_DIR/sql" ]]; then
 
@@ -220,7 +210,7 @@ fi
 #
 
 echo
-echo "[6/13] Applying override spreadsheets..."
+echo "[6/14] Applying override spreadsheets..."
 
 if [[ -d "$UPDATES_DIR" ]]; then
 
@@ -244,7 +234,7 @@ fi
 #
 
 echo
-echo "[7/13] Auditing scholarly feed records..."
+echo "[7/14] Auditing scholarly feed records..."
 
 python3 "$SCRIPT_DIR/audit_feed_records.py" \
     "$DB"
@@ -254,42 +244,202 @@ python3 "$SCRIPT_DIR/audit_feed_records.py" \
 #
 
 echo
-echo "[8/13] Removing Web of Science and PubMed Central records..."
+echo "[8/14] Removing Web of Science and PubMed Central records..."
 
 python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" \
     "$DB"
 
 #
-# Repository structural-object audit
+# Derive authoritative Fedora collection inventory.
 #
-# Structural objects use nonnumeric Fedora PIDs and represent
-# repository hierarchy rather than Figshare items.
+# Collectionhood is determined ONLY from Fedora RELS-EXT RDF:
 #
-# The audit is preserved before removal.
+#     fedora-model:hasModel
+#         rdf:resource="info:fedora/islandora:collectionCModel"
+#
+# PID syntax is deliberately NOT used as a fallback.
+#
+# The resulting inventory is retained in audits/ so the exact
+# classification input used for this migration run is preserved
+# in metadata_archive.zip.
 #
 
 echo
-echo "[9/13] Auditing repository structural objects..."
+echo "[9/14] Deriving Fedora collection PID inventory..."
+
+rm -f "$FEDORA_COLLECTION_PIDS"
+
+if [[ "$S3_MODE" == "true" ]]; then
+
+    RELS_EXT_TMP="$(mktemp -d)"
+    trap 'rm -rf "$RELS_EXT_TMP"' EXIT
+
+    S3_SOURCE="s3://$SRCBUCK"
+
+    if [[ -n "$PREFIX" ]]; then
+        S3_SOURCE="$S3_SOURCE/$PREFIX"
+    fi
+
+    echo "    Source: $S3_SOURCE"
+    echo "    Downloading RELS-EXT RDF..."
+
+    aws s3 cp \
+        "$S3_SOURCE" \
+        "$RELS_EXT_TMP" \
+        --recursive \
+        --exclude "*" \
+        --include "*RELS-EXT*"
+
+    RELS_EXT_ROOT="$RELS_EXT_TMP"
+
+else
+
+    RELS_EXT_ROOT="$ROOT"
+
+fi
+
+#
+# Parse only RELS-EXT files that explicitly declare
+# islandora:collectionCModel.
+#
+# Fedora RDF uses the subject URI to identify the object:
+#
+#     rdf:about="info:fedora/fsu:405773"
+#
+# We extract the PID from that declaration rather than inferring it
+# from directory names or PID syntax.
+#
+
+python3 - "$RELS_EXT_ROOT" "$FEDORA_COLLECTION_PIDS" <<'PY'
+import sys
+from pathlib import Path
+import xml.etree.ElementTree as ET
+
+root = Path(sys.argv[1])
+output = Path(sys.argv[2])
+
+RDF_ABOUT = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about"
+RDF_RESOURCE = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource"
+
+FEDORA_PREFIX = "info:fedora/"
+COLLECTION_MODEL = "info:fedora/islandora:collectionCModel"
+
+collection_pids = set()
+rels_ext_files = 0
+parse_errors = []
+
+for path in root.rglob("*"):
+    if not path.is_file():
+        continue
+
+    if "RELS-EXT" not in path.name:
+        continue
+
+    rels_ext_files += 1
+
+    try:
+        tree = ET.parse(path)
+    except ET.ParseError as exc:
+        parse_errors.append((path, str(exc)))
+        continue
+
+    for description in tree.getroot().iter():
+        about = description.attrib.get(RDF_ABOUT)
+
+        if not about or not about.startswith(FEDORA_PREFIX):
+            continue
+
+        is_collection = any(
+            element.attrib.get(RDF_RESOURCE) == COLLECTION_MODEL
+            for element in description
+        )
+
+        if is_collection:
+            collection_pids.add(about[len(FEDORA_PREFIX):])
+
+if parse_errors:
+    print(
+        f"ERROR: {len(parse_errors)} RELS-EXT file(s) could not be parsed.",
+        file=sys.stderr,
+    )
+
+    for path, error in parse_errors[:20]:
+        print(f"    {path}: {error}", file=sys.stderr)
+
+    if len(parse_errors) > 20:
+        print(
+            f"    ... plus {len(parse_errors) - 20} additional parse errors",
+            file=sys.stderr,
+        )
+
+    sys.exit(1)
+
+if rels_ext_files == 0:
+    print(
+        "ERROR: No RELS-EXT files were found in the Fedora source.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+if not collection_pids:
+    print(
+        "ERROR: RELS-EXT files were found but none declared "
+        "islandora:collectionCModel.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+output.parent.mkdir(parents=True, exist_ok=True)
+
+with output.open("w", encoding="utf-8") as fh:
+    for pid in sorted(collection_pids):
+        fh.write(pid + "\n")
+
+print(f"    RELS-EXT files examined: {rels_ext_files:,}")
+print(f"    Fedora collectionCModel PIDs: {len(collection_pids):,}")
+print(f"    Inventory: {output}")
+PY
+
+#
+# Clean temporary S3 download now rather than waiting for shell exit.
+#
+
+if [[ "$S3_MODE" == "true" ]]; then
+    rm -rf "$RELS_EXT_TMP"
+    trap - EXIT
+fi
+
+#
+# Repository structural-object audit.
+#
+# The Fedora collectionCModel inventory is authoritative.
+# No numeric/nonnumeric PID heuristic is used.
+#
+
+echo
+echo "[10/14] Auditing Fedora collection objects..."
 
 python3 "$SCRIPT_DIR/audit_structural_objects.py" \
-    "$DB"
+    "$DB" \
+    "$FEDORA_COLLECTION_PIDS"
 
 #
 # Repository structural-object removal
 #
 
 echo
-echo "[10/13] Removing repository structural objects..."
+echo "[11/14] Removing Fedora collection objects..."
 
 python3 "$SCRIPT_DIR/update_db_remove_structural_objects.py" \
-    "$DB"
+    "$DB" \
+    "$FEDORA_COLLECTION_PIDS"
 
 #
 # Export tables
 #
 
 echo
-echo "[11/13] Exporting database tables..."
+echo "[12/14] Exporting database tables..."
 
 python3 "$SCRIPT_DIR/dump_db_tables.py" \
     "$DB"
@@ -317,7 +467,7 @@ done
 #
 
 echo
-echo "[12/13] Creating metadata packages..."
+echo "[13/14] Creating metadata packages..."
 
 ARCHIVE_DIR="$RUN_DIR/metadata_archive"
 FIGSHARE_DIR="$RUN_DIR/metadata_figshare"
@@ -429,7 +579,7 @@ sha256sum \
 #
 
 echo
-echo "[13/13] Database status..."
+echo "[14/14] Database status..."
 
 python3 "$SCRIPT_DIR/main.py" \
     --db "$DB" \
