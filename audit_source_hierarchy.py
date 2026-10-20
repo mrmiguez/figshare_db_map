@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
+import csv
 import hashlib
 import os
 import re
+import sqlite3
 import sys
 from collections import defaultdict
 from xml.etree import ElementTree
@@ -384,6 +386,156 @@ def print_pid(resolver, pid, verify=False):
                     f"    s3://{resolver.bucket}/{key}"
                 )
 
+def get_object_pids(db_path):
+    """
+    Return every surviving object PID from the migration database.
+    """
+    con = sqlite3.connect(db_path)
+
+    try:
+        rows = con.execute(
+            """
+            SELECT pid
+            FROM objects
+            ORDER BY pid
+            """
+        ).fetchall()
+    finally:
+        con.close()
+
+    return [row[0] for row in rows]
+
+def export_hierarchies(resolver, db_path, output_path):
+    """
+    Resolve Fedora collection ancestry for every surviving objects.pid
+    and write one CSV row per object.
+
+    Hierarchy is stored rootward -> leafward using "|" as the
+    delimiter.
+    """
+    pids = get_object_pids(db_path)
+
+    fieldnames = [
+        "pid",
+        "direct_collection_pid",
+        "collection_hierarchy",
+        "hierarchy_depth",
+        "rels_ext_copies",
+        "status",
+        "error",
+    ]
+
+    resolved_count = 0
+    no_parent_count = 0
+    error_count = 0
+
+    os.makedirs(
+        os.path.dirname(os.path.abspath(output_path)),
+        exist_ok=True,
+    )
+
+    with open(
+            output_path,
+            "w",
+            encoding="utf-8",
+            newline="",
+    ) as fh:
+
+        writer = csv.DictWriter(
+            fh,
+            fieldnames=fieldnames,
+        )
+
+        writer.writeheader()
+
+        for position, pid in enumerate(
+                pids,
+                start=1,
+        ):
+
+            try:
+                rels = resolver.parse_rels(pid)
+                hierarchy = resolver.resolve(pid)
+
+                if rels["parent"]:
+                    status = "RESOLVED"
+                    resolved_count += 1
+                else:
+                    status = "NO_COLLECTION_PARENT"
+                    no_parent_count += 1
+
+                writer.writerow(
+                    {
+                        "pid": pid,
+                        "direct_collection_pid": (
+                                rels["parent"] or ""
+                        ),
+                        "collection_hierarchy": "|".join(
+                            hierarchy
+                        ),
+                        "hierarchy_depth": len(
+                            hierarchy
+                        ),
+                        "rels_ext_copies": rels["copies"],
+                        "status": status,
+                        "error": "",
+                    }
+                )
+
+            except Exception as exc:
+                error_count += 1
+
+                writer.writerow(
+                    {
+                        "pid": pid,
+                        "direct_collection_pid": "",
+                        "collection_hierarchy": "",
+                        "hierarchy_depth": "",
+                        "rels_ext_copies": len(
+                            resolver.rels_keys.get(
+                                pid,
+                                [],
+                            )
+                        ),
+                        "status": "ERROR",
+                        "error": str(exc),
+                    }
+                )
+
+            if (
+                    position % 1000 == 0
+                    or position == len(pids)
+            ):
+                print(
+                    f"Resolved {position:,}/{len(pids):,} objects",
+                    file=sys.stderr,
+                )
+
+    print(
+        f"Wrote: {output_path}",
+        file=sys.stderr,
+    )
+
+    print(
+        f"Objects: {len(pids):,}",
+        file=sys.stderr,
+    )
+
+    print(
+        f"Resolved: {resolved_count:,}",
+        file=sys.stderr,
+    )
+
+    print(
+        f"No collection parent: {no_parent_count:,}",
+        file=sys.stderr,
+    )
+
+    print(
+        f"Errors: {error_count:,}",
+        file=sys.stderr,
+    )
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -395,7 +547,7 @@ def main():
 
     parser.add_argument(
         "pids",
-        nargs="+",
+        nargs="*",
         help=(
             "Fedora PID(s), e.g. fsu:1039415"
         ),
@@ -414,6 +566,15 @@ def main():
         default="",
         help=(
             "Optional S3 prefix to restrict indexing."
+        ),
+    )
+
+    parser.add_argument(
+        "--export",
+        metavar="CSV",
+        help=(
+            "Export resolved Fedora collection hierarchy "
+            "for every surviving objects.pid in $DB."
         ),
     )
 
@@ -440,12 +601,27 @@ def main():
         file=sys.stderr,
     )
 
-    for pid in args.pids:
+    if args.export:
+        db_path = require_env(
+            "DB"
+        )
 
+        export_hierarchies(
+            resolver,
+            db_path,
+            args.export,
+        )
+
+    for pid in args.pids:
         print_pid(
             resolver,
             pid,
             verify=args.verify_duplicates,
+        )
+
+    if not args.export and not args.pids:
+        parser.error(
+            "provide one or more PIDs or use --export CSV"
         )
 
 
