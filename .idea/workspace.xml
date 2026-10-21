@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mappings/groups.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mappings/groups.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -441,15 +442,7 @@
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
       <workItem from="1791904643482" duration="44131000" />
-      <workItem from="1792498418983" duration="5554000" />
-    </task>
-    <task id="LOCAL-00033" summary="requirements.txt">
-      <option name="closed" value="true" />
-      <created>1785263659027</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1785263659027</updated>
+      <workItem from="1792498418983" duration="7470000" />
     </task>
     <task id="LOCAL-00034" summary="SQL error">
       <option name="closed" value="true" />
@@ -835,7 +828,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792510967596</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="auditing more Fedora relationships">
+      <option name="closed" value="true" />
+      <created>1792518498519</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1792518498519</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -854,7 +855,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="cleaning up i/o" />
     <MESSAGE value="forgot to uncomment something important" />
     <MESSAGE value="extending schema with new fields" />
     <MESSAGE value="implemented new fields archival_collection, extent, format, issuance, patent_number, thesis_type" />
@@ -879,7 +879,8 @@
     <MESSAGE value="reworking audit_object.py" />
     <MESSAGE value="audit_source_hierarchy.py util for more detailed hierarchy information" />
     <MESSAGE value="adding bulk-mode to audit_source_hierarchy.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding bulk-mode to audit_source_hierarchy.py" />
+    <MESSAGE value="auditing more Fedora relationships" />
+    <option name="LAST_COMMIT_MESSAGE" value="auditing more Fedora relationships" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
