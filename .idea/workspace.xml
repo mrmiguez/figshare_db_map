@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/embargoes.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/embargoes.py" afterDir="false" />
-    </list>
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -442,15 +439,7 @@
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
       <workItem from="1791904643482" duration="44131000" />
-      <workItem from="1792498418983" duration="10745000" />
-    </task>
-    <task id="LOCAL-00039" summary="remove ftp_upload.py (use lftp instead)">
-      <option name="closed" value="true" />
-      <created>1786454525023</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1786454525023</updated>
+      <workItem from="1792498418983" duration="11081000" />
     </task>
     <task id="LOCAL-00040" summary="run layer for s3 input source">
       <option name="closed" value="true" />
@@ -836,7 +825,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792594184237</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Add PDFA datastream to FILE_EMBARO_TYPES">
+      <option name="closed" value="true" />
+      <created>1792607866462</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1792607866462</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -855,7 +852,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="perpetual whole objects embargoes audited and removed" />
     <MESSAGE value="add s3 layer to update_db_embargoes.py" />
     <MESSAGE value="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh" />
     <MESSAGE value="defensive handling for proxied namespaces" />
@@ -880,7 +876,8 @@
     <MESSAGE value="reworking update_db_add_group_collection_ids.py parameters" />
     <MESSAGE value="fix for empty CSV rows" />
     <MESSAGE value="update process_metadata.sh to include update_db_add_group_collection_ids.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="update process_metadata.sh to include update_db_add_group_collection_ids.py" />
+    <MESSAGE value="Add PDFA datastream to FILE_EMBARO_TYPES" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add PDFA datastream to FILE_EMBARO_TYPES" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />

@@ -9,10 +9,15 @@ def detect_feed(iid, purl):
     iid = (iid or "").lower()
     purl = (purl or "").lower()
 
-    if "fsu_libsubv1_wos_" in iid:
+    wos_markers = (
+        "fsu_libsubv1_wos_",
+        "fsu_wos_",
+    )
+
+    if any(marker in iid for marker in wos_markers):
         return "Web of Science"
 
-    if "fsu_libsubv1_wos_" in purl:
+    if any(marker in purl for marker in wos_markers):
         return "Web of Science"
 
     if iid.startswith("fsu_pmch_"):
@@ -26,21 +31,23 @@ def detect_feed(iid, purl):
 
 def extract_iid(other_identifiers):
     """
-    Pull the feed IID from the pipe-delimited
-    other_identifiers field.
+    Pull the feed IID from the pipe-delimited other_identifiers field.
     """
 
     if not other_identifiers:
         return None
 
     for value in str(other_identifiers).split("|"):
-
         value = value.strip()
+        value_lower = value.lower()
 
-        if value.startswith("FSU_libsubv1_wos_"):
+        if value_lower.startswith("fsu_libsubv1_wos_"):
             return value
 
-        if value.startswith("FSU_pmch_"):
+        if value_lower.startswith("fsu_wos_"):
+            return value
+
+        if value_lower.startswith("fsu_pmch_"):
             return value
 
     return None
