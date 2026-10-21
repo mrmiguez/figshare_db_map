@@ -4,6 +4,7 @@ FILE_EMBARGO_TYPES = {
     "FULL_TEXT datastream",
     "MP4 datastream",
     "PREVIEW datastream",
+    "PDFA datastream",
 }
 
 ARTICLE_EMBARGO_TYPES = {

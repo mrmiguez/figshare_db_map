@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/update_db_add_group_collection_ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/update_db_add_group_collection_ids.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/embargoes.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets/embargoes.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -442,23 +442,7 @@
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
       <workItem from="1791904643482" duration="44131000" />
-      <workItem from="1792498418983" duration="8847000" />
-    </task>
-    <task id="LOCAL-00037" summary="outfile filename bug">
-      <option name="closed" value="true" />
-      <created>1785951580369</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1785951580369</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Fix for objects with multiple children (i.e. book with pages)">
-      <option name="closed" value="true" />
-      <created>1786029575339</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1786029575339</updated>
+      <workItem from="1792498418983" duration="10745000" />
     </task>
     <task id="LOCAL-00039" summary="remove ftp_upload.py (use lftp instead)">
       <option name="closed" value="true" />
@@ -836,7 +820,23 @@
       <option name="project" value="LOCAL" />
       <updated>1792593082690</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="fix for empty CSV rows">
+      <option name="closed" value="true" />
+      <created>1792593309362</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1792593309362</updated>
+    </task>
+    <task id="LOCAL-00087" summary="update process_metadata.sh to include update_db_add_group_collection_ids.py">
+      <option name="closed" value="true" />
+      <created>1792594184237</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1792594184237</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -855,8 +855,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="cleaning up" />
-    <MESSAGE value="adding more robust embargo information in embargo table" />
     <MESSAGE value="perpetual whole objects embargoes audited and removed" />
     <MESSAGE value="add s3 layer to update_db_embargoes.py" />
     <MESSAGE value="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh" />
@@ -880,7 +878,9 @@
     <MESSAGE value="initial groups/collection mapping update script" />
     <MESSAGE value="rename update_group_collection_ids.py to match other update_db* scripts" />
     <MESSAGE value="reworking update_db_add_group_collection_ids.py parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworking update_db_add_group_collection_ids.py parameters" />
+    <MESSAGE value="fix for empty CSV rows" />
+    <MESSAGE value="update process_metadata.sh to include update_db_add_group_collection_ids.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="update process_metadata.sh to include update_db_add_group_collection_ids.py" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
