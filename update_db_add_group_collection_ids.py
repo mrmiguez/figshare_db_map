@@ -31,9 +31,11 @@ def read_mapping(path):
     """
     Read hierarchy -> target group/collection assignments.
 
-    The blank collection_hierarchy row is significant. It provides the
-    explicit fallback mapping for objects whose Fedora hierarchy could
-    not be reconstructed because an ancestor RELS-EXT is absent.
+    A blank collection_hierarchy is valid when the row contains an
+    explicit mapping. It provides the fallback for objects whose Fedora
+    hierarchy could not be reconstructed.
+
+    Completely empty rows are ignored.
     """
     mapping = {}
 
@@ -41,6 +43,17 @@ def read_mapping(path):
         for row in csv.DictReader(fh):
             hierarchy = row["collection_hierarchy"].strip()
             leaf_pid = row["leaf_collection_pid"].strip()
+            group_id = row["group_id"].strip()
+            collection_id = row["collection_id"].strip()
+            status = row["status"].strip()
+
+            # Ignore completely empty spreadsheet/CSV rows.
+            if not any(value.strip() for value in row.values() if value is not None):
+                continue
+
+            # A blank hierarchy is valid only when it has an explicit target.
+            if not hierarchy and not group_id:
+                continue
 
             if hierarchy in mapping:
                 raise RuntimeError(
@@ -49,9 +62,9 @@ def read_mapping(path):
 
             mapping[hierarchy] = {
                 "leaf_pid": leaf_pid,
-                "group_id": int(row["group_id"]) if row["group_id"].strip() else None,
-                "collection_id": int(row["collection_id"]) if row["collection_id"].strip() else None,
-                "status": row["status"].strip(),
+                "group_id": int(group_id) if group_id else None,
+                "collection_id": int(collection_id) if collection_id else None,
+                "status": status,
             }
 
     return mapping
