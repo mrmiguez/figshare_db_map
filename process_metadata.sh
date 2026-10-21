@@ -21,7 +21,10 @@ TGTBUCK="${TGTBUCK:-}"
 PREFIX="${PREFIX:-}"
 
 AUDITS_DIR="$RUN_DIR/audits"
+
 FEDORA_COLLECTION_PIDS="$AUDITS_DIR/fedora_collection_pids.txt"
+OBJECT_COLLECTION_HIERARCHY="$AUDITS_DIR/object_collection_hierarchy.csv"
+SOURCE_COLLECTION_MAPPING="${SOURCE_COLLECTION_MAPPING:-$MAPPINGS_DIR/source_collection_mapping.csv}"
 
 #
 # Ensure run directories exist
@@ -35,7 +38,6 @@ mkdir -p "$AUDITS_DIR"
 #
 
 if [[ "$S3_MODE" == "true" ]]; then
-
     if [[ -z "$SRCBUCK" ]]; then
         echo "ERROR: SRCBUCK must be set in S3 mode" >&2
         exit 1
@@ -56,9 +58,7 @@ if [[ "$S3_MODE" == "true" ]]; then
             --s3-prefix "$PREFIX"
         )
     fi
-
 else
-
     ROOT="${ROOT:-${1:-}}"
 
     if [[ -z "$ROOT" ]]; then
@@ -70,21 +70,45 @@ else
     EMBARGO_SOURCE_ARGS=(
         --root "$ROOT"
     )
-
 fi
 
 #
-# Validate required mapping files before beginning the expensive work.
+# Validate required mapping files before beginning expensive work.
 #
 
-for MAPPING in groups.csv collections.csv
+for MAPPING in groups.csv collections.csv source_collection_mapping.csv
 do
-
     if [[ ! -f "$MAPPINGS_DIR/$MAPPING" ]]; then
         echo "ERROR: Missing required mapping file: $MAPPINGS_DIR/$MAPPING" >&2
         exit 1
     fi
+done
 
+#
+# Validate required scripts before beginning expensive work.
+#
+
+REQUIRED_SCRIPTS=(
+    main.py
+    update_db_embargoes.py
+    audit_perpetual_embargoes.py
+    update_db_remove_perpetual_embargoes.py
+    update_db_by_csv.py
+    audit_feed_records.py
+    update_db_remove_scholarly_feed_records.py
+    audit_structural_objects.py
+    update_db_remove_structural_objects.py
+    audit_source_hierarchy.py
+    update_db_add_group_collection_ids.py
+    dump_db_tables.py
+)
+
+for SCRIPT in "${REQUIRED_SCRIPTS[@]}"
+do
+    if [[ ! -f "$SCRIPT_DIR/$SCRIPT" ]]; then
+        echo "ERROR: Missing required script: $SCRIPT_DIR/$SCRIPT" >&2
+        exit 1
+    fi
 done
 
 #
@@ -100,6 +124,7 @@ echo "Database        : $DB"
 echo "Run Dir         : $RUN_DIR"
 echo "Updates Dir     : $UPDATES_DIR"
 echo "Mappings Dir    : $MAPPINGS_DIR"
+echo "Mapping         : $SOURCE_COLLECTION_MAPPING"
 echo "Audits Dir      : $AUDITS_DIR"
 echo "S3 Mode         : $S3_MODE"
 
@@ -123,24 +148,20 @@ echo
 # Rebuild database
 #
 
-echo "[1/14] Building migration database..."
+echo "[1/16] Building migration database..."
 
 if [[ "$S3_MODE" == "true" ]]; then
-
     python3 "$SCRIPT_DIR/main.py" \
         --db "$DB" \
         --run \
         --s3 \
         --bucket "$SRCBUCK" \
         --prefix "$PREFIX"
-
 else
-
     python3 "$SCRIPT_DIR/main.py" \
         --db "$DB" \
         --run \
         "$ROOT"
-
 fi
 
 #
@@ -153,7 +174,7 @@ fi
 #
 
 echo
-echo "[2/14] Applying embargo updates..."
+echo "[2/16] Applying embargo updates..."
 
 python3 "$SCRIPT_DIR/update_db_embargoes.py" \
     "$DB" \
@@ -168,7 +189,7 @@ python3 "$SCRIPT_DIR/update_db_embargoes.py" \
 #
 
 echo
-echo "[3/14] Auditing perpetual article embargoes..."
+echo "[3/16] Auditing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
     "$DB"
@@ -178,7 +199,7 @@ python3 "$SCRIPT_DIR/audit_perpetual_embargoes.py" \
 #
 
 echo
-echo "[4/14] Removing perpetual article embargoes..."
+echo "[4/16] Removing perpetual article embargoes..."
 
 python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
     "$DB"
@@ -188,21 +209,16 @@ python3 "$SCRIPT_DIR/update_db_remove_perpetual_embargoes.py" \
 #
 
 echo
-echo "[5/14] Applying SQL corrections..."
+echo "[5/16] Applying SQL corrections..."
 
 if [[ -d "$SCRIPT_DIR/sql" ]]; then
-
     for SQL in "$SCRIPT_DIR"/sql/*.sql
     do
-
         [[ -e "$SQL" ]] || continue
 
         echo "    Applying: $(basename "$SQL")"
-
         sqlite3 "$DB" < "$SQL"
-
     done
-
 fi
 
 #
@@ -210,13 +226,11 @@ fi
 #
 
 echo
-echo "[6/14] Applying override spreadsheets..."
+echo "[6/16] Applying override spreadsheets..."
 
 if [[ -d "$UPDATES_DIR" ]]; then
-
     for CSV in "$UPDATES_DIR"/*.csv
     do
-
         [[ -e "$CSV" ]] || continue
 
         echo "    Applying: $(basename "$CSV")"
@@ -224,9 +238,7 @@ if [[ -d "$UPDATES_DIR" ]]; then
         python3 "$SCRIPT_DIR/update_db_by_csv.py" \
             "$DB" \
             "$CSV"
-
     done
-
 fi
 
 #
@@ -234,7 +246,7 @@ fi
 #
 
 echo
-echo "[7/14] Auditing scholarly feed records..."
+echo "[7/16] Auditing scholarly feed records..."
 
 python3 "$SCRIPT_DIR/audit_feed_records.py" \
     "$DB"
@@ -244,7 +256,7 @@ python3 "$SCRIPT_DIR/audit_feed_records.py" \
 #
 
 echo
-echo "[8/14] Removing Web of Science and PubMed Central records..."
+echo "[8/16] Removing Web of Science and PubMed Central records..."
 
 python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" \
     "$DB"
@@ -260,17 +272,15 @@ python3 "$SCRIPT_DIR/update_db_remove_scholarly_feed_records.py" \
 # PID syntax is deliberately NOT used as a fallback.
 #
 # The resulting inventory is retained in audits/ so the exact
-# classification input used for this migration run is preserved
-# in metadata_archive.zip.
+# classification input used for this migration run is preserved.
 #
 
 echo
-echo "[9/14] Deriving Fedora collection PID inventory..."
+echo "[9/16] Deriving Fedora collection PID inventory..."
 
 rm -f "$FEDORA_COLLECTION_PIDS"
 
 if [[ "$S3_MODE" == "true" ]]; then
-
     RELS_EXT_TMP="$(mktemp -d)"
     trap 'rm -rf "$RELS_EXT_TMP"' EXIT
 
@@ -291,11 +301,8 @@ if [[ "$S3_MODE" == "true" ]]; then
         --include "*RELS-EXT*"
 
     RELS_EXT_ROOT="$RELS_EXT_TMP"
-
 else
-
     RELS_EXT_ROOT="$ROOT"
-
 fi
 
 #
@@ -417,7 +424,7 @@ fi
 #
 
 echo
-echo "[10/14] Auditing Fedora collection objects..."
+echo "[10/16] Auditing Fedora collection objects..."
 
 python3 "$SCRIPT_DIR/audit_structural_objects.py" \
     "$DB" \
@@ -428,18 +435,64 @@ python3 "$SCRIPT_DIR/audit_structural_objects.py" \
 #
 
 echo
-echo "[11/14] Removing Fedora collection objects..."
+echo "[11/16] Removing Fedora collection objects..."
 
 python3 "$SCRIPT_DIR/update_db_remove_structural_objects.py" \
     "$DB" \
     "$FEDORA_COLLECTION_PIDS"
 
 #
+# Resolve authoritative source hierarchy for the surviving
+# migration population.
+#
+# audit_source_hierarchy.py follows both:
+#
+#     fedora:isMemberOfCollection
+#     fedora:isConstituentOf
+#
+# Compound-object parents are traversed, but only collectionCModel
+# nodes are retained in collection_hierarchy.
+#
+
+echo
+echo "[12/16] Resolving Fedora source hierarchy..."
+
+rm -f "$OBJECT_COLLECTION_HIERARCHY"
+
+python3 "$SCRIPT_DIR/audit_source_hierarchy.py" \
+    --export "$OBJECT_COLLECTION_HIERARCHY"
+
+if [[ ! -s "$OBJECT_COLLECTION_HIERARCHY" ]]; then
+    echo "ERROR: Source hierarchy audit was not created: $OBJECT_COLLECTION_HIERARCHY" >&2
+    exit 1
+fi
+
+#
+# Apply Figshare group and collection mappings.
+#
+# source_collection_mapping.csv maps each resolved Fedora hierarchy
+# to the target Figshare group and optional collection.
+#
+# The blank hierarchy mapping is intentional. It assigns the known
+# source-hierarchy-gap objects to the configured fallback group.
+#
+# fsu:honors_ethical_issues_and_life_choices is explicitly excluded
+# by update_db_add_group_collection_ids.py.
+#
+
+echo
+echo "[13/16] Applying Figshare group and collection IDs..."
+
+python3 "$SCRIPT_DIR/update_db_add_group_collection_ids.py" \
+    --mapping "$SOURCE_COLLECTION_MAPPING" \
+    --hierarchy "$OBJECT_COLLECTION_HIERARCHY"
+
+#
 # Export tables
 #
 
 echo
-echo "[12/14] Exporting database tables..."
+echo "[14/16] Exporting database tables..."
 
 python3 "$SCRIPT_DIR/dump_db_tables.py" \
     "$DB"
@@ -451,15 +504,13 @@ python3 "$SCRIPT_DIR/dump_db_tables.py" \
 # but delivery copies are placed alongside the other CSVs.
 #
 
-echo "    Adding groups.csv and collections.csv..."
+echo "    Adding mapping CSVs..."
 
-for MAPPING in groups.csv collections.csv
+for MAPPING in groups.csv collections.csv source_collection_mapping.csv
 do
-
     cp \
         "$MAPPINGS_DIR/$MAPPING" \
         "$RUN_DIR/exports/$MAPPING"
-
 done
 
 #
@@ -467,7 +518,7 @@ done
 #
 
 echo
-echo "[13/14] Creating metadata packages..."
+echo "[15/16] Creating metadata packages..."
 
 ARCHIVE_DIR="$RUN_DIR/metadata_archive"
 FIGSHARE_DIR="$RUN_DIR/metadata_figshare"
@@ -531,7 +582,6 @@ sha256sum \
 #
 
 if [[ -n "$TGTBUCK" ]]; then
-
     echo
     echo "    Uploading preservation copy to:"
     echo "        s3://$TGTBUCK/archive/"
@@ -543,12 +593,9 @@ if [[ -n "$TGTBUCK" ]]; then
     aws s3 cp \
         "$RUN_DIR/metadata_archive.zip.sha256" \
         "s3://$TGTBUCK/archive/metadata_archive.zip.sha256"
-
 else
-
     echo
     echo "    TGTBUCK not set; skipping preservation upload."
-
 fi
 
 #
@@ -579,7 +626,7 @@ sha256sum \
 #
 
 echo
-echo "[14/14] Database status..."
+echo "[16/16] Database status..."
 
 python3 "$SCRIPT_DIR/main.py" \
     --db "$DB" \
