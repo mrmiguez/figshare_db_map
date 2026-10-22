@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="" />
+    <list default="true" id="47fb53be-496e-4a8e-9a84-ce75756a4d50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -439,15 +441,7 @@
       <workItem from="1790008469301" duration="76000" />
       <workItem from="1791823409949" duration="2544000" />
       <workItem from="1791904643482" duration="44131000" />
-      <workItem from="1792498418983" duration="11918000" />
-    </task>
-    <task id="LOCAL-00041" summary="i/o streaming error">
-      <option name="closed" value="true" />
-      <created>1786455328055</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1786455328055</updated>
+      <workItem from="1792498418983" duration="13207000" />
     </task>
     <task id="LOCAL-00042" summary="sqlite batching error">
       <option name="closed" value="true" />
@@ -833,7 +827,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792608287034</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Fix update_db_remove_structural_objects.py foreign key exception">
+      <option name="closed" value="true" />
+      <created>1792619528219</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1792619528219</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -844,7 +846,14 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="187" />
+                  <entry key="Table.GitHub.CommitStatus.ColumnIdWidth" value="15" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -852,7 +861,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="bucket mix-up, adding embargo audits &amp; removal in process_metadata.sh" />
     <MESSAGE value="defensive handling for proxied namespaces" />
     <MESSAGE value="adding zero parsed record detection to main.py" />
     <MESSAGE value="process_metadata.sh was truncated" />
@@ -877,7 +885,8 @@
     <MESSAGE value="update process_metadata.sh to include update_db_add_group_collection_ids.py" />
     <MESSAGE value="Add PDFA datastream to FILE_EMBARO_TYPES" />
     <MESSAGE value="updating assets/feed_records.py to catch uncaught WoS records" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating assets/feed_records.py to catch uncaught WoS records" />
+    <MESSAGE value="Fix update_db_remove_structural_objects.py foreign key exception" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix update_db_remove_structural_objects.py foreign key exception" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figshare_db_map$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1784036775941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
