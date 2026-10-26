@@ -11,7 +11,12 @@ SRCBUCK = os.environ["SRCBUCK"]
 TGTBUCK = os.environ.get("TGTBUCK")
 
 PID_RE = re.compile(
-    r"(fsu_\d+)_(?:PDF|OBJ)",
+    r"(fsu_\d+)_(?:PDF|OBJ|MF0|MF1|DSMAP)",
+    re.IGNORECASE
+)
+
+MODEL_ASSET_RE = re.compile(
+    r"(fsu_\d+)_(MF0|MF1|DSMAP)",
     re.IGNORECASE
 )
 
@@ -52,7 +57,6 @@ def main():
     args = parse_args()
 
     s3 = boto3.resource("s3")
-
     src_bucket = s3.Bucket(SRCBUCK)
 
     local_mode = bool(args.local_root)
@@ -66,8 +70,7 @@ def main():
 
         if not TGTBUCK:
             raise RuntimeError(
-                "TGTBUCK must be defined "
-                "for S3->S3 mode"
+                "TGTBUCK must be defined for S3->S3 mode"
             )
 
         tgt_bucket = s3.Bucket(TGTBUCK)
@@ -80,48 +83,76 @@ def main():
 
     count = 0
 
+    standard_asset_count = 0
+    model_asset_count = 0
+
     for obj in src_bucket.objects.all():
 
         key = obj.key
-
         filename = os.path.basename(key)
 
-        m = PID_RE.search(filename)
+        match = PID_RE.search(filename)
 
-        if not m:
+        if not match:
             continue
 
-        child_pid = m.group(1)
+        child_pid = match.group(1)
 
-        parent_name = PurePosixPath(
-            key
-        ).parent.name
+        is_model_asset = bool(
+            MODEL_ASSET_RE.search(filename)
+        )
 
-        if PARENT_PID_RE.fullmatch(
-                parent_name):
+        if is_model_asset:
+            model_asset_count += 1
+        else:
+            standard_asset_count += 1
 
+        parent_name = PurePosixPath(key).parent.name
+
+        if PARENT_PID_RE.fullmatch(parent_name):
             destination_dir = parent_name
+        else:
+            destination_dir = child_pid
+
+        extension = os.path.splitext(filename)[1]
+
+        #
+        # Preserve model-family filenames.
+        #
+        # Example:
+        #
+        #     fsu_1026283_MF0.bin
+        #     fsu_1026283_MF1.jpg
+        #     fsu_1026283_DSMAP.json
+        #
+        if is_model_asset:
+
+            destination_filename = filename
 
         else:
 
-            destination_dir = child_pid
+            #
+            # Existing behavior:
+            #
+            #     fsu_123456_OBJ.pdf
+            #         ->
+            #     fsu_123456.pdf
+            #
+            #     fsu_123456_OBJ.mov
+            #         ->
+            #     fsu_123456.mov
+            #
 
-        extension = os.path.splitext(
-            filename
-        )[1]
-
-        destination_filename = (
-            f"{child_pid}{extension}"
-        )
+            destination_filename = (
+                f"{child_pid}{extension}"
+            )
 
         if local_mode:
 
-            destination_path = (
-                os.path.join(
-                    args.local_root,
-                    destination_dir,
-                    destination_filename
-                )
+            destination_path = os.path.join(
+                args.local_root,
+                destination_dir,
+                destination_filename
             )
 
             print(
@@ -132,9 +163,7 @@ def main():
             if args.execute:
 
                 os.makedirs(
-                    os.path.dirname(
-                        destination_path
-                    ),
+                    os.path.dirname(destination_path),
                     exist_ok=True
                 )
 
@@ -172,29 +201,28 @@ def main():
         if count % 1000 == 0:
 
             print(
-                f"Processed "
-                f"{count:,} files..."
+                f"Processed {count:,} files..."
             )
 
-        if (
-            args.limit
-            and count >= args.limit
-        ):
+        if args.limit and count >= args.limit:
+
             print(
-                f"\nReached limit "
-                f"of {args.limit:,} files."
+                f"\nReached limit of {args.limit:,} files."
             )
+
             break
 
-    print(
-        f"\nProcessed "
-        f"{count:,} files"
-    )
+    print()
+    print("TRANSFER SUMMARY")
+    print("----------------")
+    print(f"Standard assets:     {standard_asset_count:,}")
+    print(f"MF0/MF1/DSMAP:       {model_asset_count:,}")
+    print(f"Total assets:        {count:,}")
 
     if not args.execute:
+
         print(
-            "\nNo assets copied "
-            "(dry run mode)."
+            "\nNo assets copied (dry run mode)."
         )
 
 
